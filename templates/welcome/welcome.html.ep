@@ -4,7 +4,7 @@
 % my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
 % $year += 1900;
 % my $welcomes = [
-%	'в мир опиатор',
+%	'в мир опиатов',
 %	'в мир морфея',
 %	'в Матрицу',
 %	'в Футураму',
