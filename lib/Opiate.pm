@@ -1,20 +1,19 @@
 package Opiate;
-use Mojo::Base 'Mojolicious', -signatures;
 
-# This method will run once at server start
-sub startup ($self) {
+use strict;
+use warnings;
 
-  # Load configuration from config file
-  my $config = $self->plugin('NotYAMLConfig');
+use Mojo::Base 'Mojolicious';
 
-  # Configure the application
-  $self->secrets($config->{secrets});
 
-  # Router
-  my $r = $self->routes;
+sub startup {
+	my $self = shift;
+	my $config = $self->plugin('NotYAMLConfig');
+	$self->secrets($config->{secrets});
 
-  # Normal route to controller
-  $r->get('/')->to('Example#welcome');
+	my $r = $self->routes;
+
+	$r->get('/')->to('Welcome#welcome');
 }
 
 1;
