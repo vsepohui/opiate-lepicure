@@ -8,7 +8,8 @@ use Mojo::Base 'Mojolicious';
 sub startup {
 	my $self = shift;
 	
-	my $rr = time() ^ $$;
+	my $rr = time() . $$;
+	warn $rr;
 	
 	srand($rr);
 	my $config = $self->plugin('NotYAMLConfig');
