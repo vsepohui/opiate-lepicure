@@ -21,7 +21,7 @@ sub startup {
 
 	$r->get('/')->to('Welcome#welcome');
 	
-	$self->self(irand => sub {
+	$self->helper(irand => sub {
 		my $c = shift;
 		return irand($_);
 	});
