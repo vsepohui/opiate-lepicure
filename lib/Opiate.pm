@@ -5,6 +5,8 @@ use warnings;
 
 use Mojo::Base 'Mojolicious';
 
+use Digest::CRC qw(crc32);
+
 sub startup {
 	my $self = shift;
 	
@@ -14,9 +16,8 @@ sub startup {
 
 	$self->hook(before_dispatch => sub {
 		my $c = shift;
-		my $i = $$ . $c->req->request_id() . time();
-		die $i;
-	#	srand($i);
+		my $i = hex (crc32 ($$ . time() . $c->req->request_id())) . substr(time(), 5);
+		srand($i);
 	});
 
 
