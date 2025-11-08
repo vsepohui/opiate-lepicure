@@ -9,14 +9,16 @@ sub startup {
 	my $self = shift;
 	
 	my $rr = time() . $$;
-	warn $rr;
-	
-	srand($rr);
 	my $config = $self->plugin('NotYAMLConfig');
 	$self->secrets($config->{secrets});
 
-	my $r = $self->routes;
+	$self->hook(before_dispatch => sub {
+		my $c = shift;
+		srand(time() . $$ . $c->req->request_id);
+	});
 
+
+	my $r = $self->routes;
 	$r->get('/')->to('Welcome#welcome');
 }
 
