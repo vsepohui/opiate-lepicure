@@ -16,7 +16,7 @@ sub startup {
 		my $c = shift;
 		my $i = time() . $$ . $c->req->request_id;
 		warn $i;
-		srand($i);
+	#	srand($i);
 	});
 
 
