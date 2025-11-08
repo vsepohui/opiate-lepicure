@@ -19,6 +19,7 @@
 %	'в другое измерение',
 %	'$username',
 %	'на Священную Гору',
+%	'в сказку',
 % ];
 % my $w = $welcomes->[int rand scalar @$welcomes];
 
