@@ -5,9 +5,6 @@ use warnings;
 
 use Mojo::Base 'Mojolicious';
 
-use Math::Random::Secure qw(irand);
-
-
 sub startup {
 	my $self = shift;
 	
@@ -20,11 +17,6 @@ sub startup {
 	my $r = $self->routes;
 
 	$r->get('/')->to('Welcome#welcome');
-	
-	$self->helper(irand => sub {
-		my $c = shift;
-		return irand(shift);
-	});
 }
 
 1;

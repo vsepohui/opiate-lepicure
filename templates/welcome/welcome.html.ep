@@ -20,7 +20,7 @@
 %	'$username',
 %	'на Священную Гору',
 % ];
-% my $w = $welcomes->[int irand(scalar(@$welcomes))];
+% my $w = $welcomes->[int rand scalar @$welcomes];
 
 <div class="container text-center">
 	<h1 class="h3 mt-5 mb-3 fw-normal">Добро пожаловать <%= $w %>!</h1>
