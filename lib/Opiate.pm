@@ -21,7 +21,7 @@ sub startup {
 
 	$r->get('/')->to('Welcome#welcome');
 	
-	$app->self(irand => sub {
+	$self->self(irand => sub {
 		my $c = shift;
 		return irand($_);
 	});
