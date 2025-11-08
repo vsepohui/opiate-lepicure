@@ -23,7 +23,7 @@ sub startup {
 	
 	$self->helper(irand => sub {
 		my $c = shift;
-		return irand($_);
+		return irand(shift);
 	});
 }
 
