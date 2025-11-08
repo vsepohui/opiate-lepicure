@@ -14,7 +14,9 @@ sub startup {
 
 	$self->hook(before_dispatch => sub {
 		my $c = shift;
-		srand(time() . $$ . $c->req->request_id);
+		my $i = time() . $$ . $c->req->request_id;
+		warn $i;
+		srand($i);
 	});
 
 
