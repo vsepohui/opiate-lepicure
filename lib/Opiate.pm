@@ -16,7 +16,7 @@ sub startup {
 
 	$self->hook(before_dispatch => sub {
 		my $c = shift;
-		my $i = hex (crc32 ($$ . time() . $c->req->request_id())) . substr(time(), 5);
+		my $i = hex (crc32 ($$ . time() . $c->req->request_id())) . substr($$, -3) . substr(time(), -3);
 		srand($i);
 	});
 
