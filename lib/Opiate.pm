@@ -9,9 +9,9 @@ use Mojo::Base 'Mojolicious';
 sub startup {
 	my $self = shift;
 	
-	my $r = $$ . time();
+	my $rr = $$ . time();
 	
-	srand($r);
+	srand($rr);
 	my $config = $self->plugin('NotYAMLConfig');
 	$self->secrets($config->{secrets});
 
