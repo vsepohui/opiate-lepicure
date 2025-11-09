@@ -22,7 +22,7 @@ sub startup {
 
 
 	my $r = $self->routes;
-	$r->get('/')->to('Welcome#welcome');
+	$r->any('/')->to('Welcome#welcome');
 }
 
 1;
