@@ -2,7 +2,7 @@ package Opiate::DB;
 
 use strict;
 use warnings;
-use 5.042;
+use 5.028;
 
 use DBI;
 use DBD::Pg;
