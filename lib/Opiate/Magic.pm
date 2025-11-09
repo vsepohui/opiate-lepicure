@@ -47,4 +47,33 @@ sub json_encode {
 	return $text;
 }
 
+sub generate_random_string {
+	my $self   = shift;
+    my $length = shift;
+    
+    my @chars = ('a'..'z', 'A'..'Z', '0'..'9'); # Define your character set
+    my $random_string = '';
+    
+    for (1..$length) {
+        $random_string .= $chars[rand @chars];
+    }
+    return $random_string;
+}
+
+sub crypt_password {
+	my $self = shift;
+	my $pass = shift;
+	my $salt = $self->generate_random_string(8);
+	return crypt($pass, $salt) . $salt;
+}
+
+sub check_password {
+	my $self = shift;
+	my $hash = shift;
+	my $pass = shift;
+	my $salt = substr($hash, -8);
+	return $hash eq crypt($pass, $salt) . $salt;
+}
+
+
 1;
