@@ -21,8 +21,7 @@ sub invite {
 		
 		my $ip = $self->ip;
 		my $k = "invite:limit:$ip";
-		$self->redis->get($k);
-		if ($k) {
+		if ($self->redis->get($k)) {
 			return $self->error('Вы не можете просить приглашение чаще чем раз в 1 час!');
 		}
 		$self->redis->setex($k, 60*60, 1);
