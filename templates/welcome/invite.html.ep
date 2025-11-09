@@ -1,0 +1,20 @@
+% layout 'opiate';
+% title 'Регистрация';
+
+
+<div class="container text-center">
+	<h1 class="h3 mt-5 mb-3 fw-normal">Регистрация</h1>
+	<p>На данный момент регистрация закрыта, но вы можете отправить запрос на приглашение!</p>
+	<form method="POST" class="form-signin w-100 m-auto">
+		<div class="form">
+			<input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Ваше имя"/>
+		</div>
+		<div class="form">
+			<input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Email"/>
+		</div>
+		<div class="form">
+			<textarea type="text" class="form-control form-control-lg" placeholder="Объясните, зачем вы хотите зарегистрироваться" id="ask" name="ask" rows="5"></textarea>
+		</div>
+		<button class="btn btn-lg btn-primary w-100 py-2" type="submit">Запросить приглашение</button>
+	</form>
+</div>

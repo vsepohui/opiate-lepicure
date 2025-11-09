@@ -5,7 +5,9 @@ use warnings;
 
 use Mojo::Base 'Mojolicious';
 
+use Opiate::Magic;
 use Digest::CRC qw(crc32);
+
 
 sub startup {
 	my $self = shift;
@@ -16,13 +18,22 @@ sub startup {
 
 	$self->hook(before_dispatch => sub {
 		my $c = shift;
-		my $i = hex (crc32 ($$ . time() . $c->req->request_id())) . substr($$, -3) . substr(time(), -3);
+		my $i = crc32 ($$ . time() . $c->req->request_id()) . substr($$, -3) . substr(time(), -3);
 		srand($i);
 	});
 
 
 	my $r = $self->routes;
 	$r->any('/')->to('Welcome#welcome');
+	$r->any('/invite')->to('Welcome#invite');
+	
+	$self->helper(
+		'json' => sub {
+			my $self = shift;
+			my $str  = shift;
+			return Opiate::Magic->json_encode($str);
+		},
+	);
 }
 
 1;

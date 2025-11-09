@@ -1,5 +1,4 @@
 % layout 'opiate';
-% title 'Opiate L\'Epicure';
 
 % my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
 % $year += 1900;
@@ -54,5 +53,5 @@
 		</div>
 		<button class="btn btn-lg btn-primary w-100 py-2" type="submit">Вход</button>
 	</form>
-	<a href="#">Если у вас нет аккаунта - зарегистрируйтесь!</a>
+	<a href="/invite">Если у вас нет аккаунта - зарегистрируйтесь!</a>
 </div>
