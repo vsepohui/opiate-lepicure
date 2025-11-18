@@ -34,5 +34,10 @@ sub invite {
 	return $self->render;
 }
 
+sub trunaev {
+	my $self = shift;
+	return $self->render;
+}
+
 
 1;
