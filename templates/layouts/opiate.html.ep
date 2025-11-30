@@ -18,7 +18,7 @@
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet"/>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-1.10.2.min.js"></script>
-    <script src="/js/noty.js"></script>
+    <script src="/js/notify.js"></script>
     <link href="/css/style.css" rel="stylesheet" />
 % my $noty = stash ('noty') || flash ('noty');
 % my $owner = stash('owner');
@@ -28,13 +28,14 @@
 % if ($noty) {
 	<script>
 	$(function(){
+		$.notify.defaults({position:"top center"});
 		% if ($noty) {
 			% Encode::decode_utf8($noty);
 			% for (@$noty) {
 				% my $type = $_->[0];
 				% my $text = $_->[1];
 				% my %t = ('error' => 'error');
-				noty(<%== json { type => $t{$type} , text => $text, timeout => 5000, } %> );
+				$.notify("<%= $text %>", "<%= $t{$type} %>");
 			% }
 		% }
 		});
@@ -55,7 +56,7 @@
 				  </button>
 				  <ul class="dropdown-menu"  style="font-size: 24px;">
 					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>">Профиль</a></li>
-					<li><a class="dropdown-item" href="/settings">Настройки</a></li>
+					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>?edit=1">Настройки</a></li>
 					<li><a class="dropdown-item" href="/logout">Выход</a></li>
 				  </ul>
 				</div>

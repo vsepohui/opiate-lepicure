@@ -20,15 +20,17 @@
 		% $info =~ s/\n/<br\/>/g;
 		%== $info;
 		<br/><br/>
-		%# <a class="btn btn-primary py-2" href="?edit=1">Редактировать</a>
+		%# <a class="btn bt(n-primary py-2" href="?edit=1">Редактировать</a>
 	% }
 	<br/><br/><br/><br/><br/><br/><br/>
 	<hr/>
+	% unless (param 'edit') {
 	<form method="POST" action="/<%= $alias %>/post" id="GymForm">
-		<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" require="1">
-		<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст сообщения" id="post" name="post" rows="10" require="1"></textarea>
-		<button class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" type="button" id="post_button" name="post_button">Написать сообщение?</button>
+		<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" required/>
+		<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст сообщения" id="post" name="post" rows="10" required></textarea>
+		<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Написать сообщение?"/>
 	</form>
+	% }
 	</div>
 </div>
 
@@ -38,19 +40,13 @@ $(function() {
 	$('#post_button').click(function (event) {
 		event.preventDefault();
 		if (mutex >= 1) {
-		/*	if (mutex >= 2) {
-				$('#post_button').text('Написать сообщение?');
-				$('#post').hide(604);
-				$('#subject').hide(604);
-			}
-		*/
 			$('#GymForm').submit();
 			mutex ++;
 		}
 
 		$('#subject').show(604);
 		$('#post').show(604);
-		$('#post_button').text('Кондратэ!');
+		$('#post_button').val('Кондратэ!');
 		if (mutex == 0) {
 			mutex += 1;
 		}
