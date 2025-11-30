@@ -16,7 +16,7 @@
 		<button class="btn btn-primary py-2" class="submit">Сохранить</button>
 		</form>
 	% } else {
-		% my $info = $owner->{info};
+		% my $info = $owner->{info} // '';
 		% $info =~ s/\n/<br\/>/g;
 		%== $info;
 		<br/><br/>
@@ -27,7 +27,7 @@
 	% unless (param 'edit') {
 	<form method="POST" action="/<%= $alias %>/post" id="GymForm">
 		<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" required/>
-		<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст сообщения" id="post" name="post" rows="10" required></textarea>
+		<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст сообщения" id="message" name="message" rows="10" required></textarea>
 		<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Написать сообщение?"/>
 	</form>
 	% }
@@ -39,17 +39,29 @@ $(function() {
 	var mutex = 0;
 	$('#post_button').click(function (event) {
 		event.preventDefault();
-		if (mutex >= 1) {
-			$('#GymForm').submit();
+		if (mutex % 2 == 1) {
+			$('#subject').hide(604);
+			$('#message').hide(604);		
+			
+			var form = $(this);
+			var actionUrl = $('#GymForm').attr('action');
+			 
+			$('#subject').val('');
+			$('#message').val('');
+					
+			$('#post_button').val('Написать сообщение?');
+					
 			mutex ++;
+			return;
 		}
+		
+
 
 		$('#subject').show(604);
-		$('#post').show(604);
+		$('#message').show(604);
 		$('#post_button').val('Кондратэ!');
-		if (mutex == 0) {
-			mutex += 1;
-		}
+		
+		mutex += 1;
 	});
 })
 </script>
