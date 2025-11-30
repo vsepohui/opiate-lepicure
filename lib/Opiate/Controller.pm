@@ -61,6 +61,9 @@ sub noty {
 	$self->stash('noty' => $noty);
 }
 
-
+sub page_404 {
+	my $self = shift;
+	return $self->reply->not_found;
+}
 
 1;

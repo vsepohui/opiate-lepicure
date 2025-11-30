@@ -5,10 +5,15 @@ use 5.022;
 
 BEGIN {use FindBin qw($Bin); require "$Bin/_init.pl"};
 
-use Opiate::DB;
+use Opiate::Model::User;
 use Opiate::Magic;
 
 my $db = new Opiate::DB;
+
+print "Enter alias: ";
+my $alias = <>; chomp $alias;
+die unless $alias;
+
 
 print "Enter username: ";
 my $name = <>; chomp $name;
@@ -22,10 +27,13 @@ print "Enter password: ";
 my $password = <>; chomp $password;
 die unless $password;
 
-my $salt;
 
-my $password_crypted = Opiate::Magic->crypt_password($password);
-
-$db->do(q[INSERT INTO users (name, email, password) VALUES (?, ?, ?)], $name, $email, $password_crypted);
+my $user = new Opiate::Model::User;
+$user->insert(
+	alias    => $alias,
+	name     => $name,
+	email    => $email,
+	password => $password,
+);
 
 1;

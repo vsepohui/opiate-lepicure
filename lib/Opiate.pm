@@ -26,7 +26,7 @@ sub startup {
 	my $r = $self->routes;
 	$r->any('/')->to('Welcome#welcome');
 	$r->any('/invite')->to('Welcome#invite');
-	$r->any('/trunaev')->to('Welcome#trunaev');
+	$r->any('/:alias')->to('User#feed');
 	
 	$self->helper(
 		'json' => sub {

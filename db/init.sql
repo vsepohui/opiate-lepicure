@@ -12,6 +12,7 @@ create index idx_invites_email on invites (email);
 CREATE TABLE users (
         id serial PRIMARY KEY,
         ctime date not null default now(),
+        alias text not null,
         name text not null,
         email text not null,
         password text not null,
@@ -22,3 +23,5 @@ CREATE TABLE users (
 );
 
 create index idx_users_email on users (email);
+
+create index idx_users_alias on users (alias);

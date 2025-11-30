@@ -47,12 +47,14 @@ sub select_all {
 	
 	my $dbh = $self->dbh;
 	my $sth = $dbh->prepare($sql);
+
 	$sth->execute(@binds);
 	
 	my @result = ();
 	while (my $row = $sth->fetchrow_hashref) {
 		push @result, $row;
 	}
+
 	return wantarray ? @result : \@result;
 }
 
