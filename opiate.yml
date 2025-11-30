@@ -1,9 +1,0 @@
----
-secrets:
-  - d15039ca0a3de98ada305849db8b327dda0a6d3b
-hypnotoad:
-  listen:
-    - http://127.0.0.1:9000
-  workers: 4
-  proxy: 1
-

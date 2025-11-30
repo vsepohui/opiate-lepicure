@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+
+use 5.022;
+use warnings;
+
+
+BEGIN {use FindBin qw($Bin); require "$Bin/_init.pl"};
+
+use Opiate::DB;
+
+my $db = new Opiate::DB;
+
+my $sql;
+my $arg = $ARGV[0];
+
+die "No SQL" unless $arg;
+
+if (-f $arg) {
+	say `psql -U opiate -d opiate < $arg`;
+} else { 
+	$sql = $arg;
+	say `echo "$sql" | psql -U opiate -d opiate`;
+}
+
+1;

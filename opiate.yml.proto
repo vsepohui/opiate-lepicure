@@ -1,0 +1,9 @@
+---
+secrets:
+  - YgtPJ5bJ2hK43p0wabpFwFnDw52bgdcGeHsR3
+hypnotoad:
+  listen:
+    - http://127.0.0.1:4200
+  workers: 4
+  proxy: 1
+
