@@ -21,6 +21,8 @@
     <script src="/js/noty.js"></script>
     <link href="/css/style.css" rel="stylesheet" />
 % my $noty = stash ('noty') || flash ('noty');
+% my $owner = stash('owner');
+% my $user  = stash('user');
 % flash noty => undef;
 % use Encode;
 % if ($noty) {
@@ -45,7 +47,20 @@
 			<a href="/" class="d-flex align-items-center me-md-auto link-body-emphasis text-decoration-none">
 				<span class="fs-4"><i class="bi bi-book" style="font-size: 32px;"></i>&nbsp; Opiate L'Epicure</span>
 			</a>
-			<ul class="nav nav-pills"></ul>
+			<ul class="nav nav-pills text-right fs-4">
+		% if ($user) {
+				<div class="dropdown">
+				  <button class="btn btn-lg btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="bi bi-house-fill"  style="font-size: 32px;"></i> Навигация
+				  </button>
+				  <ul class="dropdown-menu"  style="font-size: 24px;">
+					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>">Профиль</a></li>
+					<li><a class="dropdown-item" href="/settings">Настройки</a></li>
+					<li><a class="dropdown-item" href="/logout">Выход</a></li>
+				  </ul>
+				</div>
+		% }
+			</ul>
 		</header>
 	</div>
 	<%= content %>

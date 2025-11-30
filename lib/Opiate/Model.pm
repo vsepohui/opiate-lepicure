@@ -11,7 +11,6 @@ sub new {
 	my %init  = @_;
 	
 	my $self  = {
-		_db => new Opiate::DB,
 		%init,
 	};
 	return bless $self, $class;
@@ -19,7 +18,7 @@ sub new {
 
 sub db {
 	my $self = shift;
-	return $self->{_db};
+	return new Opiate::DB;
 }
 
 sub table {
@@ -28,7 +27,15 @@ sub table {
 
 sub select_all {
 	my $self = shift;
-	my %args = @_;
+	my @args = @_;
+	my %doom = ();
+	my %args = ();
+	
+	if (ref $args[-1]) {
+		my $last = pop @args;
+		%doom = (%$last);
+	}
+	%args = (@args);
 	
 	my $sql = q[SELECT * FROM ] . $self->table . q[ WHERE ];
 	
@@ -43,6 +50,11 @@ sub select_all {
 	}
 	
 	$sql .= join 'AND', @where;
+	
+	if ($doom{limit}) {
+		$sql .= " LIMIT ?";
+		push @binds, $doom{limit};
+	}
 	
 	my $class = ref $self;
 	@list = $self->db->select_all($sql, @binds);
@@ -73,6 +85,37 @@ sub insert {
 	$sql .= 'VALUES (' . (join ',', map { '?' } @binds) . '); ';
 	
 	return $self->db->do($sql, @binds);
+}
+
+sub set {
+	my $self = shift;
+	my %args = @_;
+	
+	my $sql = q[UPDATE ] . $self->table . ' SET ';
+	
+	my @fields = ();
+	my @binds = ();
+	
+	my @list = keys %args;
+	
+	my @buffer;
+	for (@list) {
+		push @binds, $args{$_};
+		push @buffer, $_ . ' =  ?';
+	}
+	
+	$sql .= join ', ', @buffer;
+	
+	return $self->db->do($sql, @binds);
+}
+
+sub get {
+	my $self   = shift;
+	my %family = @_;
+	
+	my ($hash) = $self->select_all(%family, {'limit' => 1});
+	
+	return !keys %$hash ? undef : $hash;
 }
 
 1;

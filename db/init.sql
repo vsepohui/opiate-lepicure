@@ -19,7 +19,8 @@ CREATE TABLE users (
         is_musicman boolean not null default false,
         is_admin boolean not null default false,
         is_male boolean default null,
-        birthdate date default null
+        birthdate date default null,
+        info text default null,
 );
 
 create index idx_users_email on users (email);

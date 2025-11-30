@@ -2,6 +2,7 @@
 
 use strict;
 use 5.022;
+use utf8;
 
 BEGIN {use FindBin qw($Bin); require "$Bin/_init.pl"};
 

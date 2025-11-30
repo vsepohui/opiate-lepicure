@@ -8,23 +8,35 @@ use Mojo::Base 'Opiate::Controller';
 use Opiate::Model::User;
 
 
-sub get_user {
+sub owner {
 	my $self  = shift;
-	my $alias = shift;
-	
-	my ($user) = Opiate::Model::User->new->select_all(alias => $alias);
-	 
-	return $user;
+	my $alias = $self->stash('alias');
+	return Opiate::Model::User->new->get(alias => $alias);
+}
+
+sub check_attack {
+	my $self = shift;
+	return $self->owner->{alias} eq $self->user->{alias};
 }
 
 sub feed {
 	my $self = shift;
-	my $alias = $self->stash('alias');
+	my $user = $self->user;
 	
-	my $user = $self->get_user($alias) or return $self->page_404();
+	my $owner = $self->owner() or return $self->page_404();
+
+	
+	if ($self->req->method eq 'POST') {
+		
+		die "HAXOR GET OFF!" unless $self->check_attack;
+		my $info = $self->param('info');
+		$user->set(info => $info);
+		return $self->redirect_to('/');
+	}
 	
 	return $self->render(
-		user => $user,
+		owner => $owner,
+		alias => $self->stash('alias'),
 	);
 }
 

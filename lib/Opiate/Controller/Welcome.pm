@@ -20,7 +20,8 @@ sub welcome {
 		my $password = $self->param('password') or return $self->error('Вы не ввели свой пароль');
 		my ($user) = Opiate::Model::User->new->select_all(email => $email) or return $self->error('Не верный пароль');
 		return $self->error('Не верный пароль') unless $user->check_password($password);
-		$self->session(alias => $user->{alias}, ip => $self->{ip});
+		$self->session(alias => $user->{alias});
+		$self->session(ip => $self->ip);
 		return $self->redirect_to('/' . $user->{alias});
 	}
 	return $self->render;
@@ -47,6 +48,12 @@ sub invite {
 	}
 	
 	return $self->render;
+}
+
+sub logout {
+	my $self = shift;
+    $self->session(expires => 1);
+	return $self->redirect_to('/');
 }
 
 1;

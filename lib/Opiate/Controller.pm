@@ -9,6 +9,13 @@ use Opiate::DB;
 use Opiate::Redis;
 
 
+
+sub user {
+	my $self  = shift;
+	return $self->stash('user');
+}
+
+
 sub ip {
 	my $self = shift;
 	return $self->tx->remote_address;
