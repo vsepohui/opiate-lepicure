@@ -41,4 +41,20 @@ sub feed {
 }
 
 
+sub post {
+	my $self = shift;
+	my $user = $self->user;
+	
+	my $owner = $self->owner() or return $self->page_404();
+
+	
+	die "HAXOR GET OFF!" if ($self->req->method ne 'POST');
+	die "r00t killed ruut" unless $self->check_attack;
+	
+	
+	return $self->back;
+	
+}
+
+
 1;
