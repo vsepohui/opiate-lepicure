@@ -51,8 +51,9 @@ sub startup {
 	$r->any('/')->to('Welcome#welcome');
 	$r->any('/invite')->to('Welcome#invite');
 	$r->any('/logout')->to('Welcome#logout');
-	$r->any('/:alias')->to('User#feed');
-	$r->any('/:alias/post')->to('User#post');
+	$r->any('/#alias/post')->to('User#post');
+	$r->any('/#alias')->to('User#feed');
+	
 	
 	$self->helper(
 		'json' => sub {
