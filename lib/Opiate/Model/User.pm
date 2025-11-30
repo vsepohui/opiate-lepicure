@@ -16,4 +16,19 @@ sub crypt_password {
 	return Opiate::Magic->crypt_password($password);
 }
 
+sub check_password {
+	my $self = shift;
+	my $password = shift;
+	return Opiate::Magic->check_password($self->{password}, $password);
+}
+
+sub insert {
+	my $self = shift;
+	my %args = @_;
+	
+	$args{password} = $self->crypt_password($args{password}) if $args{password};
+	
+	return $self->SUPER::insert(%args);
+}
+
 1;

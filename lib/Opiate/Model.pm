@@ -45,8 +45,12 @@ sub select_all {
 	$sql .= join 'AND', @where;
 	
 	my $class = ref $self;
-	my @result = map {$class->new($_)} $self->db->select_all($sql, @binds);
-	return wantarray ? @result : \@result;
+	@list = $self->db->select_all($sql, @binds);
+	my @buffer = ();
+	for my $hash (@list) {
+		push @buffer, bless $hash, $class;
+	}
+	return wantarray ? @buffer : \@buffer;
 }
 
 sub insert {

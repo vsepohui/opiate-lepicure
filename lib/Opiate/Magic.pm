@@ -71,8 +71,8 @@ sub check_password {
 	my $self = shift;
 	my $hash = shift;
 	my $pass = shift;
-	my $salt = substr($hash, -8);
-	return $hash eq crypt($pass, $salt) . $salt;
+	my $salt = substr($hash, length($hash) - 8);
+	return $hash eq (crypt($pass, $salt) . $salt);
 }
 
 

@@ -1,6 +1,6 @@
 CREATE TABLE invites (
         id serial PRIMARY KEY,
-        ctime date not null default now(),
+        ctime timestamp not null default now(),
         name text not null,
         email text not null,
         ask text not null
@@ -11,7 +11,7 @@ create index idx_invites_email on invites (email);
 
 CREATE TABLE users (
         id serial PRIMARY KEY,
-        ctime date not null default now(),
+        ctime timestamp not null default now(),
         alias text not null,
         name text not null,
         email text not null,
