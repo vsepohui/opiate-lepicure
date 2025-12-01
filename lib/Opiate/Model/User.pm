@@ -24,7 +24,7 @@ sub check_password {
 
 sub set {
 	my $self = shift;
-	my %args = shift;
+	my %args = @_;
 	if (my $p = $args{password}) {
 		$args{password} = $self->crypt_password($p);
 	}
