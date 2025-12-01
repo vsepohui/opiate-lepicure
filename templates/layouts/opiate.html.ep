@@ -42,7 +42,7 @@
 	</script>
 % }
   </head>
-  <body class="d-flex flex-column h-100">
+  <body class="d-flex flex-column h-100" style="font-family: FiraCode, monospace;">
 	<div class="container">
 		<header class="d-flex flex-wrap justify-content-center py-3 border-bottom">
 			<a href="/" class="d-flex align-items-center me-md-auto link-body-emphasis text-decoration-none">
