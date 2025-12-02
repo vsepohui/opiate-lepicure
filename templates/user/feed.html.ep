@@ -26,11 +26,28 @@
 	<hr/>
 	% unless (param 'edit') {
 		% if ($c->session('alias') eq $owner->{alias}) {
-		<form method="POST" action="/<%= $alias %>/post" id="GymForm">
+		<form method="POST" action="/<%= $alias %>" id="GymForm">
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" required/>
 			<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст" id="message" name="message" rows="10" required></textarea>
 			<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Написать сообщение?"/>
 		</form>
+		% }
+		
+		% for my $f (@$feed) {
+			<p>
+			<h4>
+			%= $f->{subject};
+			</h4>
+			</p>
+			<p>
+			% my $msg = $f->{message};
+			% my @l = split /\n/, $msg;
+			% for (@l) {
+				%= $_;
+				<br/>
+			% }
+			</p>
+			<hr/>
 		% }
 	% }
 	</div>
@@ -48,10 +65,12 @@ $(function() {
 			var form = $(this);
 			var actionUrl = $('#GymForm').attr('action');
 			 
-			$('#subject').val('');
-			$('#message').val('');
+			// $('#subject').val('');
+			// $('#message').val('');
 					
 			$('#post_button').val('Написать сообщение?');
+			
+			$('#GymForm').submit();
 					
 			mutex ++;
 			return;

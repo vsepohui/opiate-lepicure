@@ -14,7 +14,7 @@
     <meta name="author" content="Ivan Trunaev"/>
     <meta name="generator" content="Ivan Trunaev Hands"/>
     <title><%= $title %></title>
-    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap.css?_=2" rel="stylesheet" />
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet"/>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-1.10.2.min.js"></script>

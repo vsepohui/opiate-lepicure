@@ -24,9 +24,7 @@ sub push {
 	my $key = $self->build_key($alias);
 	my $obj = Opiate::Magic->json_encode($object);
 	
-	die $key;
-	
-	return $self->redis->pushr($key, $obj);
+	return $self->redis->rpush($key, $obj);
 }
 
 sub length {
