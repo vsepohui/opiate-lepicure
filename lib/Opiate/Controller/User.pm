@@ -34,8 +34,8 @@ sub feed {
 			$user->set(info => $info);
 			return $self->back;
 		} else {
-			my $subject = $self->param('subject');
-			my $message = $self->param('message');
+			my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
+			my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
 
 			my $handler = new Opiate::Redis::Feed;
 			$handler->push($owner->{alias}, {
