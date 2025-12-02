@@ -6,7 +6,22 @@
 
 	<br/>
 	<div class="m-auto" style="max-width: 900px;">
-	<img src="/i/<%=  $owner->{alias} %>.jpg" width="240px;" style="float: left; margin-right: 40px;"/> 
+	
+	
+	% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
+	% if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
+	<div style="float:left; display: block;">
+			<img src="<%= $avatar %>" width="240px;" style="float: left; margin-right: 40px;"/><br/>
+
+		Загрузить аватар:<br/>
+		<form action="/<%= $owner->{alias} %>?avatar_upload=1" method="POST" enctype="multipart/form-data">
+		<input class="btn btn-primary" type="file" accept="image/*" capture="camera" name="upload" id="upload" style="width: 240px;"><br/><br/>
+		<input class="btn btn-primary" type="submit" value="Загрузить"/>
+		</form>
+		</div>
+	% } else {
+	<img src="<%= $avatar %>" width="240px;" style="float: left; margin-right: 40px;"/><br/>
+	% }
 	<h3><%= $owner->{name} %></h3>
 	
 	% if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
@@ -20,7 +35,6 @@
 		% $info =~ s/\n/<br\/>/g;
 		%== $info;
 		<br/><br/>
-		%# <a class="btn bt(n-primary py-2" href="?edit=1">Редактировать</a>
 	% }
 	<br/><br/><br/><br/><br/><br/><br/>
 	<hr/>

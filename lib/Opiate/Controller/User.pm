@@ -30,7 +30,22 @@ sub feed {
 	
 	if ($self->req->method eq 'POST') {
 		die "HAXOR GET OFF!" unless $self->check_attack;
-		if (my $info = $self->param('info')) {
+		if ($self->param('avatar_upload')) {
+			for my $file (@{$self->req->uploads('upload')}) {
+				my $size = $file->size;
+				my $name = $file->filename;
+				
+				return $self->error('Файл слишком большой!') if ($size >= 300_000);
+				
+				my $path = $self->upload_image($file);
+				
+				$owner->set(avatar => $path);
+				
+				return $self->redirect_to('/' . $owner->{alias});
+				
+				
+			}
+		} elsif (my $info = $self->param('info')) {
 			$user->set(info => $info);
 			return $self->back;
 		} else {

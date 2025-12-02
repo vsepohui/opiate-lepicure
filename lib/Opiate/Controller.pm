@@ -73,4 +73,40 @@ sub page_404 {
 	return $self->reply->not_found;
 }
 
+sub upload_image {
+	my $self = shift;
+	my $file = shift;
+
+	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime();
+		
+	my @path = (qw(i up), $year, $mon, $mday);
+	
+	my $pref = 'public';
+	my @buff = ();
+	for my $p (@path) {
+		push @buff, $p;
+		my @pp = ($pref, @buff);
+		my $dir = join '/', @pp;
+		mkdir $dir unless (-d $dir);
+	}
+	my $dir = join '/', ($pref, @buff);
+	
+	my $ext = $file->filename;
+	$ext =~ s/^.+?\.(...)$/$1/;
+	
+	my $full_path;
+	while (1) {
+		my $new_filename = Opiate::Magic->generate_random_string(16);
+		$full_path = $dir . '/' . $new_filename . '.' . $ext;
+		last unless -f $full_path;
+	}
+	
+	$file->move_to($full_path);
+	
+	my $result = $full_path;
+	$result =~ s/^public//;
+	
+	return $result;
+}
+
 1;
