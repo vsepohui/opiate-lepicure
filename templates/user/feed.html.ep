@@ -6,7 +6,7 @@
 
 	<br/>
 	<div class="m-auto" style="max-width: 900px;">
-	<img src="/i/trunaev.jpg" width="240px;" style="float: left; margin-right: 40px;"/> 
+	<img src="/i/<%= %owner->{alias} %>.jpg" width="240px;" style="float: left; margin-right: 40px;"/> 
 	<h3><%= $owner->{name} %></h3>
 	
 	% if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
