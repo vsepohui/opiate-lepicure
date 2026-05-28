@@ -49,6 +49,7 @@ sub startup {
 	
 	my $r = $self->routes;
 	$r->any('/')->to('Welcome#welcome');
+	$r->any('/welcome')->to('Welcome#welcome');
 	$r->any('/invite')->to('Welcome#invite');
 	$r->any('/logout')->to('Welcome#logout');
 	$r->any('/#alias')->to('User#feed');
