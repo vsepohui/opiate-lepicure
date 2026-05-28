@@ -76,4 +76,16 @@ sub check_password {
 }
 
 
+sub reverse_list {
+	my @list = @_;
+	
+	my $s = scalar @list;
+	my @r;
+	for (1..$s) {
+		push @r, $list[$s - $_];
+	}
+	
+	return @r;
+}
+
 1;
