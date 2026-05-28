@@ -71,25 +71,7 @@
 
 <script>
 $(function() {
-	var mutex = 0;
-	$('#post_button').click(function (event) {
-		event.preventDefault();
-		if (mutex % 2 == 1) {
-			if ($('#subject').val() && $('#message').val()) {		
-				var form = $(this);
-				$('#form_post').submit();
-			}
-			return;
-		}
-		
-
-
-		$('#subject').show(604);
-		$('#message').show(604);
-		$('#post_button').val('Отправить');
-		
-		mutex += 1;
-	});
+	init_post_button_hook();
 })
 </script>
 

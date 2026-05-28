@@ -1,8 +1,30 @@
 
-function rus_to_latin ( str ) {var ru = {'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'j', 'з': 'z', 'и': 'i', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ы': 'y', 'э': 'e', 'ю': 'u', 'я': 'ya'}, n_str = [];str = str.replace(/[ъь]+/g, '').replace(/й/g, 'i');for ( var i = 0; i < str.length; ++i ) {n_str.push(ru[ str[i] ]|| ru[ str[i].toLowerCase() ] == undefined && str[i]|| ru[ str[i].toLowerCase() ].toUpperCase());}return n_str.join('');
-	} 
+function rus_to_latin (str) {
+	var ru = {'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'j', 'з': 'z', 'и': 'i', 'й': 'i', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ы': 'y', 'э': 'e', 'ю': 'u', 'я': 'ya'}, n_str = [];str = str.replace(/[ъьЪЬ]+/g, '\'').replace(/й/g, 'i');for ( var i = 0; i < str.length; ++i ) {n_str.push(ru[ str[i] ]|| ru[ str[i].toLowerCase() ] == undefined && str[i]|| ru[ str[i].toLowerCase() ].toUpperCase());}return n_str.join('');
+} 
+
 function russian_to_ruzskey () {
 	document.documentElement.innerHTML = rus_to_latin(document.documentElement.innerHTML); 
+}
+
+function init_post_button_hook () {
+	var mutex = 0;
+	$('#post_button').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#subject').val() && $('#message').val()) {		
+				var form = $(this);
+				$('#form_post').submit();
+			}
+			return;
+		}
+		
+		$('#subject').show(604);
+		$('#message').show(604);
+		$('#post_button').val('Отправить');
+		
+		mutex += 1;
+	});
 }
 
 	
