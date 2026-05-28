@@ -9,6 +9,8 @@ use Opiate::Model::User;
 use Opiate::Model::Feed;
 use Opiate::Magic;
 
+use constant POSTS_PER_PAGE => 10; 
+
 
 sub owner {
 	my $self  = shift;
@@ -65,7 +67,7 @@ sub feed {
 	
 	#my $size = Opiate::Model::Feed->length($alias);
 	
-	my @feed = Opiate::Model::Feed->get($alias, 0,  -1);
+	my @feed = reverse Opiate::Model::Feed->get($alias, -1 * POSTS_PER_PAGE(), -1);
 	
 	my $num = 0;
 	for (@feed) {
