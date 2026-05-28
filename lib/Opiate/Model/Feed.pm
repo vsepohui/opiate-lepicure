@@ -7,6 +7,8 @@ use utf8;
 
 use Opiate::Redis;
 use Opiate::Magic;
+use Carp;
+
 
 sub new {
 	my $class = shift;
@@ -74,7 +76,7 @@ sub length {
 
 sub build_key {
 	my $self = shift;
-	my $alias = shift // $self->{alias};
+	my $alias = shift || $self->{alias};
 	
 	my @key = ($self->_prefix);
 	push @key, ref $alias ?  @$alias : $alias;
