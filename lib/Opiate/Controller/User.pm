@@ -6,7 +6,6 @@ use warnings;
 use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
-use Opiate::Redis::Feed;
 use Opiate::Model::Feed;
 use Opiate::Magic;
 
