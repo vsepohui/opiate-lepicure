@@ -40,7 +40,7 @@ sub get {
 	return @list;
 }
 
-sub set {
+sub update {
 	my $self = shift;;
 	my $num  = shift;
 	my $obj = Opiate::Magic->json_encode({%$self});

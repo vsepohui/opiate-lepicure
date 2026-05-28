@@ -70,7 +70,7 @@ sub feed {
 	my $num = 0;
 	for (@feed) {
 		$_->{watch_counter} ++;
-		$_->set($num);
+		$_->update($num);
 		$num ++;
 	}
 	
