@@ -36,8 +36,7 @@ sub get {
 	my $alias = shift;
 	my ($x, $y) = @_;
 	
-	my @list = map {Opiate::Magic->json_decode($_)} $class->_range($alias, $x, $y);
-	@list = map {bless {%$_}, $class} @list;
+	my @list =  map {bless $_, $class} map {Opiate::Magic->json_decode($_)} $class->_range($alias, $x, $y);
 	return @list;
 }
 
