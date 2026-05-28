@@ -47,6 +47,11 @@ sub lrange {
 	return $class->redis->lrange(@_);
 }
 
+sub lset {
+	my $class = shift;
+	return $class->redis->lset(@_);
+}
+
 
 
 1;

@@ -7,6 +7,7 @@ use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
 use Opiate::Redis::Feed;
+use Opiate::Model::Feed;
 use Opiate::Magic;
 
 
@@ -27,9 +28,7 @@ sub feed {
 	
 	my $owner = $self->owner() or return $self->page_404();
 	
-	my $feed_key = $owner->{alias};
-	
-	my $model = new Opiate::Redis::Feed;
+	my $alias = $owner->{alias};
 	
 	if ($self->req->method eq 'POST') {
 		die "HAXOR GET OFF!" unless $self->check_attack;
@@ -44,9 +43,7 @@ sub feed {
 				
 				$owner->set(avatar => $path);
 				
-				return $self->redirect_to('/' . $feed_key);
-				
-				
+				return $self->redirect_to('/' . $alias);
 			}
 		} elsif (my $info = $self->param('info')) {
 			$user->set(info => $info);
@@ -54,32 +51,29 @@ sub feed {
 		} else {
 			my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
 			my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
-			
-			my $size = $model->length($feed_key);
 
-			$model->push($feed_key, {
+			my $feed = Opiate::Model::Feed->new( 
+				alias   => $alias,
 				subject => $subject,
 				message => $message,
 				ip 		=> $self->ip,
 				ctime   => scalar localtime(),
-				id		=> $model->get_last_id($feed_key) + 1,
-			});
+			);
 			return $self->back;		
 		}
 	}
 
 	
-	my $size = $model->length($feed_key);
+	my $size = Opiate::Model::Feed->length($alias);
 	
-	my @feed = map {Opiate::Magic->json_decode($_)} $model->part($feed_key, 0, $size - 1);
+	my @feed = Opiate::Model::Feed->get($alias, 0, $size - 1);
 	
 	my $num = 0;
 	for (@feed) {
-		$model->watch_counter_inc($feed_key, $num);
+		$_->{watch_counter} ++;
+		$_->set($num);
 		$num ++;
 	}
-	
-	
 	
 	return $self->render(
 		owner => $owner,
