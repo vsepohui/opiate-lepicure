@@ -85,9 +85,9 @@
 			</p>
 			<p>
 				<strong><i class="bi bi-eye"></i></strong> <%= $f->{visit_count} || 1 %>
-				<a href="/<%= $owner->{alias} %>/<%= $f->{id} %>" style="color: black"><strong><i class="bi bi-link-45deg"></i></strong></a>
+				<a href="/<%= $owner->{alias} %>/feed/<%= $f->{id} %>" style="color: black"><strong><i class="bi bi-link-45deg"></i></strong></a>
 				% if ($c->session('alias') eq $owner->{alias}) {
-					<a href="/<%= $owner->{alias} %>/<%= $f->{id} %>?edit=1" style="color: black"><strong><i class="bi bi-pencil"></i></strong></a>
+					<a href="/<%= $owner->{alias} %>/feed/<%= $f->{id} %>?edit=1" style="color: black"><strong><i class="bi bi-pencil"></i></strong></a>
 				% }
 			</p>
 			<hr/>

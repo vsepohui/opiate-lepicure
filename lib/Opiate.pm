@@ -54,7 +54,7 @@ sub startup {
 	$r->any('/logout')->to('Welcome#logout');
 	$r->any('/#alias')->to('User#feed');
 	$r->any('/#alias/feed.rss')->to('User#feed', rss => 1);
-	$r->any('/#alias/#post')->to('User#post');
+	$r->any('/#alias/feed/#post')->to('User#post');
 	$r->any('/#alias/ajax/update')->to('User#ajax_feed_update');
 	
 	$r->any('/#alias/books/add')->to('Books#add');

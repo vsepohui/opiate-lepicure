@@ -12,7 +12,7 @@
 % for (@$feed) {
 	<item>
 	% my $s = $_->{subject};
-	% my $url = 'https://opiate-lepicure.ru/' . $alias . '/' . $_->{id};
+	% my $url = 'https://opiate-lepicure.ru/' . $alias . '/feed/' . $_->{id};
 	<title><%= $s %></title>
 	<link>https://anarchy-press.ru<%= $url %></link>
 	<description>
