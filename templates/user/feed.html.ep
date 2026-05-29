@@ -1,4 +1,4 @@
-% layout 'opiate';
+% layout 'opiate', has_feed => 1;
 % title $owner->{name};
 
 <div class="container">
