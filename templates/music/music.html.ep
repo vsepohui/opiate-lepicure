@@ -13,7 +13,7 @@
 		<br/>
 		
 		% for (@$music) {
-			<iframe style="border: 0; width: 420px; height: 621px;" src="https://bandcamp.com/EmbeddedPlayer/album=<%= $_->{bandcamp_id} %>/size=large/bgcol=ffffff/linkcol=a74a23/transparent=true/" seamless></iframe>
+			<iframe style="border: 0; width: 444px; height: 621px;" src="https://bandcamp.com/EmbeddedPlayer/album=<%= $_->{bandcamp_id} %>/size=large/bgcol=ffffff/linkcol=a74a23/transparent=true/" seamless></iframe>
 		% }
 	</div>
 </div>

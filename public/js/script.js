@@ -21,7 +21,6 @@ function init_post_button_hook () {
 		
 		$('#subject').show(604);
 		$('#message').show(604);
-		$('#post_button').val('Отправить');
 		
 		mutex += 1;
 	});
