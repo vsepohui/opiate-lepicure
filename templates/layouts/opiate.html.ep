@@ -52,8 +52,8 @@
 			<ul class="nav nav-pills text-right fs-4">
 		% if ($user) {
 				<div class="dropdown">
-				  <button class="btn btn-lg btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-					<i class="bi bi-house-fill"  style="font-size: 32px;"></i> Навигация
+				  <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="bi bi-gear"  style="font-size: 32px;"></i>
 				  </button>
 				  <ul class="dropdown-menu"  style="font-size: 24px;">
 					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>">Профиль</a></li>
