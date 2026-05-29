@@ -7,7 +7,6 @@
 	<br/>
 	<div class="m-auto" style="max-width: 900px;">
 	
-	
 	% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
 	% if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
 	<div style="float:left; display: block;">
@@ -56,6 +55,7 @@
 			<a class="nav-link" href="/<%= $alias %>/links">Ссылки</a>
 		  </li>
 		</ul>
+		<hr/>
 
 	
 		% if ($c->session('alias') eq $owner->{alias}) {
