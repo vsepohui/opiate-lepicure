@@ -40,6 +40,24 @@
 	<br/>
 	<hr/>
 	% unless (param 'edit') {
+	
+
+		<ul class="nav nav-pills nav-fill">
+		  <li class="nav-item">
+			<a class="nav-link active" aria-current="page" href="/<%= $alias %>">Лента</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="/<%= $alias %>/books">Книги</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="/<%= $alias %>/music">Музыка</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="/<%= $alias %>/links">Ссылки</a>
+		  </li>
+		</ul>
+
+	
 		% if ($c->session('alias') eq $owner->{alias}) {
 		<form method="POST" action="/<%= $alias %>" id="form_post">
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" required/>
