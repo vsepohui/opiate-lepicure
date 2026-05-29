@@ -59,6 +59,8 @@ sub startup {
 	
 	$r->any('/#alias/books/add')->to('Books#add');
 	
+	$r->any('/#alias/music')->to('Music#music');
+	
 	
 	$self->helper(
 		'json' => sub {

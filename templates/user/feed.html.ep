@@ -1,12 +1,9 @@
 % layout 'opiate', has_feed => 1;
 % title $owner->{name};
 
-<div class="container">
 
+% if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
 
-	<br/>
-	<div class="m-auto" style="max-width: 900px;">
-	
 	% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
 	% if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
 	<div style="float:left; display: block;">
@@ -18,8 +15,6 @@
 		<input class="btn btn-primary" type="submit" value="Загрузить"/>
 		</form>
 		</div>
-	% } else {
-	<img src="<%= $avatar %>" width="240px;" style="float: left; margin-right: 40px;"/><br/>
 	% }
 	<h3><%= $owner->{name} %></h3>
 	
@@ -29,34 +24,17 @@
 		<br/><br/>
 		<button class="btn btn-primary py-2" class="submit">Сохранить</button>
 		</form>
-	% } else {
-		% my $info = html_escape ($owner->{info} // '');
-		% $info =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
-		% $info =~ s/\n/<br\/>/g;
-		%== $info;
-		<br/><br/>
 	% }
 	<hr/>
+
+% } else {
+	%= include 'include/user_header';
+% }
+
+<div class="container">
+	<div class="m-auto" style="max-width: 900px;">
+
 	% unless (param 'edit') {
-	
-
-		<ul class="nav nav-pills nav-fill">
-		  <li class="nav-item">
-			<a class="nav-link active" aria-current="page" href="/<%= $alias %>">Лента</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="/<%= $alias %>/books">Книги</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="/<%= $alias %>/music">Музыка</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="/<%= $alias %>/links">Ссылки</a>
-		  </li>
-		</ul>
-		<hr/>
-
-	
 		% if ($c->session('alias') eq $owner->{alias}) {
 		<form method="POST" action="/<%= $alias %>" id="form_post">
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" required/>
