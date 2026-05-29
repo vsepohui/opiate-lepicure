@@ -96,3 +96,21 @@ height: 1em;
 .bd-mode-toggle .dropdown-menu .active .bi {
 display: block !important;
 }
+
+.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+  color: var(--bs-btn-active-color);
+  background-color: #a74a23;
+  border-color: #a74a23;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: white;
+  background-color: #a74a23;
+}
+
+.nav-link {
+	color: #a74a23;
+}
+.nav-link:hover, .nav-link:focus {
+  	color: #a74a23;
+}
