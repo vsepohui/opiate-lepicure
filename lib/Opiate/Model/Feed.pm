@@ -5,9 +5,8 @@ use warnings;
 
 use utf8;
 
-use Opiate::Redis;
+use Opiate::DB;
 use Opiate::Magic;
-use Carp;
 
 
 sub new {
@@ -15,90 +14,65 @@ sub new {
 	my %opts  = @_;
 	
 	my $self = {
-		alias   => $opts{alias},
-		subject => $opts{subject},
-		message => $opts{message},
-		ip 		=> $opts{ip},
-		ctime   => scalar localtime(),
+		%opts
 	};
 	
 	bless $self, $class;
 	
-	$self->{id} = $class->_get_last_id($self->{alias}) + 1;
-	
-	$self->push();
-	
 	return $self;
 }
 
-sub get {
-	my $class = shift;
-	my $alias = shift;
-	my ($x, $y) = @_;
-	
-	my @list =  map {bless {%$_, alias => $alias}, $class} map {Opiate::Magic->json_decode($_)} $class->_range($alias, $x, $y);
-	return @list;
-}
-
-sub update {
-	my $self = shift;;
-	my $num  = shift;
-	my $obj = Opiate::Magic->json_encode({%$self});
-	$self->_db->lset($self->build_key(), $num, $obj);
-}
-
-sub _prefix {
-	my $self = shift;
-	return '0', 'f';
-}
-
 sub _db {
-	my $self = shift;
-	state $db = new Opiate::Redis;
+	my $class = shift;
+	state $db = new Opiate::DB;
 	return $db;
 }
 
-sub _get_last_id {
+sub insert {
+	my $self = shift;
+	my %opts = @_;
+	
+	$self->_db->do(q[
+		INSERT INTO feed (user_id, subject, message)
+		VALUES (?, ?, ?)
+	], $opts{user_id}, $opts{subject}, $opts{message});
+	
+	return;
+}
+
+sub select {
 	my $class = shift;
-	my $alias = shift;
-	my ($last) = $class->get($alias, -1, -1);
-	return $last->{id} || 0;
+	my %opts  = (
+		user_id => undef,
+		limit	=> undef,
+		case_id	=> undef,
+		@_,
+	);
+	
+	my @list = $class->_db->select_all(q[
+		SELECT * 
+		FROM feed
+		WHERE user_id = ?
+		AND id >= ?
+		ORDER BY id DESC
+		LIMIT ?
+	], $opts{user_id}, $opts{case_id}, $opts{limit});
+	
+	return map {$class->new(%$_)} @list;
 }
 
-
-sub length {
+sub inc_visit_counter {
 	my $self = shift;
-	my $key  = $self->build_key(@_);
-	return $self->_db->llen($key);
-}
-
-
-sub build_key {
-	my $self = shift;
-	my $alias = shift || $self->{alias};
 	
-	my @key = ($self->_prefix);
-	push @key, ref $alias ?  @$alias : $alias;
+	$self->{visit_count} ++;
 	
-	return join '::', @key;
-}
-
-sub _range {
-	my $self  = shift;
-	my $alias = shift;
-	my ($x, $y) = @_;
+	$self->_db->do(q[
+		UPDATE feed 
+		SET visit_count = ?
+		WHERE id = ?
+	], $self->{visit_count}, $self->{id});
 	
-	my $key = $self->build_key($alias);
-	
-	return $self->_db->lrange($key, $x, $y);	
-}
-
-sub push {
-	my $self   = shift;
-
-	my $key = $self->build_key();
-	my $obj = Opiate::Magic->json_encode({%$self});
-	return $self->_db->rpush($key, $obj);
+	return;
 }
 
 1;

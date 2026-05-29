@@ -2,14 +2,14 @@ package Opiate::DB;
 
 use strict;
 use warnings;
-use 5.028;
+use 5.026;
 
 use DBI;
 use DBD::Pg;
 
 sub _dbh {
 	my $class = shift;
-	state $dbh = DBI->connect("dbi:Pg:dbname=opiate", 'opiate', '', {AutoCommit => 1});
+	state $dbh = DBI->connect("dbi:Pg:dbname=opiate;host=127.0.0.1;port=5432", 'opiate', '', {AutoCommit => 1});
 	return $dbh;
 }
 

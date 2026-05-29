@@ -62,7 +62,7 @@
 				<br/>
 			% }
 			</p>
-			<p><i class="bi bi-eye"></i>&nbsp;<%= $f->{watch_counter} || 1 %></p>
+			<p><i class="bi bi-eye"></i>&nbsp;<%= $f->{visit_count} || 1 %></p>
 			<hr/>
 		% }
 	% }

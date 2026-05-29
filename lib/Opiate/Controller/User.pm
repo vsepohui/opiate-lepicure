@@ -53,29 +53,24 @@ sub feed {
 			my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
 			my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
 
-			my $feed = Opiate::Model::Feed->new( 
-				alias   => $alias,
+			my $feed = Opiate::Model::Feed->insert( 
+				user_id	=> $owner->{id},
 				subject => $subject,
-				message => $message,
-				ip 		=> $self->ip,
-				ctime   => scalar localtime(),
+				message	=> $message,
 			);
-			return $self->back;		
+			return $self->back;
 		}
 	}
 
 	
-	my $size = Opiate::Model::Feed->length($alias);
-	my @feed = Opiate::Model::Feed->get($alias, 0, -1);
+	my @feed = Opiate::Model::Feed->select(
+		user_id => $owner->{id},
+		case_id => 0,
+		limit   => 10,
+	);
 	
-	
-	#@feed = reverse @feed;
-	
-	my $num = 0;
 	for (@feed) {
-		$_->{watch_counter} ++;
-		$_->update($num);
-		$num ++;
+		$_->inc_visit_counter();
 	}
 	
 	return $self->render(
