@@ -93,7 +93,7 @@ sub ajax_feed_update {
 	die "Wrong param" if $case_id =~ /\D/;
 
 
-	my @feed = Opiate::Model::Feed->select(
+	my @feed = Opiate::Model::Feed->select_new(
 		user_id => $owner->{id},
 		case_id => $case_id,
 		limit   => 10,
