@@ -5,7 +5,7 @@
 		%= $f->{subject};
 		</h4>
 		</p>
-		<p>[<%= $f->{ctime} %>]</p>
+		<p>[<%= format_postgres_timestamp $f->{ctime} %>]</p>
 		<p>
 		% my $msg = $f->{message};
 		% my @l = split /\n/, $msg;

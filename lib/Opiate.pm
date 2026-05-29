@@ -62,6 +62,15 @@ sub startup {
 			my $self = shift;
 			my $str  = shift;
 			return Opiate::Magic->json_encode($str);
+		}
+	);
+	
+	$self->helper(
+		'format_postgres_timestamp' => sub {
+			my $self = shift;
+			my $str  = shift;
+			$str =~ s/\..+//;
+			return $str;
 		},
 	);
 }
