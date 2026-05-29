@@ -36,7 +36,6 @@
 		%== $info;
 		<br/><br/>
 	% }
-	<br/>
 	<hr/>
 	% unless (param 'edit') {
 	
