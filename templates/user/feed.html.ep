@@ -47,6 +47,7 @@
 		</form>
 		% }
 		
+		<div id="feed">
 		% for my $f (@$feed) {
 			<p>
 			<h4>
@@ -65,13 +66,17 @@
 			<p><i class="bi bi-eye"></i>&nbsp;<%= $f->{visit_count} || 1 %></p>
 			<hr/>
 		% }
+		</div>
 	% }
 	</div>
 </div>
 
 <script>
+
+	
 $(function() {
 	init_post_button_hook();
+	init_ajax_feed_updater('<%= $owner->{alias} %>', <%= $feed->[0]->{id} %>);
 })
 </script>
 

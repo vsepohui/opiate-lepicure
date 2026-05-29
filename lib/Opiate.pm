@@ -53,6 +53,7 @@ sub startup {
 	$r->any('/invite')->to('Welcome#invite');
 	$r->any('/logout')->to('Welcome#logout');
 	$r->any('/#alias')->to('User#feed');
+	$r->any('/#alias/ajax/update')->to('User#ajax_feed_update');
 	
 	
 	$self->helper(

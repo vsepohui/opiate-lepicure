@@ -27,4 +27,26 @@ function init_post_button_hook () {
 	});
 }
 
+var ajax_feed_case_id = null;
+
+function get_ajax_feed_case_id () {
+	return ajax_feed_case_id;
+}
+function set_ajax_feed_case_id(val) {
+	ajax_feed_case_id = val;
+}
+
+function init_ajax_feed_updater (alias, case_id) {
+	set_ajax_feed_case_id(case_id)
+	var timerId = setInterval(function() {
+		$.ajax({
+			url: "/" + alias + "/ajax/update?case_id=" + get_ajax_feed_case_id(),
+		}).done(function(data) {
+			if (data) {
+				$('#feed').prepend(data);
+			}
+		});
+	}, 5000);
+}
+
 	

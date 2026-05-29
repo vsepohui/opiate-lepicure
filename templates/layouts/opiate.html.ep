@@ -18,7 +18,7 @@
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet"/>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-1.10.2.min.js"></script>
-    <script src="/js/script.js?_=2"></script>
+    <script src="/js/script.js?_=3"></script>
     <script src="/js/notify.js"></script>
     <link href="/css/style.css" rel="stylesheet" />
 % my $noty = stash ('noty') || flash ('noty');

@@ -80,6 +80,26 @@ sub feed {
 	);
 }
 
+sub ajax_feed_update {
+	my $self = shift;
+	my $owner = $self->owner;
+	
+	my $case_id = $self->param('case_id') or die "No case_id";
+	die "Wrong param" if $case_id =~ /\D/;
+
+
+	my @feed = Opiate::Model::Feed->select(
+		user_id => $owner->{id},
+		case_id => $case_id,
+		limit   => 10,
+	);
+	
+	return $self->render(
+		template => 'user/ajax_feed',
+		feed  => \@feed,
+	);
+}
+
 
 
 

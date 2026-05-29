@@ -1,0 +1,25 @@
+% if (@$feed) {
+	% for my $f (@$feed) {
+		<p>
+		<h4>
+		%= $f->{subject};
+		</h4>
+		</p>
+		<p>[<%= $f->{ctime} %>]</p>
+		<p>
+		% my $msg = $f->{message};
+		% my @l = split /\n/, $msg;
+		% for (@l) {
+			%= $_;
+			<br/>
+		% }
+		</p>
+		<p><i class="bi bi-eye"></i>&nbsp;<%= $f->{visit_count} || 1 %></p>
+		<hr/>
+	% }
+	<script>
+	$(function() {
+		set_ajax_feed_case_id(<%= $feed->[0]->{id} %>);
+	});
+	</script>
+% }
