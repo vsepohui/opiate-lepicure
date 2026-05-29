@@ -114,13 +114,24 @@ sub post {
 	
 	my $feed_id = $self->stash('post');
 	die "Page not found" if $feed_id =~/\D/;
-	
+
+	my $feed = Opiate::Model::Feed->select_by_id(id => $feed_id);
+
 	if ($self->req->method eq 'POST') {
 		die "HAXOR GET OFF!" unless $self->check_attack;
-
+		
+		my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
+		my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
+		
+		
+		$feed->update(
+			subject => $subject,
+			message => $message,
+		);
+		
+		return $self->redirect_to('/' . $alias . '/' . $feed_id);
 	}
-	
-	my $feed = Opiate::Model::Feed->select_by_id(id => $feed_id);
+
 	$feed->inc_visit_counter();
 	
 	return $self->render(

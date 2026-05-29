@@ -40,6 +40,25 @@ sub insert {
 	return;
 }
 
+sub update {
+	my $self = shift;
+	my %opts = @_;
+	
+	$self->{subject} = $opts{subject};
+	$self->{message} = $opts{message};
+	
+	$self->_db->do(q[
+		UPDATE feed 
+		SET 
+			subject = ?,
+			message = ?
+		WHERE id = ?
+	], $self->{subject}, $self->{message}, $self->{id});
+	
+	return;
+
+}
+
 sub select {
 	my $class = shift;
 	my %opts  = (
