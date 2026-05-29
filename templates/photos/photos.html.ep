@@ -1,5 +1,5 @@
 % layout 'opiate', has_feed => 1, include_js => 'photos.min.js',  include_css => 'lightbox.min.css';
-% title $owner->{name};
+% title [$owner->{name}, 'Фотографии'];
 
 %= include 'include/user_header';
 

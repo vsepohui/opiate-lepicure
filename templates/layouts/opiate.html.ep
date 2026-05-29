@@ -1,6 +1,7 @@
 % my $url = url_for;
 % my $title = title;
 % if ($title) {
+%	$title = join ' :: ', @$title if (ref $title eq 'ARRAY');
 %	$title = "$title :: Opiate L'Epicure";
 % } else {
 % 	$title  = 'Opiate L\'Epicure';
