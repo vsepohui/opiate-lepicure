@@ -86,7 +86,7 @@ sub select {
 		SELECT * 
 		FROM feed
 		WHERE user_id = ?
-		AND id < ?
+		AND id <= ?
 		ORDER BY id DESC
 		LIMIT ?
 	], $opts{user_id}, $opts{case_id}, $opts{limit});
