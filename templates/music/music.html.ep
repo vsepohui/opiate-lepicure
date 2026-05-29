@@ -4,7 +4,6 @@
 %= include 'include/user_header';
 
 <div class="container">
-	<br/>
 	<div class="m-auto" style="max-width: 900px;">
 		<form action="/<%= $owner->{alias} %>/music/add" id="form" method="POST">
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="html" name="html" placeholder="Код с bandcamp.com" required/>
