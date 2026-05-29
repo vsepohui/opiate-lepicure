@@ -10,8 +10,7 @@
 		% my $msg = $f->{message};
 		% my @l = split /\n/, $msg;
 		% for (@l) {
-			% $_ =~ s/</&lt;/g;
-			% $_ =~ s/>/&gt;/g;
+			% $_ = html_escape $_;
 			% $_ =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
 			%== $_;
 			<br/>

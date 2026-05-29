@@ -31,9 +31,7 @@
 		<button class="btn btn-primary py-2" class="submit">Сохранить</button>
 		</form>
 	% } else {
-		% my $info = $owner->{info} // '';
-		% $info =~ s/</&lt;/g;
-		% $info =~ s/>/&gt;/g;		
+		% my $info = html_escape ($owner->{info} // '');
 		% $info =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
 		% $info =~ s/\n/<br\/>/g;
 		%== $info;
@@ -62,8 +60,7 @@
 			% my $msg = $f->{message};
 			% my @l = split /\n/, $msg;
 			% for (@l) {
-				% $_ =~ s/</&lt;/g;
-				% $_ =~ s/>/&gt;/g;
+				% $_ = html_escape $_;
 				% $_ =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
 				%== $_;
 				<br/>
