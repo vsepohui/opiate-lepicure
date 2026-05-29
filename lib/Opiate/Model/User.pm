@@ -35,16 +35,32 @@ sub check_password {
 	return Opiate::Magic->check_password($self->{password}, $password);
 }
 
-sub set {
+sub set_info {
 	my $self = shift;
-#	my %args = @_;
-	#if (my $p = $args{password}) {
-	#	$args{password} = $self->crypt_password($p);
-	#}
+	my %args = @_;
 	
-	#return $self->SUPER::set(%args);
-	...
+	$self->{info} = $args{info};
+
+	$self->_db->do(q[
+		UPDATE users
+		SET info = ?
+		WHERE id = ?
+	], $self->{info}, $self->{id});
 }
+
+sub set_avatar {
+	my $self = shift;
+	my %args = @_;
+	
+	$self->{avatar} = $args{avatar};
+
+	$self->_db->do(q[
+		UPDATE users
+		SET avatar = ?
+		WHERE id = ?
+	], $self->{avatar}, $self->{id});
+}
+
 
 sub insert {
 	my $self = shift;

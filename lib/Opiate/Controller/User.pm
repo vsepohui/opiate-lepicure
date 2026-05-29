@@ -44,12 +44,12 @@ sub feed {
 				
 				my $path = $self->upload_image($file);
 				
-				$owner->set(avatar => $path);
+				$owner->set_avatar(avatar => $path);
 				
 				return $self->redirect_to('/' . $alias);
 			}
 		} elsif (my $info = $self->param('info')) {
-			$user->set(info => $info);
+			$user->set_info(info => $info);
 			return $self->back;
 		} else {
 			my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
