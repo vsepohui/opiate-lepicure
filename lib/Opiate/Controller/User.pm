@@ -29,7 +29,7 @@ sub feed {
 	
 	my $owner = $self->owner() or return $self->page_404();
 	
-	my $page = $self->param('page') // 1;
+	my $marker = $self->param('marker') // Opiate::Model::Feed->get_max_id();
 	
 	my $alias = $owner->{alias};
 	
@@ -67,7 +67,7 @@ sub feed {
 	
 	my @feed = Opiate::Model::Feed->select(
 		user_id => $owner->{id},
-		case_id => 0,
+		case_id => $marker,
 		limit   => 10,
 	);
 	
@@ -78,10 +78,10 @@ sub feed {
 
 	return $self->render(
 		$self->stash('rss') ? (template => 'user/feed', format => 'rss') : (),
-		owner => $owner,
-		alias => $self->stash('alias'),
-		feed  => \@feed,
-		page  => $page,
+		owner  => $owner,
+		alias  => $self->stash('alias'),
+		feed   => \@feed,
+		marker => $marker,
 	);
 }
 

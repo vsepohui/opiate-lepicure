@@ -1,11 +1,14 @@
 % my $url = url_for;
+% $url =~ s/\.rss//g;
 <?xml version="1.0"?>
 <rss version="2.0">
 <channel>
    <title>Opiate L'Epicure</title>
-   <link><%= $url %></link>
+   <link>https://opiate-lepicure.ru<%= $url %></link>
    <language>ru</language>
-   <link rel="next" href="https://opiate-lepicure.ru<%= $url eq '/' ? '/' : $url . '/'  %>feed.rss?page=<%= $page + 1 %>"/>
+   % if (@$feed && @$feed == 10) {
+   <link rel="next" href="https://opiate-lepicure.ru<%= $url eq '/' ? '/' : $url . '/'  %>.rss?marker=<%= $feed->[-1]->{id} %>"/>
+   % }
 % for (@$feed) {
 	<item>
 	% my $s = $_->{subject};

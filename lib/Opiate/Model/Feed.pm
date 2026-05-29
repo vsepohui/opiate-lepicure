@@ -59,6 +59,20 @@ sub update {
 
 }
 
+sub get_max_id {
+	my $class = shift;
+	
+	my ($id) = $class->_db->select_all(q[
+		SELECT id
+		FROM feed
+		ORDER BY id DESC
+		LIMIT 1
+	]);
+	
+	return $id->{id};
+}
+
+
 sub select {
 	my $class = shift;
 	my %opts  = (
@@ -72,7 +86,7 @@ sub select {
 		SELECT * 
 		FROM feed
 		WHERE user_id = ?
-		AND id > ?
+		AND id < ?
 		ORDER BY id DESC
 		LIMIT ?
 	], $opts{user_id}, $opts{case_id}, $opts{limit});
