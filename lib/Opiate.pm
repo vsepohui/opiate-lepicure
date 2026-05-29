@@ -57,10 +57,17 @@ sub startup {
 	$r->any('/#alias/feed/#post')->to('User#post');
 	$r->any('/#alias/ajax/update')->to('User#ajax_feed_update');
 	
+	$r->any('/#alias/books')->to('Books#books');
 	$r->any('/#alias/books/add')->to('Books#add');
 	
 	$r->any('/#alias/music')->to('Music#music');
 	$r->any('/#alias/music/add')->to('Music#add');
+	
+	$r->any('/#alias/photos')->to('Photos#photos');
+	$r->any('/#alias/photos/upload')->to('Photos#upload');
+	
+	$r->any('/#alias/links')->to('Links#links');
+	$r->any('/#alias/links/add')->to('Links#add');
 	
 	
 	$self->helper(

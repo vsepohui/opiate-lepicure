@@ -1,0 +1,39 @@
+% layout 'opiate', has_feed => 1;
+% title $owner->{name};
+
+%= include 'include/user_header';
+
+
+<div class="container">
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+	
+		<form action="/<%= $owner->{alias} %>/books/add" id="form" method="POST">
+			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="name" name="name" placeholder="Название книги" required/>
+			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="year" name="year" placeholder="Год написания" required/>
+			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_book" type="submit" value="Создать"/>
+		</form>
+</div>
+
+
+<script>
+$(function() {
+	var mutex = 0;
+	$('#add_book').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#name').val() && $('#year').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#name').show(604);
+		$('#year').show(604);
+		
+		mutex += 1;		
+	});
+})
+</script>
+
+

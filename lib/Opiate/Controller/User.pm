@@ -42,7 +42,7 @@ sub feed {
 				
 				return $self->error('Файл слишком большой!') if ($size >= 300_000);
 				
-				my $path = $self->upload_image($file);
+				my $path = $self->upload_image($owner->{alias}, $file);
 				
 				$owner->set_avatar(avatar => $path);
 				

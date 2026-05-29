@@ -1,0 +1,34 @@
+% layout 'opiate', has_feed => 1;
+% title $owner->{name};
+
+%= include 'include/user_header';
+
+<div class="container">
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+		<form action="/<%= $owner->{alias} %>/photos/upload" id="form" method="POST">
+			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="upload_photo" type="submit" value="Загрузить"/>
+		</form>
+</div>
+
+<script>
+$(function() {
+	var mutex = 0;
+	$('#upload_photo').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#file').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#upload_photo').show(604);
+		$('#upload_photo').show(604);
+		
+		mutex += 1;		
+	});
+})
+</script>
+
+

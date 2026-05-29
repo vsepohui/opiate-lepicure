@@ -26,6 +26,15 @@ sub is_allowed {
 	return $self->owner->{alias} eq $self->user->{alias};
 }
 
+sub books {
+	my $self = shift;
+	my $user = $self->user;
+	
+	my $owner = $self->owner();
+
+	return $self->render(owner => $owner);
+}
+
 sub add {
 	my $self = shift;
 	my $user = $self->user;
@@ -49,7 +58,7 @@ sub add {
 		return $self->redirect_to('/' . $owner->{alias} . '/books/' . $book->{id} . '/' . $alias);
 	}
 	
-	$self->render(owner => $owner);
+	return $self->render(owner => $owner);
 }
 
 

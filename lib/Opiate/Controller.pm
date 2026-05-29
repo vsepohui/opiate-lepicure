@@ -74,8 +74,9 @@ sub page_404 {
 }
 
 sub upload_image {
-	my $self = shift;
-	my $file = shift;
+	my $self  = shift;
+	my $alias = shift;
+	my $file  = shift;
 
 	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime();
 		
@@ -97,7 +98,7 @@ sub upload_image {
 	my $full_path;
 	while (1) {
 		my $new_filename = Opiate::Magic->generate_random_string(16);
-		$full_path = $dir . '/' . $new_filename . '.' . $ext;
+		$full_path = $dir . '/' . $alias . '_' . $new_filename . '.' . $ext;
 		last unless -f $full_path;
 	}
 	

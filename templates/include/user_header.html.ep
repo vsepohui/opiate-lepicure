@@ -1,13 +1,12 @@
 % my $url = url_for;
 % my $area = 'feed';
-% for (qw(books music links)) {
+% for (qw(books music photos links)) {
 %	$area = $_ if ($url =~ /^\/$alias\/$_/);
 % }
 <div class="container">
 	<br/>
 
 	<div class="m-auto" style="max-width: 900px;">
-
 		% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
 		<img src="<%= $avatar %>" width="240px;" style="float: left; margin-right: 40px;"/><br/>
 		<h3><%= $owner->{name} %></h3>
@@ -15,7 +14,7 @@
 		% $info =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
 		% $info =~ s/\n/<br\/>/g;
 		%== $info;
-
+		
 		<br/><br/>
 		
 		<hr/>
@@ -29,6 +28,9 @@
 		  </li>
 		  <li class="nav-item">
 			<a class="nav-link<%= ' active' if $area eq 'music' %>" href="/<%= $alias %>/music">Музыка</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link<%= ' active' if $area eq 'photos' %>" href="/<%= $alias %>/photos">Фотографии</a>
 		  </li>
 		  <li class="nav-item">
 			<a class="nav-link<%= ' active' if $area eq 'links' %>" href="/<%= $alias %>/links">Ссылки</a>

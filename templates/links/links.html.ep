@@ -1,0 +1,39 @@
+% layout 'opiate', has_feed => 1;
+% title $owner->{name};
+
+%= include 'include/user_header';
+
+
+<div class="container">
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+	
+		<form action="/<%= $owner->{alias} %>/limks/add" id="form" method="POST">
+			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="url" name="url" placeholder="Ссылка" required/>
+			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="description" name="description" placeholder="Описание ссылки" required/>
+			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_link" type="submit" value="Добавить"/>
+		</form>
+</div>
+
+
+<script>
+$(function() {
+	var mutex = 0;
+	$('#add_link').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#description').val() && $('#description').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#url').show(604);
+		$('#description').show(604);
+		
+		mutex += 1;		
+	});
+})
+</script>
+
+
