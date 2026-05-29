@@ -18,7 +18,7 @@ sub welcome {
 	if ($self->req->method eq 'POST') {
 		my $email    = $self->param('email') or return $self->error('Вы не ввели свой email');
 		my $password = $self->param('password') or return $self->error('Вы не ввели свой пароль');
-		my ($user) = Opiate::Model::User->new->select_all(email => $email) or return $self->error('Не верный пароль');
+		my ($user) = Opiate::Model::User->get_by_email(email => $email) or return $self->error('Не верный пароль');
 		return $self->error('Не верный пароль') unless $user->check_password($password);
 		$self->session(alias => $user->{alias});
 		$self->session(ip => $self->ip);

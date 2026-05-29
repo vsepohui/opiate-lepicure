@@ -43,6 +43,7 @@ sub set {
 	#}
 	
 	#return $self->SUPER::set(%args);
+	...
 }
 
 sub insert {
@@ -50,51 +51,8 @@ sub insert {
 	my %args = @_;
 	
 	$args{password} = $self->crypt_password($args{password}) if $args{password};
+	...
 
-}
-
-sub insert {
-	my $self = shift;
-	my %args = @_;
-	
-	my $sql = q[INSERT INTO ] . $self->table;
-	
-	my @fields = ();
-	my @binds = ();
-	
-	my @list = keys %args;
-	
-	for (@list) {
-		push @fields, q[ ? ];
-		push @binds, $args{$_};
-	}
-	
-	$sql .= '(' . (join ',', @list) . ') ';
-	$sql .= 'VALUES (' . (join ',', map { '?' } @binds) . '); ';
-	
-	return $self->db->do($sql, @binds);
-}
-
-sub set {
-	my $self = shift;
-	my %args = @_;
-	
-	my $sql = q[UPDATE ] . $self->table . ' SET ';
-	
-	my @fields = ();
-	my @binds = ();
-	
-	my @list = keys %args;
-	
-	my @buffer;
-	for (@list) {
-		push @binds, $args{$_};
-		push @buffer, $_ . ' =  ?';
-	}
-	
-	$sql .= join ', ', @buffer;
-	
-	return $self->db->do($sql, @binds);
 }
 
 sub get_by_alias {
@@ -108,10 +66,25 @@ sub get_by_alias {
 		SELECT *
 		FROM users
 		WHERE alias = ?
-	], $opts{alias});
+	], $opts{alias}) or return;
 	
 	return $class->new(%$user);
 }
 
+sub get_by_email {
+	my $class   = shift;
+	my %opts = (
+		email => undef,
+		@_,
+	);
+	
+	my ($user) = $class->_db->select_all(q[
+		SELECT *
+		FROM users
+		WHERE email = ?
+	], $opts{email}) or return;
+	
+	return $class->new(%$user);
+}
 
 1;
