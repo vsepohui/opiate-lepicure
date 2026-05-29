@@ -60,6 +60,7 @@ sub startup {
 	$r->any('/#alias/books/add')->to('Books#add');
 	
 	$r->any('/#alias/music')->to('Music#music');
+	$r->any('/#alias/music/add')->to('Music#add');
 	
 	
 	$self->helper(

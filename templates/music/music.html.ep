@@ -6,11 +6,34 @@
 <div class="container">
 	<br/>
 	<div class="m-auto" style="max-width: 900px;">
-		<form action="/<%= $owner->{alias} %>/books/add" method="POST">
-			<input class="form-control form-control-lg" style="margin-top: 14px;" type="text" id="name" name="name" placeholder="Название книги" required/>
-			<input class="form-control form-control-lg" style="margin-top: 14px;" type="text" id="year" name="year" placeholder="Год написания" required/>
-			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" type="submit" value="Создать"/>
+		<form action="/<%= $owner->{alias} %>/music/add" id="form" method="POST">
+			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="html" name="html" placeholder="Код с bandcamp.com" required/>
+			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_album" type="button" value="Добавить альбом"/>
 		</form>
+		<br/>
+		
+		% for (@$music) {
+			<iframe style="border: 0; width: 420px; height: 621px;" src="https://bandcamp.com/EmbeddedPlayer/album=<%= $_->{bandcamp_id} %>/size=large/bgcol=ffffff/linkcol=a74a23/transparent=true/" seamless></iframe>
+		% }
+	</div>
 </div>
 
-
+<script>
+$(function() {
+	var mutex = 0;
+	$('#add_album').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#html').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#html').show(604);
+		$('#post_button').val('Отправить');
+		
+		mutex += 1;		
+	});
+})
+</script>

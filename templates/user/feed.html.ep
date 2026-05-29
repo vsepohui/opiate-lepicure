@@ -76,8 +76,6 @@
 </div>
 
 <script>
-
-	
 $(function() {
 	init_post_button_hook();
 	init_ajax_feed_updater('<%= $owner->{alias} %>', <%= $feed->[0]->{id} %>);
