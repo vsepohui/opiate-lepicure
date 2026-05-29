@@ -37,7 +37,7 @@
 		%== $info;
 		<br/><br/>
 	% }
-	
+	<br/>
 	<hr/>
 	% unless (param 'edit') {
 		% if ($c->session('alias') eq $owner->{alias}) {
