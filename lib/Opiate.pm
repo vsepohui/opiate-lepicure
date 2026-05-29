@@ -31,7 +31,7 @@ sub startup {
 		if (my $sip = $c->session('ip')) {
 			if ($sip eq $c->ip) {
 				my $user;
-				if ($user = Opiate::Model::User->new->get(alias => $c->session('alias'))) {
+				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
 					$c->stash('user' => $user);
 				} else {
 					return 0;

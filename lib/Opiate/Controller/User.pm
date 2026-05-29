@@ -15,7 +15,7 @@ use constant POSTS_PER_PAGE => 10;
 sub owner {
 	my $self  = shift;
 	my $alias = $self->stash('alias');
-	return Opiate::Model::User->new->get(alias => $alias);
+	return Opiate::Model::User->get_by_alias(alias => $alias);
 }
 
 sub check_attack {
