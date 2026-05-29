@@ -6,6 +6,7 @@ use warnings;
 use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
+use Opiate::Model::Photo;
 use Opiate::Magic;
 
 use utf8;
@@ -26,8 +27,13 @@ sub photos {
 	my $user = $self->user;
 	
 	my $owner = $self->owner();
-
-	return $self->render(owner => $owner);
+	
+	my @photos = Opiate::Model::Photo->select(user_id => $owner->{id});
+	
+	return $self->render(
+		owner  => $owner,
+		photos => \@photos,
+	);
 }
 
 sub upload {
@@ -37,7 +43,21 @@ sub upload {
 	return $self->error('Ошибка доступа!') unless $self->is_allowed();
 	my $owner = $self->owner();
 	
-	...
+	for my $file (@{$self->req->uploads('upload')}) {
+		my $size = $file->size;
+		my $name = $file->filename;
+		
+		return $self->error('Файл слишком большой!') if ($size >= 700_000);
+		
+		my $path = $self->upload_image($owner->{alias}, $file);
+		
+		Opiate::Model::Photo->insert(
+			user_id => $owner->{id},
+			path    => $path,
+		);
+	}
+	
+	return $self->redirect_to('/' . $owner->{alias} . '/photos');
 }
 
 
