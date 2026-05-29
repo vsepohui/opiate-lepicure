@@ -50,6 +50,8 @@ sub invite {
 		$self->db->do(q[
 			INSERT INTO invites (name, email, ask) VALUES (?, ?, ?)
 		], $name, $email, $ask);
+		
+		$self->stash(is_submit => 1);
 	}
 	
 	return $self->render;
