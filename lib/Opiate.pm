@@ -57,6 +57,8 @@ sub startup {
 	$r->any('/#alias/#post')->to('User#post');
 	$r->any('/#alias/ajax/update')->to('User#ajax_feed_update');
 	
+	$r->any('/#alias/books/add')->to('Books#add');
+	
 	
 	$self->helper(
 		'json' => sub {

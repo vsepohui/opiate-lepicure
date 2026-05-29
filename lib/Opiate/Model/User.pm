@@ -5,23 +5,8 @@ use warnings;
 
 use Opiate::Magic;
 
+use base 'Opiate::Model';
 
-sub new {
-	my $class = shift;
-	my %opts  = @_;
-	
-	my $self  = {
-		%opts,
-	};
-	
-	return bless $self, $class;
-}
-
-sub _db {
-	my $class = shift;
-	state $db = new Opiate::DB;
-	return $db;
-}
 
 sub crypt_password {
 	my $self = shift;

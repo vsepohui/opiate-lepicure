@@ -58,4 +58,11 @@ sub select_all {
 	return wantarray ? @result : \@result;
 }
 
+sub last_insert_id {
+	my $self  = shift;
+	my $table = shift;
+	my $pkey  = shift // 'id';
+	return $self->dbh->last_insert_id(undef, undef, $table, $pkey);
+}
+
 1;

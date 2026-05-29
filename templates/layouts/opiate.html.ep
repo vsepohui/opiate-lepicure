@@ -60,6 +60,7 @@
 					<i class="bi bi-gear"  style="font-size: 32px;"></i>
 				  </button>
 				  <ul class="dropdown-menu"  style="font-size: 24px;">
+					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>/books/add">Создать книгу</a></li>
 					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>">Профиль</a></li>
 					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>?edit=1">Настройки</a></li>
 					<li><a class="dropdown-item" href="/logout">Выход</a></li>
