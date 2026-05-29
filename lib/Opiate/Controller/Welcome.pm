@@ -22,6 +22,11 @@ sub welcome {
 		return $self->error('Не верный пароль') unless $user->check_password($password);
 		$self->session(alias => $user->{alias});
 		$self->session(ip => $self->ip);
+		if ($self->param('remember')) {
+			$self->session(expiration => 4233600);
+		} else {
+			$self->session(expiration => 86400);
+		}
 		return $self->redirect_to('/' . $user->{alias});
 	}
 	return $self->render;
