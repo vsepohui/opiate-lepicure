@@ -1,0 +1,21 @@
+% my $url = url_for;
+<?xml version="1.0"?>
+<rss version="2.0">
+<channel>
+   <title>Opiate L'Epicure</title>
+   <link><%= $url %></link>
+   <language>ru</language>
+   <link rel="next" href="https://opiate-lepicure.ru<%= $url eq '/' ? '/' : $url . '/'  %>feed.rss?page=<%= $page + 1 %>"/>
+% for (@$feed) {
+	<item>
+	% my $s = $_->{subject};
+	% my $url = 'https://opiate-lepicure.ru/' . $alias . '/' . $_->{id};
+	<title><%= $s %></title>
+	<link>https://anarchy-press.ru<%= $url %></link>
+	<description>
+		%== $_->{message};
+	</description>
+	</item>
+% }
+ </channel>
+</rss>

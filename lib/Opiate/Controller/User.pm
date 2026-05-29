@@ -29,6 +29,8 @@ sub feed {
 	
 	my $owner = $self->owner() or return $self->page_404();
 	
+	my $page = $self->param('page') // 1;
+	
 	my $alias = $owner->{alias};
 	
 	if ($self->req->method eq 'POST') {
@@ -73,10 +75,13 @@ sub feed {
 		$_->inc_visit_counter();
 	}
 	
+
 	return $self->render(
+		$self->stash('rss') ? (template => 'user/feed', format => 'rss') : (),
 		owner => $owner,
 		alias => $self->stash('alias'),
 		feed  => \@feed,
+		page  => $page,
 	);
 }
 
