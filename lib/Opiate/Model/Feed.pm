@@ -61,6 +61,22 @@ sub select {
 	return map {$class->new(%$_)} @list;
 }
 
+sub select_by_id {
+	my $class = shift;
+	my %opts  = (
+		id	=> undef,
+		@_,
+	);
+	
+	my ($obj) = $class->_db->select_all(q[
+		SELECT * 
+		FROM feed
+		WHERE id = ?
+	], $opts{id});
+	
+	return $class->new(%$obj);
+}
+
 sub inc_visit_counter {
 	my $self = shift;
 	

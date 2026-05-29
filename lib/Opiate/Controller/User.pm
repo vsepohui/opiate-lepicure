@@ -96,11 +96,39 @@ sub ajax_feed_update {
 	
 	return $self->render(
 		template => 'user/ajax_feed',
+		owner => $owner,
+		alias => $self->stash('alias'),		
 		feed  => \@feed,
 	);
 }
 
 
+
+
+sub post {
+	my $self = shift;
+	my $user = $self->user;
+	
+	my $owner = $self->owner() or return $self->page_404();
+	my $alias = $owner->{alias};
+	
+	my $feed_id = $self->stash('post');
+	die "Page not found" if $feed_id =~/\D/;
+	
+	if ($self->req->method eq 'POST') {
+		die "HAXOR GET OFF!" unless $self->check_attack;
+
+	}
+	
+	my $feed = Opiate::Model::Feed->select_by_id(id => $feed_id);
+	$feed->inc_visit_counter();
+	
+	return $self->render(
+		owner => $owner,
+		alias => $self->stash('alias'),
+		feed  => $feed,
+	);
+}
 
 
 1;

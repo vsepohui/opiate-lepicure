@@ -1,0 +1,41 @@
+% layout 'opiate';
+% title $feed->{subject};
+
+<div class="container">
+
+
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+		
+		<div id="feed">
+			<p>
+			<h4>
+			%= $feed->{subject};
+			</h4>
+			</p>
+			<p>[<%= $feed->{ctime} %>]</p>
+			<p>
+			% my $msg = $feed->{message};
+			% my @l = split /\n/, $msg;
+			% for (@l) {
+				% $_ =~ s/</&lt;/g;
+				% $_ =~ s/>/&gt;/g;
+				% $_ =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
+				%== $_;
+				<br/>
+			% }
+			</p>
+			<p>
+				<strong><i class="bi bi-eye"></i></strong> <%= $feed->{visit_count} || 1 %>
+				<a href="/<%= $owner->{alias} %>/<%= $feed->{id} %>" style="color: black"><strong><i class="bi bi-link-45deg"></i></strong></a>
+				% if ($c->session('alias') eq $owner->{alias}) {
+					<a href="/<%= $owner->{alias} %>/<%= $feed->{id} %>?edit=1" style="color: black"><strong><i class="bi bi-pencil"></i></strong></a>
+				% }
+			</p>
+			<hr/>
+		</div>
+	</div>
+</div>
+
+
+
