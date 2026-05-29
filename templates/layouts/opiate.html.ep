@@ -21,6 +21,12 @@
     <script src="/js/jquery-1.10.2.min.js"></script>
     <script src="/js/script.js?_=3"></script>
     <script src="/js/notify.js"></script>
+% if (my $js = stash 'include_js') {
+	<script src="/js/<%= $js %>"></script>
+% }    
+% if (my $css = stash 'include_css') {
+	<link href="/css/<%= $css %>" rel="stylesheet" />
+% }    
     <link href="/css/style.css?_=4" rel="stylesheet" />
 % if (stash 'has_feed') {
 	<link rel="alternate" type="application/rss+xml" href="<%= $url eq '/' ? '/' : $url . '/'  %>feed.rss" />

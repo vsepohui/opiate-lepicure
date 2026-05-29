@@ -1,4 +1,4 @@
-% layout 'opiate', has_feed => 1;
+% layout 'opiate', has_feed => 1, include_js => 'photos.min.js',  include_css => 'lightbox.min.css';
 % title $owner->{name};
 
 %= include 'include/user_header';
@@ -9,14 +9,33 @@
 			<input class="btn btn-primary" type="file" accept="image/*" capture="camera" name="upload" id="upload" style="display: none;"><br/><br/>
 			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="upload_photo" type="submit" value="Загрузить"/>
 		</form>
+
+		<div class="grid">
+		% for (@$photos) {
+			<div class="grid-item" style="width: 270px; padding-top: 20px;">
+				<a href="<%= $_->{path} %>" data-lightbox="roadtrip">
+					<img src="<%= $_->{path} %>" style="width: 270px;"/>
+				</a>
+			</div>
+		% }
+		</div>
+
+
 	</div>
-	% for (@$photos) {
-		<img src="<%= $_->{path} %>"/><br/>
-	% }
 </div>
+
 
 <script>
 $(function() {
+    var $grid = $('.grid').masonry({
+        itemSelector: '.grid-item',
+        columnWidth: 290
+    });
+    
+    $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+    });
+
 	var mutex = 0;
 	$('#upload_photo').click(function (event) {
 		event.preventDefault();
