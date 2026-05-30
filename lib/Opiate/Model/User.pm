@@ -52,8 +52,13 @@ sub insert {
 	my %args = @_;
 	
 	$args{password} = $self->crypt_password($args{password}) if $args{password};
-	...
 
+	$self->_db->do(q[
+		INSERT INTO users (alias, name, email, password)
+		VALUES (?, ?, ?, ?)
+	], $args{alias}, $args{name}, $args{email}, $args{password});
+	
+	return;
 }
 
 sub get_by_alias {
