@@ -1,0 +1,13 @@
+% layout 'opiate';
+
+
+<div class="container">
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+		<h1>Админка</h1>
+		<ul>
+			<li><a href="/admin/users">Пользователи</a></li>
+			<li><a href="/admin/invites">Приглагшения</a></li>
+		</ul>
+	</div>
+</div>

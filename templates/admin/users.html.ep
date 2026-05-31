@@ -1,0 +1,30 @@
+% layout 'opiate';
+
+
+<div class="container">
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+		<h1><a href="/admin">Админка</a> &gt; Пользователи</h1>
+		<table class="table">
+		<tr>
+			<th>id</th>
+			<th>ctime</th>
+			<th>alias</th>
+			<th>email</th>
+			<th>name</th>
+			<th></th>
+		</tr>
+		% for (@$users) {
+			% $_;
+			<tr>
+				<td><%= $_->{id} %></id>
+				<td><%= $_->{ctime} %></td>
+				<td><a href="/<%= $_->{alias} %>"><%= $_->{alias} %></a></td>
+				<td><%= $_->{email} %></td>
+				<td><%= $_->{name} %></td>
+				<td><a href="/admin/users/edit?alias=<%= $_->{alias} %>">Редактировать</a></td>
+			</tr>
+		% }
+		</table>
+	</div>
+</div>

@@ -20,6 +20,28 @@ sub check_password {
 	return Opiate::Magic->check_password($self->{password}, $password);
 }
 
+sub update_admin {
+	my $self = shift;
+	my %opts = (
+		name  => undef,
+		email => undef,
+		@_,
+	);
+	
+	$self->{name} = $opts{name} or die "Name not specified";
+	$self->{email} = $opts{email} or die "Email not specified";
+	
+	$self->_db->do(q[
+		UPDATE users
+		SET 
+			name = ?,
+			email = ?
+		WHERE id = ?
+	], $self->{name}, $self->{email}, $self->{id});
+	
+	return;
+}
+
 sub set_info {
 	my $self = shift;
 	my %args = @_;
@@ -92,5 +114,17 @@ sub get_by_email {
 	
 	return $class->new(%$user);
 }
+
+
+sub select_all {
+	my $class   = shift;
+	
+	my @users = $class->_db->select_all(q[
+		SELECT *
+		FROM users
+		ORDER BY id
+	]) or return;
+	
+	return map {$class->new(%$_)} @users;}
 
 1;

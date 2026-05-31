@@ -27,12 +27,15 @@ sub startup {
 		my $i = crc32 ($$ . time() . $c->req->request_id()) . substr($$, -3) . substr(time(), -3);
 		srand($i);
 		
+		$c->stash('is_admin' => 0);
+		
 		# Check cookie
 		if (my $sip = $c->session('ip')) {
 			if ($sip eq $c->ip) {
 				my $user;
 				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
 					$c->stash('user' => $user);
+					$c->stash('is_admin' => ($user->{alias} eq $self->config->{admin}));
 				} else {
 					return 0;
 				}
@@ -52,6 +55,12 @@ sub startup {
 	$r->any('/welcome')->to('Welcome#welcome');
 	$r->any('/invite')->to('Welcome#invite');
 	$r->any('/logout')->to('Welcome#logout');
+	
+	$r->any('/admin')->to('Admin#admin');
+	$r->any('/admin/users')->to('Admin#users');
+	$r->any('/admin/users/edit')->to('Admin#users_edit');
+	$r->any('/admin/invites')->to('Admin#invites');
+	
 	$r->any('/#alias')->to('User#feed');
 	$r->any('/#alias/feed.rss')->to('User#feed', rss => 1);
 	$r->any('/#alias/feed/#post')->to('User#post');
@@ -68,6 +77,7 @@ sub startup {
 	
 	$r->any('/#alias/links')->to('Links#links');
 	$r->any('/#alias/links/add')->to('Links#add');
+	
 	
 	
 	$self->helper(

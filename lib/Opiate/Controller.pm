@@ -1,6 +1,6 @@
 package Opiate::Controller;
 
-use strict;
+use 5.022;
 use warnings;
 
 use Mojo::Base 'Mojolicious::Controller';
@@ -23,7 +23,8 @@ sub ip {
 
 sub db {
 	my $self = shift;
-	return new Opiate::DB;
+	state $db = new Opiate::DB; 
+	return $db;
 }
 
 sub redis {

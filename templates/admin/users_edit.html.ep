@@ -1,0 +1,16 @@
+% layout 'opiate';
+
+
+<div class="container">
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+		<h1><a href="/admin">Админка</a> &gt; <a href="/admin/users">Пользователи</a> &gt; <%= $admin_user->{alias} %><h1>
+		<form method="POST" action="/admin/users/edit" id="form_post">
+			<input type="hidden" name="alias" value="<%= $admin_user->{alias} %>"/>
+			<input class="form-control form-control-lg" style="margin-top: 14px;" type="text" id="name" name="name" placeholder="Имя пользователя" value="<%= $admin_user->{name} %>" required/>
+			<input class="form-control form-control-lg" style="margin-top: 14px;" type="email" id="email" name="email" placeholder="Email" value="<%= $admin_user->{email} %>" required/>
+			<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" value="Сохранить"/>
+		</form>		
+	
+	</div>
+</div>
