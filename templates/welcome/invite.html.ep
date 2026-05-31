@@ -13,6 +13,9 @@
 				<input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Ваше имя"/>
 			</div>
 			<div class="form">
+				<input type="text" class="form-control form-control-lg" id="alias" name="alias" placeholder="Логин"/>
+			</div>
+			<div class="form">
 				<input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Email"/>
 			</div>
 			<div class="form">

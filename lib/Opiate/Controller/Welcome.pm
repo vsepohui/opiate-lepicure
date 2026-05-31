@@ -37,6 +37,7 @@ sub invite {
 	
 	if ($self->req->method eq 'POST') {
 		my $name  = $self->param('name') or return $self->error('Вы не ввесли свое имя');
+		my $alias  = $self->param('alias') or return $self->error('Вы не ввесли свой логин');
 		my $email = $self->param('email') or return $self->error('Вы не ввели свой email');
 		my $ask   = $self->param('ask') or return $self->error('Вы не указали причину заявки на приглашение');
 		
@@ -48,8 +49,8 @@ sub invite {
 		$self->redis->setex($k, 60*60, 1);
 		
 		$self->db->do(q[
-			INSERT INTO invites (name, email, ask) VALUES (?, ?, ?)
-		], $name, $email, $ask);
+			INSERT INTO invites (alias, name, email, ask) VALUES (?, ?, ?, ?)
+		], $alias, $name, $email, $ask);
 		
 		$self->stash(is_submit => 1);
 	}

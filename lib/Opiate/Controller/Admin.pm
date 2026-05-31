@@ -6,6 +6,7 @@ use warnings;
 use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
+use Opiate::Model::Invite;
 
 
 sub acl {
@@ -58,7 +59,12 @@ sub invites {
 	my $self = shift;
 	$self->acl;
 	
-	return $self->render;
+	my @invites = Opiate::Model::Invite->select_all;
+	
+	return $self->render(
+		invites => \@invites,
+	);
 }
+
 
 1;
