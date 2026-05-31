@@ -4,7 +4,7 @@
 <div class="container">
 	<br/>
 	<div class="m-auto" style="max-width: 900px;">
-		<h1><a href="/admin/invites">Админка</a> &gt; Приглашения</h1>
+		<h1><a href="/admin">Админка</a> &gt; Приглашения</h1>
 		<table class="table">
 		<tr>
 			<th>id</th>
@@ -12,14 +12,12 @@
 			<th>name</th>
 			<th>alias</th>
 			<th>email</th>
-			
 			<th>ask</th>
 		</tr>
 		% for (@$invites) {
-			% $_;
 			<tr>
 				<td><%= $_->{id} %></id>
-				<td><%= $_->{ctime		} %></t
+				<td><%= $_->{ctime} %></td>
 				<td><%= $_->{name} %></td>
 				<td><%= $_->{alias} %></td>
 				<td><%= $_->{email} %></td>
