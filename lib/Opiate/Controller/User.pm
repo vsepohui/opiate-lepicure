@@ -134,7 +134,7 @@ sub post {
 			message => $message,
 		);
 		
-		return $self->redirect_to('/' . $alias . '/' . $feed_id);
+		return $self->redirect_to('/' . $alias . '/feed/' . $feed_id);
 	}
 
 	$feed->inc_visit_counter();
