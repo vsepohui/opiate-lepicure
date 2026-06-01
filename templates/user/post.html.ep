@@ -11,7 +11,7 @@
 	
 		% if (param 'edit') {
 			% if ($c->session('alias') eq $owner->{alias}) {
-				<form method="POST" action="/<%= $alias %>/<%= $feed->{id} %>?edit=1" id="form_post">
+				<form method="POST" action="/<%= $alias %>/feed/<%= $feed->{id} %>?edit=1" id="form_post">
 					<input class="form-control form-control-lg" style="margin-top: 14px;" type="text" id="subject" name="subject" placeholder="Тема сообщения" value="<%= $feed->{subject} %>" required/>
 					<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px;" placeholder="Текст" id="message" name="message" rows="10" required><%= $feed->{message} %></textarea>
 					<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Сохранить"/>
