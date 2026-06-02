@@ -68,7 +68,7 @@ sub feed {
 	my @feed = Opiate::Model::Feed->select(
 		user_id => $owner->{id},
 		case_id => $marker,
-		limit   => 10,
+		limit   => 50,
 	);
 	
 	for (@feed) {
@@ -96,7 +96,7 @@ sub ajax_feed_update {
 	my @feed = Opiate::Model::Feed->select_new(
 		user_id => $owner->{id},
 		case_id => $case_id,
-		limit   => 10,
+		limit   => 50,
 	);
 	
 	return $self->render(
