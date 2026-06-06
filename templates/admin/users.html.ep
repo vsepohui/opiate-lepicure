@@ -18,9 +18,9 @@
 			<tr>
 				<td><%= $_->{id} %></td>
 				<td><%= $_->{ctime} %></td>
-				<td><%= $_->{name} %></td>
 				<td><a href="/<%= $_->{alias} %>"><%= $_->{alias} %></a></td>
 				<td><%= $_->{email} %></td>
+				<td><%= $_->{name} %></td>
 				<td><a href="/admin/users/edit?alias=<%= $_->{alias} %>">Редактировать</a></td>
 			</tr>
 		% }
