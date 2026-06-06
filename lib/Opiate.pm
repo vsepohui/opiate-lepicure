@@ -67,6 +67,10 @@ sub startup {
 	$r->any('/#alias/ajax/update')->to('User#ajax_feed_update');
 	
 	$r->any('/#alias/books')->to('Books#books');
+	$r->any('/#alias/books/#book_id/#book_alias')->to('Books#show');
+	$r->any('/#alias/books/#book_id/#book_alias/add_list')->to('Books#add_list');
+	$r->any('/#alias/books/#book_id/#book_alias/#page_id')->to('Books#show');
+	
 	$r->any('/#alias/books/add')->to('Books#add');
 	
 	$r->any('/#alias/music')->to('Music#music');

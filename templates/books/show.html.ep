@@ -1,0 +1,85 @@
+% layout 'opiate';
+% title [$book->{name}, $owner->{name}];
+
+%= include 'include/user_header';
+
+<div class="container">
+	<div class="m-auto" style="max-width: 900px;">
+
+		% if ($c->session('alias') eq $owner->{alias}) {
+		<form method="POST" action="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/add_list" id="form_post">
+			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="title" name="title" placeholder="Тема сообщения" spellcheck="true" required/>
+			<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст" id="text" name="text" rows="10" spellcheck="true" required></textarea>
+			<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Добавить лист"/>
+		</form>
+		% }
+		
+		<div id="feed">
+			<p>
+			<h3>
+				%= $book->{name};
+			</h3>
+			</p>
+			<p>[<%= $owner->{name} %>, <%= $book->{year} %>]</p>
+			<p>
+
+			<h3>
+				%= $list->{title};
+			</h3>
+			
+			<p><%= $list->{text} %></p>
+
+			<hr/>			
+		</div>
+		
+		% if ($lists_count > 1) {
+		  <ul class="pagination pagination-lg">
+			% if ($page_id > 1) {
+				<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $page_id - 1 %>">&lt;</a></li>
+			% } 
+			<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>">1</a></li>
+			% if ($lists_count > 2) {
+				% my $a = $page_id - 1;
+				% my $b = $page_id + 1;
+				% if ($page_id > 3) {
+					<li class="page-item page-link">&hellip;</li>
+				% }
+				% for (grep {$_ > 1 && $_ < $lists_count} $a..$b) {
+					<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $_ %>"><%= $_ %></a></li>
+				% }
+				% if ($lists_count - $page_id >= 3) {
+					<li class="page-item page-link">&hellip;</li>
+				% }				
+			% } 
+			<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $lists_count %>"><%= $lists_count %></a></li>
+			% if ($page_id < $lists_count) {
+				<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $page_id + 1 %>">&gt;</a></li>
+			% } 
+		  </ul>
+		 % }
+		
+	</div>
+</div>
+
+<script>
+$(function() {
+	var mutex = 0;
+	$('#post_button').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#title').val() && $('#text').val()) {		
+				var form = $('#form_post');
+				form.submit();
+			}
+			return;
+		}
+		$('#title').show(604);
+		$('#text').show(604);
+		
+		mutex += 1;		
+	});
+})
+</script>
+
+
+

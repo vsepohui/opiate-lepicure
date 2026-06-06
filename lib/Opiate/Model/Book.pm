@@ -41,6 +41,24 @@ sub select_by_id {
 	return $class->new(%$obj);
 }
 
+
+sub select_by_user_id {
+	my $class = shift;
+	my %opts  = (
+		user_id	=> undef,
+		@_,
+	);
+	
+	my @books = $class->_db->select_all(q[
+		SELECT * 
+		FROM books
+		WHERE user_id = ?
+	], $opts{user_id});
+	
+	return map {$class->new(%$_)} @books;
+}
+
+
 sub inc_visit_counter {
 	my $self = shift;
 	

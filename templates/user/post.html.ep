@@ -1,5 +1,5 @@
 % layout 'opiate';
-% title [$owner->{name}, $feed->{subject}];
+% title [$feed->{subject}, $owner->{name}];
 
 %= include 'include/user_header';
 

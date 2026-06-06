@@ -35,104 +35,51 @@ sub insert {
 	my %opts = @_;
 	
 	$self->_db->do(q[
-		INSERT INTO feed (user_id, subject, message)
+		INSERT INTO book_lists (book_id, title, text)
 		VALUES (?, ?, ?)
-	], $opts{user_id}, $opts{subject}, $opts{message});
+	], $opts{book_id}, $opts{title}, $opts{text});
 	
 	return;
 }
-
-sub update {
-	my $self = shift;
-	my %opts = @_;
-	
-	$self->{subject} = $opts{subject};
-	$self->{message} = $opts{message};
-	
-	$self->_db->do(q[
-		UPDATE feed 
-		SET 
-			subject = ?,
-			message = ?
-		WHERE id = ?
-	], $self->{subject}, $self->{message}, $self->{id});
-	
-	return;
-
-}
-
-sub get_max_id {
-	my $class = shift;
-	
-	my ($id) = $class->_db->select_all(q[
-		SELECT id
-		FROM feed
-		ORDER BY id DESC
-		LIMIT 1
-	]);
-	
-	return $id->{id};
-}
-
 
 sub select {
 	my $class = shift;
 	my %opts  = (
-		user_id => undef,
+		book_id => undef,
 		limit	=> undef,
-		case_id	=> undef,
+		offset  => undef,
 		@_,
 	);
 	
 	my @list = $class->_db->select_all(q[
 		SELECT * 
-		FROM feed
-		WHERE user_id = ?
-		AND id <= ?
-		ORDER BY id DESC
+		FROM book_lists
+		WHERE book_id = ?
+		ORDER BY id
 		LIMIT ?
-	], $opts{user_id}, $opts{case_id}, $opts{limit});
+		OFFSET ?
+	], $opts{book_id}, $opts{limit}, $opts{offset});
 	
 	return map {$class->new(%$_)} @list;
 }
 
 
-sub select_new {
+sub count {
 	my $class = shift;
 	my %opts  = (
-		user_id => undef,
-		limit	=> undef,
-		case_id	=> undef,
+		book_id => undef,
 		@_,
 	);
 	
-	my @list = $class->_db->select_all(q[
-		SELECT * 
-		FROM feed
-		WHERE user_id = ?
-		AND id > ?
-		ORDER BY id DESC
-		LIMIT ?
-	], $opts{user_id}, $opts{case_id}, $opts{limit});
+	my ($data) = $class->_db->select_all(q[
+		SELECT COUNT(id) AS count
+		FROM book_lists
+		WHERE book_id = ?
+	], $opts{book_id});
 	
-	return map {$class->new(%$_)} @list;
+	return $data->{count};
 }
 
-sub select_by_id {
-	my $class = shift;
-	my %opts  = (
-		id	=> undef,
-		@_,
-	);
-	
-	my ($obj) = $class->_db->select_all(q[
-		SELECT * 
-		FROM feed
-		WHERE id = ?
-	], $opts{id});
-	
-	return $class->new(%$obj);
-}
 
 sub inc_visit_counter {
 	my $self = shift;
@@ -140,7 +87,7 @@ sub inc_visit_counter {
 	$self->{visit_count} ++;
 	
 	$self->_db->do(q[
-		UPDATE feed 
+		UPDATE book_lists 
 		SET visit_count = ?
 		WHERE id = ?
 	], $self->{visit_count}, $self->{id});
