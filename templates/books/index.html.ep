@@ -17,7 +17,7 @@
 			<ol>
 				% my $num = 0;
 				% for (@$list) {
-					% my $num ++;
+					% $num ++;
 					<li><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $num %>"><%= $_->{title} %></a></li>
 				% }
 			</ol>
