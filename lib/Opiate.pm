@@ -80,11 +80,12 @@ sub startup {
 	$r->any('/temple/users/edit')->to('Temple#users_edit');
 	$r->any('/temple/invites')->to('Temple#invites');
 	
-	$r->any('/#alias')->to('User#feed');
-	$r->any('/#alias/profile')->to('User#profile');
-	$r->any('/#alias/feed.rss')->to('User#feed', rss => 1);
-	$r->any('/#alias/feed/#post')->to('User#post');
-	$r->any('/#alias/ajax/update')->to('User#ajax_feed_update');
+	$r->any('/profile')->to('User#profile');
+	
+	$r->any('/#alias')->to('Feed#feed');
+	$r->any('/#alias/feed.rss')->to('Feed#feed', rss => 1);
+	$r->any('/#alias/feed/#post')->to('Feed#post');
+	$r->any('/#alias/ajax/update')->to('Feed#ajax_feed_update');
 	
 	$r->any('/#alias/books')->to('Books#books');
 	$r->any('/#alias/books/#book_id/#book_alias')->to('Books#show');
