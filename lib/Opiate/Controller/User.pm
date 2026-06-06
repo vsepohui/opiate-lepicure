@@ -6,22 +6,7 @@ use warnings;
 use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
-use Opiate::Model::Feed;
-use Opiate::Magic;
 
-use constant POSTS_PER_PAGE => 10; 
-
-
-sub owner {
-	my $self  = shift;
-	my $alias = $self->stash('alias');
-	return Opiate::Model::User->get_by_alias(alias => $alias);
-}
-
-sub check_attack {
-	my $self = shift;
-	return $self->owner->{alias} eq $self->user->{alias};
-}
 
 sub profile {
 	my $self = shift;
