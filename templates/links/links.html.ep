@@ -11,9 +11,10 @@
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="description" name="description" placeholder="Описание ссылки" required/>
 			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_link" type="submit" value="Добавить"/>
 		</form>
+		<br/>
 		<ul>
 			% for (@$links) {
-				<li><a href="<%= $_->{url} %>"><%= $_->{url} %></a> - <%= $_->{description} %></li>
+				<li><a href="<%= $_->{url} %>" target="_blank"><%= $_->{url} %></a> - <%= $_->{description} %></li>
 			% }
 		</ul>
 	</div>
