@@ -14,9 +14,16 @@
 	% my $s = $_->{subject};
 	% my $url = 'https://opiate-lepicure.ru/' . $alias . '/feed/' . $_->{id};
 	<title><%= $s %></title>
-	<link>https://anarchy-press.ru<%= $url %></link>
+	<link>https://opiate-lepicure.ru<%= $url %></link>
 	<description>
-		%== $_->{message};
+	% my $msg = $f->{message};
+	% my @l = split /\n/, $msg;
+	% for (@l) {
+		% $_ = html_escape $_;
+		% $_ =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2"\>$2\<\/a\>/g;
+		%== $_;
+		<br/>
+	% }
 	</description>
 	</item>
 % }
