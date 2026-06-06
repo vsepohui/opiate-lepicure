@@ -75,11 +75,8 @@ sub profile {
 	my $owner = $self->owner() or return $self->page_404();
 	
 	return $self->error('Ошибка доступа!') unless $self->check_attack;
-	
-	my $marker = $self->param('marker') // Opiate::Model::Feed->get_max_id();
-	
+
 	my $alias = $owner->{alias};
-	
 	
 	if ($self->req->method eq 'POST') {
 		if ($self->param('avatar_upload')) {
