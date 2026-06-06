@@ -64,4 +64,11 @@ sub logout {
 	return $self->redirect_to('/');
 }
 
+sub update_magic {
+	my $self = shift;
+	my $magic = $self->stash('magic');
+	my ($val) = $magic =~ / value="([^"]+)"/;
+	return $self->render(text => $val);
+}
+
 1;

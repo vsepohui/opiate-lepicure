@@ -10,6 +10,7 @@
 	% unless (param 'edit') {
 		% if ($c->session('alias') eq $owner->{alias}) {
 		<form method="POST" action="/<%= $alias %>" id="form_post">
+			%== magic;
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" spellcheck="true" required/>
 			<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст" id="message" name="message" rows="10" spellcheck="true" required></textarea>
 			<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Написать сообщение"/>

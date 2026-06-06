@@ -8,6 +8,7 @@
 
 		% if ($c->session('alias') eq $owner->{alias}) {
 		<form method="POST" action="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/add_list" id="form_post">
+			%== magic;
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="title" name="title" placeholder="Тема сообщения" spellcheck="true" required/>
 			<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px; display: none;" placeholder="Текст" id="text" name="text" rows="10" spellcheck="true" required></textarea>
 			<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Добавить лист"/>
@@ -70,21 +71,7 @@
 
 <script>
 $(function() {
-	var mutex = 0;
-	$('#post_button').click(function (event) {
-		event.preventDefault();
-		if (mutex % 2 == 1) {
-			if ($('#title').val() && $('#text').val()) {		
-				var form = $('#form_post');
-				form.submit();
-			}
-			return;
-		}
-		$('#title').show(604);
-		$('#text').show(604);
-		
-		mutex += 1;		
-	});
+	init_books_add_list_form();
 })
 </script>
 

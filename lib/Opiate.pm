@@ -29,15 +29,16 @@ sub startup {
 		
 		$c->stash('is_admin' => 0);
 		
+		my $user;
+		
 		# Check cookie
 		if (my $sip = $c->session('ip')) {
 			if ($sip eq $c->ip) {
-				my $user;
 				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
 					$c->stash('user' => $user);
-					$c->stash('is_admin' => ($user->{alias} eq $self->config->{admin}));
+					$c->stash('is_admin' => ($user->{alias} eq $self->config->{admin}));				
 				} else {
-					return 0;
+					return $c->page_404;
 				}
 			} else {
 				 $self->session(expires => 1);
@@ -45,6 +46,23 @@ sub startup {
 		} else {
 			 $self->session(expires => 1);
 		}
+
+		my $code = Opiate::Magic->generate_random_string(32).':'.($user ? $user->{id} : 0).':'.time();
+		my $token = Opiate::Magic->sign_with_secret($code, $c->config->{secrets}->[0]);
+
+		$c->stash(magic => '<input type="hidden" name="magic" value="' . $code . ':' . $token . '"/>');	
+
+
+		if ($c->req->method() eq 'POST') {
+			my $magic = $c->param('magic') or return $c->page_404;
+			my ($rnd, $user_id, $time, $sign) = split /:/, $magic;
+			
+			die "Wrong magic" if ($user_id != ($user ? $user->{id} : 0));
+			
+			my $code = $rnd . ':' . $user_id . ':' . $time;
+			return $c->error('Попробуйте еще раз') if (Opiate::Magic->sign_with_secret($code, $c->config->{secrets}->[0]) ne $sign || time() > $time + 60);
+		}
+		
 		
 		return 1;
 	});
@@ -54,7 +72,8 @@ sub startup {
 	$r->any('/')->to('Welcome#welcome');
 	$r->any('/welcome')->to('Welcome#welcome');
 	$r->any('/invite')->to('Welcome#invite');
-	$r->any('/logout')->to('Welcome#logout');
+	$r->post('/logout')->to('Welcome#logout');
+	$r->any('/ajax/update_magic')->to('Welcome#update_magic');
 	
 	$r->any('/admin')->to('Admin#admin');
 	$r->any('/admin/users')->to('Admin#users');
@@ -116,6 +135,13 @@ sub startup {
 
 			return $str;
 		},
+	);
+	
+	$self->helper(
+		'magic' => sub {
+			my $self = shift;
+			return $self->stash('magic');
+		}
 	);
 }
 

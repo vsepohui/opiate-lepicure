@@ -75,6 +75,14 @@ sub check_password {
 	return $hash eq (crypt($pass, $salt) . $salt);
 }
 
+sub sign_with_secret {
+	my $self   = shift;
+	my $str    = shift;
+	my $secret = shift;
+	return crypt($str, $secret);
+	
+}
+
 
 sub reverse_list {
 	my @list = @_;

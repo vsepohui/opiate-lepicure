@@ -13,6 +13,7 @@
 
 	Загрузить аватар:<br/>
 	<form action="/<%= $user->{alias} %>/profile?avatar_upload=1" method="POST" enctype="multipart/form-data">
+	%== magic;
 	<input class="btn btn-primary" type="file" accept="image/*" capture="camera" name="upload" id="upload" style="width: 240px;"><br/><br/>
 	<input class="btn btn-primary" type="submit" value="Загрузить"/>
 	</form>
@@ -21,6 +22,7 @@
 	<h3><%= $user->{name} %></h3>
 
 	<form method="POST">
+	%== magic;
 	<textarea style="max-width: 600px;" class="form-control" placeholder="Информация о себе" id="ask" name="info" rows="8"><%= $owner->{info} %></textarea>
 	<br/><br/>
 	<button class="btn btn-primary py-2" class="submit">Сохранить</button>

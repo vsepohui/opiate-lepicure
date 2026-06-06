@@ -41,6 +41,7 @@
 <div class="container text-center">
 	<h1 class="h3 mt-5 mb-3 fw-normal">Добро пожаловать <%= $w %>!</h1>
 	<form method="POST" class="form-signin w-100 m-auto">
+		%== magic;
 		<div class="form-floating">
 			<input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="email@example.com"/>
 			<label for="email">Email</label>

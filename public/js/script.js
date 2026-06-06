@@ -82,3 +82,55 @@ function init_scroll_feed_hook (alias) {
 		}
 	});
 }
+
+function init_main () {
+	$('#logout').click( function() {
+		$('#form-logout').submit();
+	});
+	var update_magic_Timer = setInterval(function() {
+		$.ajax({
+			url: '/ajax/update_magic',
+		}).done(function(data) {
+			if (data) {
+				$("input[name='magic']").val(data);
+			}
+		});
+	}, 30000);
+}
+
+function init_books_form() {
+	var mutex = 0;
+	$('#add_book').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#name').val() && $('#year').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#name').show(604);
+		$('#year').show(604);
+		
+		mutex += 1;		
+	});	
+}
+
+function init_books_add_list_form() {
+	var mutex = 0;
+	$('#post_button').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#title').val() && $('#text').val()) {		
+				var form = $('#form_post');
+				form.submit();
+			}
+			return;
+		}
+		$('#title').show(604);
+		$('#text').show(604);
+		
+		mutex += 1;		
+	});
+}
+
