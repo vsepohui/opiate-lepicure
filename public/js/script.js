@@ -44,6 +44,12 @@ function set_ajax_next_case_id(val) {
 	ajax_next_case_id = val;
 }
 
+function init_ajax_feed(alias, x, y) {
+	init_ajax_feed_updater(alias, x);
+	init_scroll_feed_hook(alias, y);
+}
+
+
 function init_ajax_feed_updater (alias, case_id) {
 	set_ajax_feed_case_id(case_id)
 	var timerId = setInterval(function() {
@@ -58,7 +64,8 @@ function init_ajax_feed_updater (alias, case_id) {
 }
 
 	
-function init_scroll_feed_hook (alias) {
+function init_scroll_feed_hook (alias, case_id) {
+	set_ajax_next_case_id(case_id);
 	var isLoading = 0;
 	var isFinished = false;
 	$(window).scroll(function() {

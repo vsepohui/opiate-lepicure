@@ -20,7 +20,7 @@
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet"/>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-1.10.2.min.js"></script>
-    <script src="/js/script.js?_=5"></script>
+    <script src="/js/script.js?_=6"></script>
     <script src="/js/notify.js"></script>
 % if (my $js = stash 'include_js') {
 	<script src="/js/<%= $js %>"></script>
@@ -83,9 +83,9 @@
 	</div>
 	<%= content %>
 	<script>
-		$(function() {
-			init_main();
-		});
+	$(function() {
+		init_main();
+	});
 	</script>
 	<footer class="container footer bottom d-flex flex-wrap justify-content-center border-top" style="margin-top: 20px;">	
 		<p class="mt-3 text-center">
