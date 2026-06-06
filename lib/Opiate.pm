@@ -62,6 +62,7 @@ sub startup {
 	$r->any('/admin/invites')->to('Admin#invites');
 	
 	$r->any('/#alias')->to('User#feed');
+	$r->any('/#alias/profile')->to('User#profile');
 	$r->any('/#alias/feed.rss')->to('User#feed', rss => 1);
 	$r->any('/#alias/feed/#post')->to('User#post');
 	$r->any('/#alias/ajax/update')->to('User#ajax_feed_update');

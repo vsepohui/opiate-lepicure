@@ -1,0 +1,32 @@
+% layout 'opiate', has_feed => 1;
+% title $owner->{name};
+
+% my $avatar = $user->{avatar} // '/i/anonym.jpg';
+
+
+<div class="container">
+<br/>
+	<div class="m-auto" style="max-width: 900px;">
+
+	<div style="float:left; display: block;">
+		<img src="<%= $avatar %>" width="240px;" style="float: left; margin-right: 40px;"/><br/>
+
+	Загрузить аватар:<br/>
+	<form action="/<%= $user->{alias} %>/profile?avatar_upload=1" method="POST" enctype="multipart/form-data">
+	<input class="btn btn-primary" type="file" accept="image/*" capture="camera" name="upload" id="upload" style="width: 240px;"><br/><br/>
+	<input class="btn btn-primary" type="submit" value="Загрузить"/>
+	</form>
+	</div>
+
+	<h3><%= $user->{name} %></h3>
+
+	<form method="POST">
+	<textarea style="max-width: 600px;" class="form-control" placeholder="Информация о себе" id="ask" name="info" rows="8"><%= $owner->{info} %></textarea>
+	<br/><br/>
+	<button class="btn btn-primary py-2" class="submit">Сохранить</button>
+	</form>
+	
+	<hr/>
+	</div>
+</div>
+

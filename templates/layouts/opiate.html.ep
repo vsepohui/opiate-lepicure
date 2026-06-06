@@ -67,7 +67,7 @@
 					<i class="bi bi-gear"  style="font-size: 32px;"></i>
 				  </button>
 				  <ul class="dropdown-menu"  style="font-size: 24px;">
-					<li><a class="dropdown-item" href="/<%= $owner->{alias} %>?edit=1">Настройки</a></li>
+					<li><a class="dropdown-item" href="/<%= $user->{alias} %>/profile">Настройки</a></li>
 					% if ($is_admin) {
 						<li><a class="dropdown-item" href="/admin">Админка</a></li>
 					% }

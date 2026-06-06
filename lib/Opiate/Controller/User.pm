@@ -34,34 +34,17 @@ sub feed {
 	my $alias = $owner->{alias};
 	
 	if ($self->req->method eq 'POST') {
-		die "HAXOR GET OFF!" unless $self->check_attack;
-		if ($self->param('avatar_upload')) {
-			for my $file (@{$self->req->uploads('upload')}) {
-				my $size = $file->size;
-				my $name = $file->filename;
-				
-				return $self->error('Файл слишком большой!') if ($size >= 300_000);
-				
-				my $path = $self->upload_image($owner->{alias}, $file);
-				
-				$owner->set_avatar(avatar => $path);
-				
-				return $self->redirect_to('/' . $alias);
-			}
-		} elsif (my $info = $self->param('info')) {
-			$user->set_info(info => $info);
-			return $self->back;
-		} else {
-			my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
-			my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
+		return $self->error('Ошибка доступа!') unless $self->check_attack;
+		
+		my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
+		my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
 
-			my $feed = Opiate::Model::Feed->insert( 
-				user_id	=> $owner->{id},
-				subject => $subject,
-				message	=> $message,
-			);
-			return $self->back;
-		}
+		my $feed = Opiate::Model::Feed->insert( 
+			user_id	=> $owner->{id},
+			subject => $subject,
+			message	=> $message,
+		);
+		return $self->back;
 	}
 
 	
@@ -83,6 +66,43 @@ sub feed {
 		feed   => \@feed,
 		marker => $marker,
 	);
+}
+
+sub profile {
+	my $self = shift;
+	my $user = $self->user;
+	
+	my $owner = $self->owner() or return $self->page_404();
+	
+	my $marker = $self->param('marker') // Opiate::Model::Feed->get_max_id();
+	
+	my $alias = $owner->{alias};
+	
+	if ($self->req->method eq 'POST') {
+		return $self->error('Ошибка доступа!') unless $self->check_attack;
+		if ($self->param('avatar_upload')) {
+			for my $file (@{$self->req->uploads('upload')}) {
+				my $size = $file->size;
+				my $name = $file->filename;
+				
+				return $self->error('Файл слишком большой!') if ($size >= 300_000);
+				
+				my $path = $self->upload_image($owner->{alias}, $file);
+				
+				$owner->set_avatar(avatar => $path);
+				
+				return $self->redirect_to('/' . $alias);
+			}
+		} elsif (my $info = $self->param('info')) {
+			$user->set_info(info => $info);
+			return $self->back;
+		}
+	}
+	
+	return $self->render(
+		owner  => $owner,
+		alias  => $self->stash('alias'),
+	);	
 }
 
 sub ajax_feed_update {
@@ -133,7 +153,7 @@ sub post {
 	my $feed = Opiate::Model::Feed->select_by_id(id => $feed_id);
 
 	if ($self->req->method eq 'POST') {
-		die "HAXOR GET OFF!" unless $self->check_attack;
+		return $self->error('Ошибка доступа!') unless $self->check_attack;
 		
 		my $subject = $self->param('subject') or return $self->error('Вы не ввели тему сообщения!');
 		my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
