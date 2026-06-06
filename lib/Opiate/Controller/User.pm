@@ -68,7 +68,7 @@ sub feed {
 	my @feed = Opiate::Model::Feed->select(
 		user_id => $owner->{id},
 		case_id => $marker,
-		limit   => 50,
+		limit   => 10,
 	);
 	
 	for (@feed) {
@@ -91,19 +91,29 @@ sub ajax_feed_update {
 	
 	my $case_id = $self->param('case_id') or die "No case_id";
 	die "Wrong param" if $case_id =~ /\D/;
-
-
-	my @feed = Opiate::Model::Feed->select_new(
-		user_id => $owner->{id},
-		case_id => $case_id,
-		limit   => 50,
-	);
+	
+	my @feed;
+	
+	if ($self->param('last')) {
+		@feed = Opiate::Model::Feed->select_last(
+			user_id => $owner->{id},
+			case_id => $case_id,
+			limit   => 10,
+		);
+	} else {
+		@feed = Opiate::Model::Feed->select_new(
+			user_id => $owner->{id},
+			case_id => $case_id,
+			limit   => 10,
+		);
+	}
 	
 	return $self->render(
 		template => 'user/ajax_feed',
-		owner => $owner,
-		alias => $self->stash('alias'),		
-		feed  => \@feed,
+		owner   => $owner,
+		alias   => $self->stash('alias'),		
+		feed    => \@feed,
+		is_last => ($self->param('last') ? 1 : 0),
 	);
 }
 

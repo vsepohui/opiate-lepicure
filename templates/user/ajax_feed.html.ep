@@ -27,7 +27,11 @@
 	% }
 	<script>
 	$(function() {
-		set_ajax_feed_case_id(<%= $feed->[0]->{id} %>);
+		% if ($is_last) {
+			set_ajax_next_case_id(<%= $feed->[-1]->{id} %>);
+		% } else {
+			set_ajax_feed_case_id(<%= $feed->[0]->{id} %>);
+		% }
 	});
 	</script>
 % }

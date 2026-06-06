@@ -99,6 +99,27 @@ sub select_new {
 	return map {$class->new(%$_)} @list;
 }
 
+sub select_last {
+	my $class = shift;
+	my %opts  = (
+		user_id => undef,
+		limit	=> undef,
+		case_id	=> undef,
+		@_,
+	);
+	
+	my @list = $class->_db->select_all(q[
+		SELECT * 
+		FROM feed
+		WHERE user_id = ?
+		AND id < ?
+		ORDER BY id DESC
+		LIMIT ?
+	], $opts{user_id}, $opts{case_id}, $opts{limit});
+	
+	return map {$class->new(%$_)} @list;	
+}
+
 sub select_by_id {
 	my $class = shift;
 	my %opts  = (

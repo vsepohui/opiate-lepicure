@@ -27,12 +27,21 @@ function init_post_button_hook () {
 }
 
 var ajax_feed_case_id = null;
+var ajax_next_case_id = null;
 
 function get_ajax_feed_case_id () {
 	return ajax_feed_case_id;
 }
 function set_ajax_feed_case_id(val) {
 	ajax_feed_case_id = val;
+}
+
+function get_ajax_next_case_id () {
+	return ajax_next_case_id;
+}
+
+function set_ajax_next_case_id(val) {
+	ajax_next_case_id = val;
 }
 
 function init_ajax_feed_updater (alias, case_id) {
@@ -49,3 +58,27 @@ function init_ajax_feed_updater (alias, case_id) {
 }
 
 	
+function init_scroll_feed_hook (alias) {
+	var isLoading = 0;
+	var isFinished = false;
+	$(window).scroll(function() {
+		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+			if (!isLoading && !isFinished) {
+				isLoading = true;
+				
+				$.ajax({
+					url: '/'+alias+'/ajax/update',
+					type: 'GET',
+					data: { case_id: get_ajax_next_case_id(), last: 1 },
+					success: function(response) {
+						if (!response) {
+							isFinished = true;
+						}
+						$('#feed').append(response);
+						isLoading = false;
+					}
+				});
+			}
+		}
+	});
+}

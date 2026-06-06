@@ -20,7 +20,7 @@
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet"/>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-1.10.2.min.js"></script>
-    <script src="/js/script.js?_=3"></script>
+    <script src="/js/script.js?_=4"></script>
     <script src="/js/notify.js"></script>
 % if (my $js = stash 'include_js') {
 	<script src="/js/<%= $js %>"></script>

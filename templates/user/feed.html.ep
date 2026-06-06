@@ -83,6 +83,11 @@
 $(function() {
 	init_post_button_hook();
 	init_ajax_feed_updater('<%= $owner->{alias} %>', <%= $feed->[0]->{id} %>);
+	set_ajax_next_case_id(<%= $feed->[-1]->{id} %>);
+	% if (@$feed) {
+		init_scroll_feed_hook('<%= $owner->{alias} %>');
+	% }
+	
 })
 </script>
 
