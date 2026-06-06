@@ -35,9 +35,12 @@ sub books {
 	
 	my @books = Opiate::Model::Book->select_by_user_id(user_id => $owner->{id});
 	
+	my %lists_count = map {$_ => Opiate::Model::BookList->count(book_id => $_)} map {$_->{id}} @books;
+	
 	return $self->render(
-		owner => $owner, 
-		books => \@books,
+		owner       => $owner, 
+		books       => \@books,
+		lists_count => \%lists_count,
 	);
 }
 
