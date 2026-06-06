@@ -16,7 +16,7 @@
 	<title><%= $s %></title>
 	<link>https://opiate-lepicure.ru<%= $url %></link>
 	<description>
-	% my $msg = $f->{message};
+	% my $msg = $_->{message};
 	% my @l = split /\n/, $msg;
 	% for (@l) {
 		% $_ = html_escape $_;
