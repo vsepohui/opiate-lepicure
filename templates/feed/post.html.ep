@@ -21,13 +21,17 @@
 		% } else {
 		
 			<div id="feed">
-				<p>
-				<h4>
+			<br/>
+				% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
+				<p style="margin: 0;">
+				<img src="<%= $avatar %>" style="float: left; margin: 7px;" width="70" height="70">
+				<h5 style="margin-top: 3px;">
 				%= $feed->{subject};
-				</h4>
+				</h5>
+				[ <%= $owner->{name} %> ]<br/>
+				[ <%= format_postgres_timestamp $feed->{ctime} %> ]<br/>
 				</p>
-				<p>[<%= $feed->{ctime} %>]</p>
-				<p>
+				<p style="margin-top: 3px;">
 				% my $msg = $feed->{message};
 				% my @l = split /\n/, $msg;
 				% for (@l) {
