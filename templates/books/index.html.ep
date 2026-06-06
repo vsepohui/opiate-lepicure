@@ -18,7 +18,14 @@
 				% my $num = 0;
 				% for (@$list) {
 					% $num ++;
-					<li><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $num %>"><%= $_->{title} %></a></li>
+					% my $title = $_->{title};
+					% if ($title =~ /^\*+$/) {
+						% $title = $_->{text};
+						% $title =~ s/^(.*)?\n.*$/$1/mg;
+						% my @w = split /\s+/, $title;
+						% $title = (join ' ', grep {defined $_} ($w[0], $w[1], $w[2]) ). '...';
+					% }
+					<li><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $num %>"><%= $title %></a></li>
 				% }
 			</ol>
 		
