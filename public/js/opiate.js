@@ -726,7 +726,7 @@ function init_scroll_feed_hook (alias, case_id) {
 }
 
 function init_main () {
-	$('#logout').click( function() {
+	$('#logout-btn').click( function() {
 		$('#form-logout').submit();
 	});
 	var update_magic_Timer = setInterval(function() {
