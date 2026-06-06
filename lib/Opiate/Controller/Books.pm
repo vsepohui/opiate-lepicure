@@ -71,6 +71,29 @@ sub show {
 	);
 }
 
+sub index {
+	my $self = shift;
+	my $user = $self->user;
+	
+	my $owner = $self->owner();
+	
+	
+	my ($book) = Opiate::Model::Book->select_by_id(id => $self->stash('book_id')) or  return $self->error('Книга не найдена!');
+	return $self->error('Книга не найдена!') if(($book->{user_id} != $owner->{id}) || ($book->{alias} ne $self->stash('book_alias')));
+	
+	my @list = Opiate::Model::BookList->select(
+		book_id => $book->{id},
+		limit   => 1000,
+		offset  => 0,
+	);
+	
+	return $self->render(
+		owner       => $owner, 
+		book        => $book,
+		list        => \@list,
+	);	
+}
+
 
 sub add {
 	my $self = shift;

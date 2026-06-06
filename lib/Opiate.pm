@@ -69,6 +69,7 @@ sub startup {
 	$r->any('/#alias/books')->to('Books#books');
 	$r->any('/#alias/books/#book_id/#book_alias')->to('Books#show');
 	$r->any('/#alias/books/#book_id/#book_alias/add_list')->to('Books#add_list');
+	$r->any('/#alias/books/#book_id/#book_alias/index')->to('Books#index');
 	$r->any('/#alias/books/#book_id/#book_alias/#page_id')->to('Books#show');
 	
 	$r->any('/#alias/books/add')->to('Books#add');

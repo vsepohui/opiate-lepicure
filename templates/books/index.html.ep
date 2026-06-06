@@ -1,0 +1,28 @@
+% layout 'opiate';
+% title [$book->{name}, $owner->{name}];
+
+%= include 'include/user_header';
+
+<div class="container">
+	<div class="m-auto" style="max-width: 900px;">
+
+		<div id="feed">
+			<p>
+			<h1>
+				%= $book->{name};
+			</h1>
+			</p>
+			<p>[<%= $owner->{name} %>, <%= $book->{year} %>]</p>
+			<h2>Оглавление</h2>
+			<ol>
+				% my $num = 0;
+				% for (@$list) {
+					% my $num ++;
+					<li><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $num %>"><%= $_->{title} %></a></li>
+				% }
+			</ol>
+		
+	</div>
+</div>
+
+

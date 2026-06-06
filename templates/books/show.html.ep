@@ -16,16 +16,17 @@
 		
 		<div id="feed">
 			<p>
-			<h3>
+			<h1>
 				%= $book->{name};
-			</h3>
+			</h1>
 			</p>
 			<p>[<%= $owner->{name} %>, <%= $book->{year} %>]</p>
+			<p><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/index">Оглавление</a></p>
 			<p>
 
-			<h3>
+			<h2>
 				%= $list->{title};
-			</h3>
+			</h2>
 			
 			<p>
 				% my $msg = $list->{text};
