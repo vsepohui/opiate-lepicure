@@ -4,8 +4,8 @@
 <div class="container">
 	<br/>
 	<div class="m-auto" style="max-width: 900px;">
-		<h1><a href="/admin">Админка</a> &gt; <a href="/admin/users">Пользователи</a> &gt; <%= $admin_user->{alias} %><h1>
-		<form method="POST" action="/admin/users/edit" id="form_post">
+		<h1><a href="/temple">Тэмпл</a> &gt; <a href="/temple/users">Пользователи</a> &gt; <%= $admin_user->{alias} %><h1>
+		<form method="POST" action="/temple/users/edit" id="form_post">
 			%== magic;
 			<input type="hidden" name="alias" value="<%= $admin_user->{alias} %>"/>
 			<input class="form-control form-control-lg" style="margin-top: 14px;" type="text" id="name" name="name" placeholder="Имя пользователя" value="<%= $admin_user->{name} %>" required/>

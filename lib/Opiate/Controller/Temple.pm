@@ -1,4 +1,4 @@
-package Opiate::Controller::Admin;
+package Opiate::Controller::Temple;
 
 use strict;
 use warnings;
@@ -15,7 +15,7 @@ sub acl {
 }
 
 
-sub admin {
+sub temple {
 	my $self = shift;
 	$self->acl;
 	

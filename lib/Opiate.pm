@@ -75,10 +75,10 @@ sub startup {
 	$r->post('/logout')->to('Welcome#logout');
 	$r->any('/ajax/update_magic')->to('Welcome#update_magic');
 	
-	$r->any('/admin')->to('Admin#admin');
-	$r->any('/admin/users')->to('Admin#users');
-	$r->any('/admin/users/edit')->to('Admin#users_edit');
-	$r->any('/admin/invites')->to('Admin#invites');
+	$r->any('/temple')->to('Temple#temple');
+	$r->any('/temple/users')->to('Temple#users');
+	$r->any('/temple/users/edit')->to('Temple#users_edit');
+	$r->any('/temple/invites')->to('Temple#invites');
 	
 	$r->any('/#alias')->to('User#feed');
 	$r->any('/#alias/profile')->to('User#profile');
