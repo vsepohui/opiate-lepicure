@@ -69,20 +69,20 @@ sub startup {
 	
 	$r->any('/#alias/books')->to('Books#books');
 	$r->any('/#alias/books/#book_id/#book_alias')->to('Books#show');
-	$r->any('/#alias/books/#book_id/#book_alias/add_list')->to('Books#add_list');
+	$r->post('/#alias/books/#book_id/#book_alias/add_list')->to('Books#add_list');
 	$r->any('/#alias/books/#book_id/#book_alias/index')->to('Books#index');
 	$r->any('/#alias/books/#book_id/#book_alias/#page_id')->to('Books#show');
 	
-	$r->any('/#alias/books/add')->to('Books#add');
+	$r->post('/#alias/books/add')->to('Books#add');
 	
 	$r->any('/#alias/music')->to('Music#music');
-	$r->any('/#alias/music/add')->to('Music#add');
+	$r->post('/#alias/music/add')->to('Music#add');
 	
 	$r->any('/#alias/photos')->to('Photos#photos');
-	$r->any('/#alias/photos/upload')->to('Photos#upload');
+	$r->post('/#alias/photos/upload')->to('Photos#upload');
 	
 	$r->any('/#alias/links')->to('Links#links');
-	$r->any('/#alias/links/add')->to('Links#add');
+	$r->post('/#alias/links/add')->to('Links#add');
 	
 	
 	
