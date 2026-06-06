@@ -14,14 +14,14 @@
 		</form>
 		% }
 		
-		<br/>
-		
-		<ul>
-			% for (@$books) {
-				<li><a href="/<%= $owner->{alias} %>/books/<%= $_->{id} %>/<%= $_->{alias} %>/<%= $lists_count->{$_->{id}} > 1 ? 'index' : '1' %>"><%= $_->{name} %>, <%= $_->{year} %></a></li>
-			% }
-		</ul>
-		
+		% if (@$books) {
+			<br/>
+			<ul>
+				% for (@$books) {
+					<li><a href="/<%= $owner->{alias} %>/books/<%= $_->{id} %>/<%= $_->{alias} %>/<%= $lists_count->{$_->{id}} > 1 ? 'index' : '1' %>"><%= $_->{name} %>, <%= $_->{year} %></a></li>
+				% }
+			</ul>
+		% }
 	</div>
 </div>
 
