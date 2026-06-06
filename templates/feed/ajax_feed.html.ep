@@ -2,7 +2,7 @@
 	% for my $f (@$feed) {
 		<br/>
 		% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
-		<img src="<%= $avatar %>" class="rounded-circle" style="float: left; margin: 7px;" width="70" height="70">
+		<img src="<%= $avatar %>" class="rounded-circle" style="float: left; margin: 7px;" width="100" height="100">
 		<h4>
 		%= $f->{subject};
 		</h4>
