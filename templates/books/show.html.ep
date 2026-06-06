@@ -27,8 +27,16 @@
 				%= $list->{title};
 			</h3>
 			
-			<p><%= $list->{text} %></p>
-
+			<p>
+				% my $msg = $list->{text};
+				% my @l = split /\n/, $msg;
+				% for (@l) {
+					% $_ =~ s/</&lt;/g;
+					% $_ =~ s/>/&gt;/g;
+					%== $_;
+					<br/>
+				% }
+			</p>
 			<hr/>			
 		</div>
 		
