@@ -5,10 +5,12 @@
 
 <div class="container">
 	<div class="m-auto" style="max-width: 900px;">
+		% if ($c->session('alias') eq $owner->{alias}) {
 		<form action="/<%= $owner->{alias} %>/music/add" id="form" method="POST">
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="html" name="html" placeholder="Код с bandcamp.com" required/>
 			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_album" type="button" value="Добавить альбом"/>
 		</form>
+		% }
 		<br/>
 		
 		% for (@$music) {

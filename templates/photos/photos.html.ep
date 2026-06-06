@@ -5,10 +5,12 @@
 
 <div class="container">
 	<div class="m-auto" style="max-width: 900px;">
+		% if ($c->session('alias') eq $owner->{alias}) {
 		<form action="/<%= $owner->{alias} %>/photos/upload" id="form" method="POST" enctype="multipart/form-data">
 			<input class="btn btn-primary" type="file" accept="image/*" capture="camera" name="upload" id="upload" style="display: none;">
 			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="upload_photo" type="submit" value="Загрузить"/>
 		</form>
+		% }
 
 		<div class="grid">
 		% for (@$photos) {

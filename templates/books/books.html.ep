@@ -6,11 +6,13 @@
 
 <div class="container">
 	<div class="m-auto" style="max-width: 900px;">
+		% if ($c->session('alias') eq $owner->{alias}) {
 		<form action="/<%= $owner->{alias} %>/books/add" id="form" method="POST">
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="name" name="name" placeholder="Название книги" required/>
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="year" name="year" placeholder="Год написания" required/>
 			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_book" type="submit" value="Создать"/>
 		</form>
+		% }
 		
 		<br/>
 		
