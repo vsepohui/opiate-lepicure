@@ -12,11 +12,11 @@
 		</form>
 		% }
 
-		<div class="grid">
+		<div class="grid row">
 		% for (@$photos) {
-			<div class="grid-item" style="width: 270px; padding-top: 20px;">
+			<div class="grid-item col-md-4" style="padding-top: 20px;">
 				<a href="<%= $_->{path} %>" data-lightbox="roadtrip">
-					<img src="<%= $_->{path} %>" style="width: 280px;"/>
+					<img src="<%= $_->{path} %>" style="max-width: 100%;"/>
 				</a>
 			</div>
 		% }
@@ -30,8 +30,8 @@
 <script>
 $(function() {
     var $grid = $('.grid').masonry({
-        itemSelector: '.grid-item',
-        columnWidth: 300
+        itemSelector: '.grid-item'
+        // columnWidth: 300
     });
     
     $grid.imagesLoaded().progress( function() {

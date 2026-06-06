@@ -6,20 +6,19 @@
 <div class="container">
 	<br/>
 
-	<div class="m-auto" style="max-width: 900px;">
+	<div class="m-auto row" style="max-width: 900px;">
 		% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
-		<img src="<%= $avatar %>" width="240px;" style="float: left; margin-right: 40px;"/><br/>
+		<img src="<%= $avatar %>" class="col-md-4" style="float: left; margin-bottom: 20px;"/>
+		<div class="col-md-8">
 		<h3><%= $owner->{name} %></h3>
 		% my $info = html_escape ($owner->{info} // '');
 		% $info =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
 		% $info =~ s/\n/<br\/>/g;
 		%== $info;
-		
 		<br/><br/>
-		
-		<hr/>
+		</div>
 
-		<ul class="nav nav-pills nav-fill">
+		<ul class="nav nav-tabs">
 		  <li class="nav-item">
 			<a class="nav-link<%= ' active' if $area eq 'feed' %>" aria-current="page" href="/<%= $alias %>">Лента</a>
 		  </li>
@@ -36,7 +35,6 @@
 			<a class="nav-link<%= ' active' if $area eq 'links' %>" href="/<%= $alias %>/links">Ссылки</a>
 		  </li>
 		</ul>
-		<hr/>
 	</div>
 </div>
 
