@@ -11,7 +11,7 @@ use Opiate::Model::Invite;
 
 sub acl {
 	my $self = shift;
-	die $self->error('Ошибка доступа') unless $self->stash('is_admin');
+	die $self->error('Ошибка доступа') unless $self->stash('is_god');
 }
 
 

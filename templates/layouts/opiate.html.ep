@@ -68,7 +68,7 @@
 				  </button>
 				  <ul class="dropdown-menu"  style="font-size: 24px;">
 					<li><a class="dropdown-item" href="/profile">Настройки</a></li>
-					% if ($is_admin) {
+					% if ($is_god) {
 						<li><a class="dropdown-item" href="/temple">Тэмпл</a></li>
 					% }
 					<li><a class="dropdown-item" href="#" id="logout">Выход</a></li>

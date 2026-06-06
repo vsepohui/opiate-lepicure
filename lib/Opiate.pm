@@ -27,7 +27,7 @@ sub startup {
 		my $i = crc32 ($$ . time() . $c->req->request_id()) . substr($$, -3) . substr(time(), -3);
 		srand($i);
 		
-		$c->stash('is_admin' => 0);
+		$c->stash('is_god' => 0);
 		
 		my $user;
 		
@@ -36,7 +36,7 @@ sub startup {
 			if ($sip eq $c->ip) {
 				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
 					$c->stash('user' => $user);
-					$c->stash('is_admin' => ($user->{alias} eq $self->config->{admin}));				
+					$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
 				} else {
 					return $c->page_404;
 				}
