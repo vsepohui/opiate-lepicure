@@ -1,12 +1,14 @@
 % if (@$feed) {
 	% for my $f (@$feed) {
-		<p>
+		<br/>
+		% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
+		<img src="<%= $avatar %>" class="rounded-circle" style="float: left; margin: 7px;" width="70" height="70">
 		<h4>
 		%= $f->{subject};
 		</h4>
-		</p>
-		<p>[<%= format_postgres_timestamp $f->{ctime} %>]</p>
-		<p>
+		[ <%= $owner->{name} %> ]<br/>
+		[ <%= format_postgres_timestamp $f->{ctime} %> ]<br/>
+		<p style="margin-top: 5px;">
 		% my $msg = $f->{message};
 		% my @l = split /\n/, $msg;
 		% for (@l) {
