@@ -6,6 +6,7 @@ use warnings;
 use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
+use Opiate::Model::Link;
 use Opiate::Magic;
 
 use utf8;
@@ -26,8 +27,13 @@ sub links {
 	my $user = $self->user;
 	
 	my $owner = $self->owner();
+	
+	my @links = Opiate::Model::Link->select(user_id => $owner->{id});
 
-	return $self->render(owner => $owner);
+	return $self->render(
+		owner => $owner,
+		links => \@links,
+	);
 }
 
 sub add {
@@ -36,9 +42,19 @@ sub add {
 	
 	return $self->error('Ошибка доступа!') unless $self->is_allowed();
 	my $owner = $self->owner();
+
+	my $url         = $self->param('url') or return $self->error('Вы не ввели ссылку!');
+	my $description = $self->param('description') or return $self->error('Вы не ввели описание ссылки!');	
+
+	Opiate::Model::Link->insert(
+		user_id     => $owner->{id},
+		url         => $url, 
+		description => $description,
+	);
 	
-	...
+	return $self->redirect_to('/' . $owner->{alias} . '/links');
 }
 
 
 1;
+
