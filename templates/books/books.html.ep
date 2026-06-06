@@ -18,7 +18,7 @@
 		
 		<ul>
 			% for (@$books) {
-				<li><a href="/<%= $owner->{alias} %>/books/<%= $_->{id} %>/<%= $_->{alias} %>"><%= $_->{name} %>, <%= $_->{year} %></a></li>
+				<li><a href="/<%= $owner->{alias} %>/books/<%= $_->{id} %>/<%= $_->{alias} %>/index"><%= $_->{name} %>, <%= $_->{year} %></a></li>
 			% }
 		</ul>
 		

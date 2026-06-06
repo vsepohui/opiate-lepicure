@@ -21,8 +21,6 @@
 			</h1>
 			</p>
 			<p>[<%= $owner->{name} %>, <%= $book->{year} %>]</p>
-			<p><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/index">Оглавление</a></p>
-			<p>
 
 			<h2>
 				%= $list->{title};
