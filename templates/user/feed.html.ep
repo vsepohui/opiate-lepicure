@@ -1,13 +1,13 @@
 % layout 'opiate', has_feed => 1;
 % title $owner->{name};
 
+% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
 
 % if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
 <div class="container">
 <br/>
 	<div class="m-auto" style="max-width: 900px;">
 
-	% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
 	% if (param ('edit') && $c->session('alias') eq $owner->{alias}) {
 	<div style="float:left; display: block;">
 			<img src="<%= $avatar %>" width="240px;" style="float: left; margin-right: 40px;"/><br/>
@@ -50,11 +50,10 @@
 		
 		<div id="feed">
 		% for my $f (@$feed) {
-			<p>
+			<br/>
 			<h4>
 			%= $f->{subject};
 			</h4>
-			</p>
 			<p>[<%= format_postgres_timestamp $f->{ctime} %>]</p>
 			<p>
 			% my $msg = $f->{message};

@@ -44,7 +44,9 @@ sub add {
 	my $owner = $self->owner();
 
 	my $url         = $self->param('url') or return $self->error('Вы не ввели ссылку!');
-	my $description = $self->param('description') or return $self->error('Вы не ввели описание ссылки!');	
+	my $description = $self->param('description') or return $self->error('Вы не ввели описание ссылки!');
+	
+	return $self->error('Вы ввели некорректную ссылку!') unless $url =~ /^https?:\/\/[\d\w\-\.]+/;
 
 	Opiate::Model::Link->insert(
 		user_id     => $owner->{id},
