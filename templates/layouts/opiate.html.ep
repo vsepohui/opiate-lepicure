@@ -56,7 +56,7 @@
 				<span class="fs-4"><i class="bi bi-book" style="font-size: 32px;"></i>&nbsp; Opiate L'Epicure</span>
 			</a>
 			<ul class="nav nav-pills text-right fs-4">
-		% if ($user) {
+			% if ($user) {
 				<div class="dropdown">
 				  <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					<i class="bi bi-gear"  style="font-size: 32px;"></i>
@@ -69,14 +69,12 @@
 					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logout-confirm" id="logout">Выход</a></li>
 				  </ul>
 				</div>
-		% }
+			% }
 			</ul>
 		</header>
 		<form action="/logout" id="form-logout" method="POST"/>
 			%== magic;
 		</form>
-
-
 		<div class="modal fade" id="logout-confirm" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -89,8 +87,6 @@
 				</div>
 			</div>
 		</div>
-
-			
 	</div>
 	<%= content %>
 	<script>
