@@ -203,3 +203,8 @@ function init_photos () {
 		mutex += 1;		
 	});	
 }
+
+
+$(function() {
+	init_main();
+});
