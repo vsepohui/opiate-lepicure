@@ -7,7 +7,7 @@
 	<div class="m-auto" style="max-width: 900px;">
 
 	% unless (param 'edit') {
-		% if ($c->session('alias') eq $owner->{alias}) {
+		% if ($c->session('alias') && $c->session('alias') eq $owner->{alias}) {
 		<form method="POST" action="/<%= $alias %>" id="form_post">
 			%== magic;
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="subject" name="subject" placeholder="Тема сообщения" spellcheck="true" required/>
