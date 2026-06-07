@@ -20,7 +20,7 @@
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
     <li><a class="dropdown-item" href="#" id="copy-profile-url"><i class="bi bi-copy"></i> Скопировать ссылку на профиль</a></li>
-    % if ($owner->{id} == $user->{id}) {
+    % if ($user && $owner->{id} == $user->{id}) {
 		<li><a class="dropdown-item" href="/profile"><i class="bi bi-pencil"></i> Редактировать профиль</a></li>
 	% }
   </ul>
