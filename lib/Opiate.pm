@@ -47,6 +47,8 @@ sub startup {
 			 $self->session(expires => 1);
 		}
 
+		$c->stash('user' => $user);
+		
 		my $code = Opiate::Magic->generate_random_string(32).':'.($user ? $user->{id} : 0).':'.time();
 		my $token = Opiate::Magic->sign_with_secret($code, $c->config->{secrets}->[0]);
 
