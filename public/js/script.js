@@ -28,6 +28,7 @@ function init_post_button_hook () {
 
 var ajax_feed_case_id = null;
 var ajax_next_case_id = null;
+var user_alias        = null;
 
 function get_ajax_feed_case_id () {
 	return ajax_feed_case_id;
@@ -44,7 +45,12 @@ function set_ajax_next_case_id(val) {
 	ajax_next_case_id = val;
 }
 
+function set_user_alias (val) {
+	user_alias = val;
+}
+
 function init_ajax_feed(alias, x, y) {
+	set_user_alias(alias);
 	init_ajax_feed_updater(alias, x);
 	init_scroll_feed_hook(alias, y);
 }
@@ -207,4 +213,7 @@ function init_photos () {
 
 $(function() {
 	init_main();
+	$('#copy-profile-url').click(function() {
+		navigator.clipboard.writeText("https://opiate-lepicure.ru/" + user_alias);
+	});
 });

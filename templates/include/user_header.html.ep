@@ -9,18 +9,36 @@
 	<div class="m-auto row" style="max-width: 900px;">
 		% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
 		<img src="<%= $avatar %>" class="col-md-4" style="float: left; margin-bottom: 20px;"/>
+
+
+		
 		<div class="col-md-8">
+
+<div class="dropdown" style="float: right">
+  <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="bi bi-three-dots"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><a class="dropdown-item" href="#" id="copy-profile-url"><i class="bi bi-copy"></i> Скопировать ссылку на профиль</a></li>
+    % if ($owner->{id} == $user->{id}) {
+		<li><a class="dropdown-item" href="/profile">Редактировать профиль</a></li>
+	% }
+  </ul>
+</div>
+
+
 		<h3><%= $owner->{name} %></h3>
 		% my $info = html_escape ($owner->{info} // '');
 		% $info =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
 		% $info =~ s/\n/<br\/>/g;
 		%== $info;
+
+		
 		<br/><br/>
 		</div>
-
 		<ul class="nav nav-tabs">
 		  <li class="nav-item">
-			<a class="nav-link<%= ' active' if $area eq 'feed' %>" aria-current="page" href="/<%= $alias %>">Лента</a>
+			<a class="nav-link<%= ' active' if $area eq 'feed' %>" href="/<%= $alias %>">Лента</a>
 		  </li>
 		  <li class="nav-item">
 			<a class="nav-link<%= ' active' if $area eq 'books' %>" href="/<%= $alias %>/books">Книги</a>

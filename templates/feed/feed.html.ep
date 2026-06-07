@@ -28,6 +28,8 @@ $(function() {
 	init_post_button_hook();
 % if (@$feed) {
 	init_ajax_feed('<%= $owner->{alias} %>', <%= $feed->[0]->{id} %>, <%= $feed->[-1]->{id} %>);
+% } else {
+	set_user_alias('<%= $owner->{alias} %>');
 % }
 });
 </script>
