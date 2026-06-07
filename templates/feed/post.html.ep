@@ -4,11 +4,8 @@
 %= include 'include/user_header';
 
 <div class="container">
-
-
 	<br/>
 	<div class="m-auto" style="max-width: 900px;">
-	
 		% if (param 'edit') {
 			% if ($c->session('alias') eq $owner->{alias}) {
 				<form method="POST" action="/<%= $alias %>/feed/<%= $feed->{id} %>?edit=1" id="form_post">
@@ -19,41 +16,8 @@
 				</form>			
 			% }
 		% } else {
-		
 			<div id="feed">
-			<br/>
-				% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
-				<div class="d-flex align-items-center" style="display: flow-root">
-				<img src="<%= $avatar %>" style="float: left; margin: 7px;" width="100" height="100">
-				
-				<div style="display: block">
-				<h5 style="margin-top: 3px;">
-				%= $feed->{subject};
-				</h5>
-				[ <%= $owner->{name} %> ]<br/>
-				[ <%= format_postgres_timestamp $feed->{ctime} %> ]<br/>
-				</div>
-				</div>
-			
-				<p style="margin-top: 3px;">
-				% my $msg = $feed->{message};
-				% my @l = split /\n/, $msg;
-				% for (@l) {
-					% $_ =~ s/</&lt;/g;
-					% $_ =~ s/>/&gt;/g;
-					% $_ =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2" target="_blank"\>$2\<\/a\>/g;
-					%== $_;
-					<br/>
-				% }
-				</p>
-				<p>
-					<strong><i class="bi bi-eye"></i></strong> <%= $feed->{visit_count} || 1 %>
-					<a href="/<%= $owner->{alias} %>/feed/<%= $feed->{id} %>" style="color: black"><strong><i class="bi bi-link-45deg"></i></strong></a>
-					% if ($c->session('alias') eq $owner->{alias}) {
-						<a href="/<%= $owner->{alias} %>/feed/<%= $feed->{id} %>?edit=1" style="color: black"><strong><i class="bi bi-pencil"></i></strong></a>
-					% }
-				</p>
-				<hr/>
+				%== include 'include/feed_part', feed => [$feed];
 			</div>
 		</div>
 	 % }

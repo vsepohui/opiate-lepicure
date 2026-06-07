@@ -141,3 +141,65 @@ function init_books_add_list_form() {
 	});
 }
 
+function init_add_link_button () {
+	var mutex = 0;
+	$('#add_link').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#description').val() && $('#description').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#url').show(604);
+		$('#description').show(604);
+		
+		mutex += 1;		
+	});	
+}
+
+function init_add_album_button () {
+	var mutex = 0;
+	$('#add_album').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#html').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#html').show(604);
+		$('#post_button').val('Отправить');
+		
+		mutex += 1;		
+	});
+}
+
+function init_photos () {
+    var $grid = $('.grid').masonry({
+        itemSelector: '.grid-item'
+        // columnWidth: 300
+    });
+    
+    $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+    });
+
+	var mutex = 0;
+	$('#upload_photo').click(function (event) {
+		event.preventDefault();
+		if (mutex % 2 == 1) {
+			if ($('#upload').val()) {		
+				var form = $('#form');
+				form.submit();
+			}
+			return;
+		}
+		$('#upload').show(604);
+
+		
+		mutex += 1;		
+	});	
+}

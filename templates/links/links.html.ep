@@ -28,21 +28,7 @@
 
 <script>
 $(function() {
-	var mutex = 0;
-	$('#add_link').click(function (event) {
-		event.preventDefault();
-		if (mutex % 2 == 1) {
-			if ($('#description').val() && $('#description').val()) {		
-				var form = $('#form');
-				form.submit();
-			}
-			return;
-		}
-		$('#url').show(604);
-		$('#description').show(604);
-		
-		mutex += 1;		
-	});
+	init_add_link_button();
 })
 </script>
 
