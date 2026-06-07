@@ -213,7 +213,8 @@ function init_photos () {
 
 $(function() {
 	init_main();
-	$('#copy-profile-url').click(function() {
+	$('#copy-profile-url').click(function(e) {
+		e.preventDefault();
 		navigator.clipboard.writeText("https://opiate-lepicure.ru/" + user_alias);
 	});
 });
