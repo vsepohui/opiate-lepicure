@@ -146,7 +146,9 @@ sub add_list {
 			text    => $text,
 		);
 		
-		return $self->redirect_to('/' . $owner->{alias} . '/books/' . $book->{id} . '/' . $book->{alias});
+		my $lists_count = Opiate::Model::BookList->count(book_id => $book->{id});
+		
+		return $self->redirect_to('/' . $owner->{alias} . '/books/' . $book->{id} . '/' . $book->{alias} . '/' . $lists_count);
 	}
 
 	return $self->redirect_to('/' . $owner->{alias} . '/books');
