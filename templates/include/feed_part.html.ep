@@ -2,7 +2,7 @@
 	<br/>
 	% my $avatar = $owner->{avatar} // '/i/anonym.jpg';
 	<div class="d-flex align-items-center" style="display: flow-root">
-	<img src="<%= $avatar %>" style="float: left; margin: 7px;" width="100" height="100">
+	<img src="<%= $avatar %>" style="float: left; margin-right: 7px; margin-bottom: 7px;" width="100" height="100">
 	
 	<div style="display: block">
 	<h5 style="margin-top: 3px;">

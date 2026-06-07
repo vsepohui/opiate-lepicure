@@ -114,3 +114,7 @@ display: block !important;
 .nav-link:hover, .nav-link:focus {
   	color: #a74a23;
 }
+
+#feed {
+	padding: 7px;
+}

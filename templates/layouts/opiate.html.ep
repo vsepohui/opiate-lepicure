@@ -16,7 +16,7 @@
     <meta name="author" content="Ivan Trunaev"/>
     <meta name="generator" content="Ivan Trunaev Hands"/>
     <title><%= $title %></title>
-    <link href="/css/opiate.min.css" rel="stylesheet" />
+    <link href="/css/opiate.min.css?_=2" rel="stylesheet" />
     <script src="/js/opiate.min.js?_=8"></script>
 % if (my $js = stash 'include_js') {
 	<script src="/js/<%= $js %>"></script>
