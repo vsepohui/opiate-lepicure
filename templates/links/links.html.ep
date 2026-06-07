@@ -11,7 +11,7 @@
 			%== magic;
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="url" name="url" placeholder="Ссылка" required/>
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="description" name="description" placeholder="Описание ссылки" required/>
-			<input  class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_link" type="submit" value="Добавить ссылку"/>
+			<button class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="add_link"><i class="bi-plus-circle"></i> Добавить ссылку</button>
 		</form>
 		% }
 		% if (@$links) {
