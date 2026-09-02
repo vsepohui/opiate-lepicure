@@ -9,7 +9,7 @@ use DBD::Pg;
 
 sub _dbh {
 	my $class = shift;
-	state $dbh = DBI->connect("dbi:Pg:dbname=opiate", 'opiate', '', {AutoCommit => 1});
+	state $dbh = DBI->connect("dbi:Pg:dbname=opiate", 'opiate', 'XvDa_bDVaxiFateoNGr3etcZ', {AutoCommit => 1});
 	return $dbh;
 }
 
