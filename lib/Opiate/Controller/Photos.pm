@@ -47,7 +47,7 @@ sub upload {
 		my $size = $file->size;
 		my $name = $file->filename;
 		
-		return $self->error('Файл слишком большой!') if ($size >= 700_000);
+		return $self->error('Файл слишком большой!') if ($size >= 4_000_000);
 		
 		my $path = $self->upload_image($owner->{alias}, $file);
 		
