@@ -23,7 +23,7 @@ sub welcome {
 		$self->session(alias => $user->{alias});
 		$self->session(ip => $self->ip);
 		if ($self->param('remember')) {
-			$self->session(expiration => 4233600);
+			$self->session(expiration => time + 60*60*24*365);
 		} else {
 			$self->session(expiration => 86400);
 		}
