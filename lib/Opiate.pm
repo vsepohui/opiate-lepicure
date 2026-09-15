@@ -128,11 +128,11 @@ sub check_auth {
 				return $c->page_404;
 			}
 		} else {
-			delete $c->session->{alias};
+			#delete $c->session->{alias};
 			$c->session(expires => 1);
 		}
 	} else {
-		delete $c->session->{alias};
+		#delete $c->session->{alias};
 		$c->session(expires => 1);
 	}
 
