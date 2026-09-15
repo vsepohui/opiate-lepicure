@@ -24,57 +24,12 @@ sub startup {
     
     $self->sessions->cookie_name('opiate');
 
-	$self->hook(before_dispatch => sub {
-		my $c = shift;
-		my $i = crc32 ($$ . time() . $c->req->request_id()) . substr($$, -3) . substr(time(), -3);
-		srand($i);
-		
-		$c->stash('is_god' => 0);
-		
-		my $user;
-		
-		# Check cookie
-		if (my $sip = $c->session('ip')) {
-			if ($sip eq $c->ip) {
-				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
-					$c->stash('user' => $user);
-					$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
-				} else {
-					return $c->page_404;
-				}
-			} else {
-				delete $c->session->{alias};
-				$c->session(expires => 1);
-			}
-		} else {
-			delete $c->session->{alias};
-			$c->session(expires => 1);
-		}
-
-		$c->stash('user' => $user);
-		
-		my $code = Opiate::Magic->generate_random_string(32).':'.($user ? $user->{id} : 0).':'.time();
-		my $token = Opiate::Magic->sign_with_secret($code, $c->config->{secrets}->[0]);
-
-		$c->stash(magic => '<input type="hidden" name="magic" value="' . $code . ':' . $token . '"/>');	
-
-
-		if ($c->req->method() eq 'POST') {
-			my $magic = $c->param('magic') or return $c->page_404;
-			my ($rnd, $user_id, $time, $sign) = split /:/, $magic;
-			
-			die "Wrong magic" if ($user_id != ($user ? $user->{id} : 0));
-			
-			my $code = $rnd . ':' . $user_id . ':' . $time;
-			return $c->error('Попробуйте еще раз') if (Opiate::Magic->sign_with_secret($code, $c->config->{secrets}->[0]) ne $sign || time() > $time + 60);
-		}
-		
-		
-		return 1;
-	});
-
 	
-	my $r = $self->routes;
+	my $r = $self->routes->under('/' => sub {
+		my $c = shift;
+		$self->check_auth($c);
+	});
+	
 	$r->any('/')->to('Welcome#welcome');
 	$r->any('/welcome')->to('Welcome#welcome');
 	$r->any('/invite')->to('Welcome#invite');
@@ -150,6 +105,57 @@ sub startup {
 			return $self->stash('magic');
 		}
 	);
+}
+
+sub check_auth {
+	my $self = shift;
+	my $c = shift;
+	
+	my $i = crc32 ($$ . time() . $c->req->request_id()) . substr($$, -3) . substr(time(), -3);
+	srand($i);
+	
+	$c->stash('is_god' => 0);
+	
+	my $user;
+	
+	# Check cookie
+	if (my $sip = $c->session('ip')) {
+		if ($sip eq $c->ip) {
+			if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
+				$c->stash('user' => $user);
+				$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
+			} else {
+				return $c->page_404;
+			}
+		} else {
+			delete $c->session->{alias};
+			$c->session(expires => 1);
+		}
+	} else {
+		delete $c->session->{alias};
+		$c->session(expires => 1);
+	}
+
+	$c->stash('user' => $user);
+	
+	my $code = Opiate::Magic->generate_random_string(32).':'.($user ? $user->{id} : 0).':'.time();
+	my $token = Opiate::Magic->sign_with_secret($code, $c->config->{secrets}->[0]);
+
+	$c->stash(magic => '<input type="hidden" name="magic" value="' . $code . ':' . $token . '"/>');	
+
+
+	if ($c->req->method() eq 'POST') {
+		my $magic = $c->param('magic') or return $c->page_404;
+		my ($rnd, $user_id, $time, $sign) = split /:/, $magic;
+		
+		die "Wrong magic" if ($user_id != ($user ? $user->{id} : 0));
+		
+		my $code = $rnd . ':' . $user_id . ':' . $time;
+		return $c->error('Попробуйте еще раз') if (Opiate::Magic->sign_with_secret($code, $c->config->{secrets}->[0]) ne $sign || time() > $time + 60);
+	}
+	
+	
+	return 1;
 }
 
 1;
