@@ -42,11 +42,11 @@ sub startup {
 				}
 			} else {
 				$self->session(alias => undef);
-				$self->session(expires => 1);
+				$self->session(expires => -1);
 			}
 		} else {
 			$self->session(alias => undef);
-			$self->session(expires => 1);
+			$self->session(expires => -1);
 		}
 
 		$c->stash('user' => $user);
