@@ -41,12 +41,12 @@ sub startup {
 					return $c->page_404;
 				}
 			} else {
-				delete $self->session->{alias};
-				$self->session(expires => 1);
+				delete $c->session->{alias};
+				$c->session(expires => 1);
 			}
 		} else {
-			delete $self->session->{alias};
-			$self->session(expires => 1);
+			delete $c->session->{alias};
+			$c->session(expires => 1);
 		}
 
 		$c->stash('user' => $user);
