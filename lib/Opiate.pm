@@ -41,10 +41,12 @@ sub startup {
 					return $c->page_404;
 				}
 			} else {
-				 $self->session(expires => 1);
+				$self->session({});
+				#$self->session(expires => 1);
 			}
 		} else {
-			 $self->session(expires => 1);
+			$self->session({});
+			#$self->session(expires => 1);
 		}
 
 		$c->stash('user' => $user);
