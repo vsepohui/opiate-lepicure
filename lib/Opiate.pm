@@ -41,11 +41,11 @@ sub startup {
 					return $c->page_404;
 				}
 			} else {
-				$self->session({});
+				$self->{session} = {};
 				#$self->session(expires => 1);
 			}
 		} else {
-			$self->session({});
+			$self->{session} = {};
 			#$self->session(expires => 1);
 		}
 
