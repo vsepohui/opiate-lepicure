@@ -21,6 +21,8 @@ sub startup {
 
     $self->routes->namespaces(['Opiate::Controller']);
     $self->controller_class('Opiate::Controller');
+    
+    $self->sessions->cookie_name('opiate');
 
 	$self->hook(before_dispatch => sub {
 		my $c = shift;
