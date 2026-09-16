@@ -119,7 +119,7 @@ sub check_auth {
 	my $user;
 	
 	# Check cookie
-	warn "URI = ". $c->req->url->to_abs ;
+	warn "URI = ". $c->req->url->to_rel;
 	if (my $sip = $self->session('client_ip') && not $c->req->url->to_rel ~~ ['/', '/welcome']) {
 		if ($sip eq $c->ip) {
 			if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
