@@ -22,10 +22,10 @@ sub startup {
     $self->routes->namespaces(['Opiate::Controller']);
     $self->controller_class('Opiate::Controller');
     
-    #$self->sessions->cookie_name('opiate');
+    $self->sessions->cookie_name('opiate');
 
 	
-	my $r = $self->routes->under('/' => sub {
+	my $r = $self->routes->under(sub {
 		my $c = shift;
 		$self->check_auth($c);
 	});
@@ -119,9 +119,8 @@ sub check_auth {
 	my $user;
 	
 	# Check cookie
-	warn "URI = ". $c->req->url->path;
 	unless ($c->req->url->path ~~ ['/', '/welcome']) {
-		if (my $sip = $self->session('client_ip')) {
+		if (my $sip = $c->session('client_ip')) {
 			if ($sip eq $c->ip) {
 				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
 					$c->stash('user' => $user);
@@ -130,17 +129,11 @@ sub check_auth {
 					return $c->page_404;
 				}
 			} else {
-				warn "Cleanup session";
-				warn "Wrong ip: " . $sip . ' <=> ' . $c->ip;
-				#delete $c->session->{alias};
+				delete $c->session->{alias};
 				$c->session(expires => 1);
 			}
 		} else {
-			warn "Cleanup session";
-			warn "No session ip";
-			use Data::Dumper;
-			warn Dumper {%{$self->session}};
-			#delete $c->session->{alias};
+			delete $c->session->{alias};
 			$c->session(expires => 1);
 		}
 	}
