@@ -22,7 +22,7 @@ sub startup {
     $self->routes->namespaces(['Opiate::Controller']);
     $self->controller_class('Opiate::Controller');
     
-    $self->sessions->cookie_name('opiate');
+    #$self->sessions->cookie_name('opiate');
 
 	
 	my $r = $self->routes->under('/' => sub {
