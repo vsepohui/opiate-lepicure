@@ -26,7 +26,7 @@ sub welcome {
 		if ($self->param('remember')) {
 			$self->session(expiration => time + 60*60*24*365);
 		} else {
-			$self->session(expiration => 86400);
+			$self->session(expiration => time + 86400);
 		}
 		return $self->redirect_to('/' . $user->{alias});
 	}
