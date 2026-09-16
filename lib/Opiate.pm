@@ -119,23 +119,19 @@ sub check_auth {
 	my $user;
 	
 	# Check cookie
-	unless ($c->req->url->path ~~ ['/', '/welcome']) {
-		if (my $sip = $c->session('client_ip')) {
-			if ($sip eq $c->ip) {
-				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
-					$c->stash('user' => $user);
-					$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
-				} else {
-					return $c->page_404;
-				}
+	if (my $sip = $c->session('ip')) {
+		if ($sip eq $c->ip) {
+			if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
+				$c->stash('user' => $user);
+				$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
 			} else {
-				delete $c->session->{alias};
-				$c->session(expires => 1);
+				return $c->page_404;
 			}
 		} else {
-			delete $c->session->{alias};
-			$c->session(expires => 1);
+			%{$c->session} = ();
 		}
+	} else {
+		%{$c->session} = ();
 	}
 
 	$c->stash('user' => $user);
