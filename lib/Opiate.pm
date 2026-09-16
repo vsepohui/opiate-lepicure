@@ -128,11 +128,13 @@ sub check_auth {
 				return $c->page_404;
 			}
 		} else {
+			warn "Cleanup session";
 			warn "Wrong ip: " . $sip . ' <=> ' . $c->ip;
 			#delete $c->session->{alias};
 			$c->session(expires => 1);
 		}
 	} else {
+		warn "Cleanup session";
 		warn "No session ip";
 		use Data::Dumper;
 		warn Dumper {%{$self->session}};
