@@ -21,7 +21,7 @@ sub welcome {
 		my ($user) = Opiate::Model::User->get_by_email(email => $email) or return $self->error('Не верный пароль');
 		return $self->error('Не верный пароль') unless $user->check_password($password);
 		warn "setup ip".$self->ip;
-		$self->session(alias => $user->{alias}, ip => $self->ip);
+		$self->session(alias => $user->{alias}, client_ip => $self->ip);
 
 		if ($self->param('remember')) {
 			$self->session(expiration => time + 60*60*24*365);

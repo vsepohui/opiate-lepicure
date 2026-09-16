@@ -119,7 +119,7 @@ sub check_auth {
 	my $user;
 	
 	# Check cookie
-	if (my $sip = $c->session('ip')) {
+	if (my $sip = $c->session('client_ip')) {
 		if ($sip eq $c->ip) {
 			if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
 				$c->stash('user' => $user);
