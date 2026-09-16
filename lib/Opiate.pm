@@ -120,27 +120,29 @@ sub check_auth {
 	
 	# Check cookie
 	warn "URI = ". $c->req->url->path;
-	if (my $sip = $self->session('client_ip') && not $c->req->url->path ~~ ['/', '/welcome']) {
-		if ($sip eq $c->ip) {
-			if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
-				$c->stash('user' => $user);
-				$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
+	unless ($c->req->url->path ~~ ['/', '/welcome']) {
+		if (my $sip = $self->session('client_ip')) {
+			if ($sip eq $c->ip) {
+				if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
+					$c->stash('user' => $user);
+					$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
+				} else {
+					return $c->page_404;
+				}
 			} else {
-				return $c->page_404;
+				warn "Cleanup session";
+				warn "Wrong ip: " . $sip . ' <=> ' . $c->ip;
+				#delete $c->session->{alias};
+				$c->session(expires => 1);
 			}
 		} else {
 			warn "Cleanup session";
-			warn "Wrong ip: " . $sip . ' <=> ' . $c->ip;
+			warn "No session ip";
+			use Data::Dumper;
+			warn Dumper {%{$self->session}};
 			#delete $c->session->{alias};
 			$c->session(expires => 1);
 		}
-	} else {
-		warn "Cleanup session";
-		warn "No session ip";
-		use Data::Dumper;
-		warn Dumper {%{$self->session}};
-		#delete $c->session->{alias};
-		$c->session(expires => 1);
 	}
 
 	$c->stash('user' => $user);
