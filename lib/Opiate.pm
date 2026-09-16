@@ -134,6 +134,8 @@ sub check_auth {
 		}
 	} else {
 		warn "No session ip";
+		use Data::Dumper;
+		warn Dumper {%{$self->session}};
 		#delete $c->session->{alias};
 		$c->session(expires => 1);
 	}
