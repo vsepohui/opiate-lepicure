@@ -128,10 +128,12 @@ sub check_auth {
 				return $c->page_404;
 			}
 		} else {
+			warn "Wrong ip: " . $sip . ' <=> ' . $c->ip;
 			#delete $c->session->{alias};
 			$c->session(expires => 1);
 		}
 	} else {
+		warn "No session ip";
 		#delete $c->session->{alias};
 		$c->session(expires => 1);
 	}
