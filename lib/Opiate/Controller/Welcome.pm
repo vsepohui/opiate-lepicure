@@ -21,13 +21,10 @@ sub welcome {
 		my ($user) = Opiate::Model::User->get_by_email(email => $email) or return $self->error('Не верный пароль');
 		return $self->error('Не верный пароль') unless $user->check_password($password);
 
-		$self->session(alias => $user->{alias}, ip => $self->ip);
+		my $remember = $self->param('remember') ? 1 : 0;
+		$self->session(alias => $user->{alias}, ip => $self->ip, remember => $remember);
 
-		if ($self->param('remember')) {
-			$self->session(expiration => 60*60*24*365);
-		} else {
-			$self->session(expiration => 86400);
-		}
+		$self->session(expiration => $remember ? 60*60*24*365 : 86400);
 		return $self->redirect_to('/' . $user->{alias});
 	}
 	return $self->render;

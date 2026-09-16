@@ -123,7 +123,8 @@ sub check_auth {
 		if ($sip eq $c->ip) {
 			if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
 				$c->stash('user' => $user);
-				$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));				
+				$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));	
+				$self->session(expiration => $c->session->{remember} ? 60*60*24*365 : 86400);			
 			} else {
 				return $c->page_404;
 			}
