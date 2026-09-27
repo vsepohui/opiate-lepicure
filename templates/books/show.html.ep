@@ -1,5 +1,5 @@
 % layout 'opiate';
-% title [$book->{name}, $owner->{name}];
+% title [$list->{title}, $book->{name}, $owner->{name}];
 
 %= include 'include/user_header';
 
