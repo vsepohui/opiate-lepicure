@@ -57,9 +57,9 @@ sub set_info {
 
 sub set_password {
 	my $self = shift;
-	my %args = @_;
+	my $password = shift;
 	
-	$self->{password} = $self->crypt_password($args{info});
+	$self->{password} = $self->crypt_password($password);
 
 	$self->_db->do(q[
 		UPDATE users
