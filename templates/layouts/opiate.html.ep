@@ -95,5 +95,13 @@
 			<a href="javascript: (() => {russian_to_ruzskey() })();">Read on Ruzskey</a>
 		</p>
 	</footer>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-4PNR48VSV2"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-4PNR48VSV2');
+	</script>	
 	</body>
 </html>
