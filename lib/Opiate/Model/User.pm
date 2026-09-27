@@ -55,6 +55,20 @@ sub set_info {
 	], $self->{info}, $self->{id});
 }
 
+sub set_password {
+	my $self = shift;
+	my %args = @_;
+	
+	$self->{password} = $self->crypt_password($args{info});
+
+	$self->_db->do(q[
+		UPDATE users
+		SET password = ?
+		WHERE id = ?
+	], $self->{password}, $self->{id});
+}
+
+
 sub set_avatar {
 	my $self = shift;
 	my %args = @_;
