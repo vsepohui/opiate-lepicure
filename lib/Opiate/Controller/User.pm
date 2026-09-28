@@ -20,7 +20,7 @@ sub profile {
 				my $size = $file->size;
 				my $name = $file->filename;
 				
-				return $self->error('Файл слишком большой!') if ($size >= 300_000);
+				return $self->error('Файл слишком большой!') if ($size >= 700_000);
 				
 				my $path = $self->upload_image($user->{alias}, $file);
 				
