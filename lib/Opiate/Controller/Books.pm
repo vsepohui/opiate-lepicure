@@ -63,6 +63,8 @@ sub show {
 		offset  => $offset - 1,
 	);
 	
+	return $self->page_404 unless $list;
+	
 	my $lists_count = Opiate::Model::BookList->count(book_id => $book->{id});
 	
 	return $self->render(
