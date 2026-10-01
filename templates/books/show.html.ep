@@ -46,7 +46,21 @@
 			% if ($page_id > 1) {
 				<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $page_id - 1 %>">&lt;</a></li>
 			% } 
-			<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>">1</a></li>
+			<li class="page-item">
+				<li class="page-item">
+				% if ($page_id == 1) {
+					<b class="page-link"> 
+				% } else {
+					<a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>">
+				% }
+					1
+				% if ($page_id == 1) {
+					</b>
+				% } else {
+					</a>
+				% }
+				</li>
+			</li>
 			% if ($lists_count > 2) {
 				% my $a = $page_id - 1;
 				% my $b = $page_id + 1;
@@ -54,13 +68,38 @@
 					<li class="page-item page-link">&hellip;</li>
 				% }
 				% for (grep {$_ > 1 && $_ < $lists_count} $a..$b) {
-					<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $_ %>"><%= $_ %></a></li>
+					<li class="page-item">
+					% if ($page_id == $_) {
+						<b class="page-link"> 
+					% } else {
+						<a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $_ %>">
+					% }
+					<%= $_ %>
+					% if ($page_id == $_) {
+						</b>
+					% } else {
+						</a>
+					% }
+					</li>
 				% }
 				% if ($lists_count - $page_id >= 3) {
 					<li class="page-item page-link">&hellip;</li>
 				% }				
 			% } 
-			<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $lists_count %>"><%= $lists_count %></a></li>
+			
+			<li class="page-item">
+			% if ($page_id == $lists_count) {
+				<b class="page-link"> 
+			% } else {
+				<a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $lists_count %>">
+			% }
+				<%= $lists_count %>
+			% if ($page_id == $lists_count) {
+				</b>
+			% } else {
+				</a>
+			% }
+			</li>
 			% if ($page_id < $lists_count) {
 				<li class="page-item"><a class="page-link" href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/<%= $page_id + 1 %>">&gt;</a></li>
 			% } 
