@@ -1,0 +1,14 @@
+{
+	secrets		=> ['111111111111111111111111111 secret!'],
+	
+	hypnotoad 	=> {
+		listen	=> 'http://127.0.0.1:4200',
+		workers => 4,
+		proxy	=> 1,
+	},
+	god => 'trunaev',
+
+	DB => ["dbi:Pg:dbname=opiate", 'opiate', 'db password', {AutoCommit => 1}]
+};
+
+

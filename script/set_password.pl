@@ -20,8 +20,7 @@ my $password = <>; chomp $password;
 die unless $password;
 
 
-my $user = new Opiate::Model::User;
-$user->get(alias => $alias);
-$user->set(password => $password);
+my $user = Opiate::Model::User->get_by_alias(alias => $alias);
+$user->set_password($password);
 
 1;

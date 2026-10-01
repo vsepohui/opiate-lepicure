@@ -5,6 +5,7 @@ use warnings;
 
 use Mojo::Base 'Mojolicious';
 
+use Opiate::Config;
 use Opiate::Controller;
 use Opiate::Model::User;
 use Opiate::Magic;
@@ -16,7 +17,8 @@ sub startup {
 
         
    	my $rr = time() . $$;
-	my $config = $self->plugin('NotYAMLConfig');
+	my $config = new Opiate::Config;
+	$self->config($config);
 	$self->secrets($config->{secrets});
 
     $self->routes->namespaces(['Opiate::Controller']);

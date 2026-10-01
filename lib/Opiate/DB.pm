@@ -7,9 +7,11 @@ use 5.026;
 use DBI;
 use DBD::Pg;
 
+use Opiate::Config;
+
 sub _dbh {
 	my $class = shift;
-	state $dbh = DBI->connect("dbi:Pg:dbname=opiate", 'opiate', 'XvDa_bDVaxiFateoNGr3etcZ', {AutoCommit => 1});
+	state $dbh = DBI->connect(@{Opiate::Config->new->{DB}});
 	return $dbh;
 }
 

@@ -2,8 +2,9 @@ INSTALL
 
 Debian:
 
-# apt-get install postgresql redis memcached cpanminus build-essential make gcc  libdbd-pg-perl  libredis-fast-perl
-# cpan install Mojolicious AnyEvent EV Digest::CRC DBI DBD::Pg Redis Cache::Memcached::Fast IO::Socket::SSL JSON::XS Data::Validate::Email
+# apt-get install postgresql redis memcached cpanminus build-essential make gcc  libdbd-pg-perl  libredis-fast-perl cpanminus nginx git
+
+# cpanm install Mojolicious AnyEvent EV Digest::CRC DBI DBD::Pg Redis Cache::Memcached::Fast IO::Socket::SSL JSON::XS Data::Validate::Email
 
 
 Init DB:
