@@ -36,7 +36,6 @@
 % if ($noty || $sudo) {
 	<script>
 	$(function(){
-		$.notify.defaults({position:"top center"});
 		% if ($sudo) {
 			noty({type: 'success', text: "Sudo: <%= $sudo %> (LOG <a href=\"/temple/users/sudo_off\">OFF</a>)"});
 		% } 
