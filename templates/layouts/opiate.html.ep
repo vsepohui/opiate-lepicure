@@ -16,8 +16,8 @@
     <meta name="author" content="Ivan Trunaev"/>
     <meta name="generator" content="Ivan Trunaev Hands"/>
     <title><%= $title %></title>
-    <link href="/css/opiate.min.css?_=2" rel="stylesheet" />
-    <script src="/js/opiate.min.js?_=8"></script>
+    <link href="/css/opiate.min.css?_=3" rel="stylesheet" />
+    <script src="/js/opiate.min.js?_=9"></script>
 % if (my $js = stash 'include_js') {
 	<script src="/js/<%= $js %>"></script>
 % }    
@@ -32,17 +32,22 @@
 % my $user  = stash('user');
 % flash noty => undef;
 % use Encode;
-% if ($noty) {
+% my $sudo = $c->session->{sudo};
+% if ($noty || $sudo) {
 	<script>
 	$(function(){
 		$.notify.defaults({position:"top center"});
+		% if ($sudo) {
+			noty({type: 'success', text: "Sudo: <%= $sudo %> (LOG <a href=\"/temple/users/sudo_off\">OFF</a>)"});
+		% } 
+		
 		% if ($noty) {
 			% Encode::decode_utf8($noty);
 			% for (@$noty) {
 				% my $type = $_->[0];
 				% my $text = $_->[1];
 				% my %t = ('error' => 'error');
-				$.notify("<%= $text %>", "<%= $t{$type} %>");
+				noty({text: "<%= $text %>", type: "<%= $type %>", timeout: 5000});
 			% }
 		% }
 		});

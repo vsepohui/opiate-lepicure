@@ -6,7 +6,7 @@
 <div class="container">
 	<div class="m-auto" style="max-width: 900px;">
 
-		% if ($c->session('alias') eq $owner->{alias}) {
+		% if ($user && $user->{alias} eq $owner->{alias}) {
 		<form method="POST" action="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/add_list" id="form_post">
 			%== magic;
 			<input class="form-control form-control-lg" style="margin-top: 14px; display: none;" type="text" id="title" name="title" placeholder="Заголовок листа" spellcheck="true" required/>

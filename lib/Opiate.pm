@@ -1,6 +1,6 @@
 package Opiate;
 
-use strict;
+use 5.028;
 use warnings;
 
 use Mojo::Base 'Mojolicious';
@@ -41,6 +41,8 @@ sub startup {
 	$r->any('/temple')->to('Temple#temple');
 	$r->any('/temple/users')->to('Temple#users');
 	$r->any('/temple/users/edit')->to('Temple#users_edit');
+	$r->any('/temple/users/sudo')->to('Temple#user_sudo');
+	$r->any('/temple/users/sudo_off')->to('Temple#user_sudo_off');
 	$r->any('/temple/invites')->to('Temple#invites');
 	
 	$r->any('/profile')->to('User#profile');
@@ -123,9 +125,19 @@ sub check_auth {
 	# Check cookie
 	if (my $sip = $c->session('ip')) {
 		if ($sip eq $c->ip) {
-			if ($user = Opiate::Model::User->get_by_alias(alias => $c->session('alias'))) {
+			my $s_alias = $c->session('alias');
+			my $is_god = $s_alias ~~ $self->config->{god};
+			my $alias = $s_alias;
+			
+			if ($is_god && $c->session('sudo')) {
+				$alias = $c->session('sudo');
+			} 
+
+			$c->stash('is_god' => ($alias ~~ $self->config->{god}));	
+			
+			if ($user = Opiate::Model::User->get_by_alias(alias => $alias)) {
 				$c->stash('user' => $user);
-				$c->stash('is_god' => ($user->{alias} eq $self->config->{god}));	
+				#$c->stash('is_god' => $is_god);
 				$self->session(expiration => $c->session->{remember} ? 60*60*24*365 : 86400);			
 			} else {
 				return $c->page_404;

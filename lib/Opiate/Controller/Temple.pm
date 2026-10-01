@@ -33,6 +33,28 @@ sub users {
 	);
 }
 
+sub user_sudo {
+	my $self = shift;
+	$self->acl;
+	
+	my ($user) = Opiate::Model::User->get_by_alias(alias => $self->param('alias')) or die "User not found";
+	
+	$self->session('sudo' => $user->{alias});
+	
+	return $self->redirect_to('/' . $user->{alias});
+}
+
+sub user_sudo_off {
+	my $self = shift;
+	if ($self->session->{sudo}) {
+		delete $self->session->{sudo};
+	} else {
+		return $self->page_404;
+	}
+	
+	return $self->redirect_to('/temple/users');
+}
+
 sub users_edit {
 	my $self = shift;
 	

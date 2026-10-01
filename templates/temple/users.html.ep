@@ -12,6 +12,7 @@
 			<th>alias</th>
 			<th>email</th>
 			<th>name</th>
+			<th>SUDO</th>
 			<th></th>
 		</tr>
 		% for (@$users) {
@@ -21,6 +22,12 @@
 				<td><a href="/<%= $_->{alias} %>"><%= $_->{alias} %></a></td>
 				<td><%= $_->{email} %></td>
 				<td><%= $_->{name} %></td>
+				<td>
+					% if ($user->{alias} ne $_->{alias}) {
+						<a href="/temple/users/sudo?alias=<%= $_->{alias} %>">SUDO</a></td>	
+					% } else {
+						-
+					% }
 				<td><a href="/temple/users/edit?alias=<%= $_->{alias} %>">Редактировать</a></td>
 			</tr>
 		% }
