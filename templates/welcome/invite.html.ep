@@ -9,6 +9,7 @@
 		<h1 class="h3 mt-5 mb-3 fw-normal">Регистрация</h1>
 		<p>На данный момент регистрация закрыта, но вы можете отправить запрос на приглашение!</p>
 		<form method="POST" class="form-signin w-100 m-auto">
+			%== magic;
 			<div class="form">
 				<input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Ваше имя"/>
 			</div>
