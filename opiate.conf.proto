@@ -2,7 +2,7 @@
 	secrets		=> ['111111111111111111111111111 secret!'],
 	
 	hypnotoad 	=> {
-		listen	=> 'http://127.0.0.1:4200',
+		listen	=> ['http://127.0.0.1:4200'],
 		workers => 4,
 		proxy	=> 1,
 	},
