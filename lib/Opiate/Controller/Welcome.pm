@@ -26,7 +26,7 @@ sub welcome {
 
 		$self->session(expiration => $remember ? 60*60*24*365 : 86400);
 		
-		$self->noty('success' => 'Добро пожаловать на Опиаты!');
+		$self->noty('success' => 'Добро пожаловать в Опиаты!');
 		return $self->redirect_to('/' . $user->{alias});
 	}
 	return $self->render;
