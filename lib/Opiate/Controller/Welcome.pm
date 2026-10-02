@@ -11,8 +11,8 @@ use Opiate::Model::User;
 sub welcome {
 	my $self = shift;
 	
-	if (my $alias = $self->session('alias')) {
-		return $self->redirect_to('/' . $alias);
+	if (my $user = $self->stash->{user}) {
+		return $self->redirect_to('/' . $user->{alias});
 	}
 	
 	if ($self->req->method eq 'POST') {
