@@ -5,7 +5,7 @@
 
 <div class="container">
 	<br/>
-	<div class="m-auto" style="max-width: 900px; white-space: pre-wrap;">
+	<div class="m-auto" style="max-width: 900px; ">
 		% if (param 'edit') {
 			% if ($c->session('alias') eq $owner->{alias}) {
 				<form method="POST" action="/<%= $alias %>/feed/<%= $feed->{id} %>?edit=1" id="form_post">
