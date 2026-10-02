@@ -831,7 +831,7 @@ function init_scroll_feed_hook (alias, case_id) {
 	var isLoading = 0;
 	var isFinished = false;
 	$(window).scroll(function() {
-		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+		if($(window).scrollTop() + $(window).height() > $(document).height() - 400) {
 			if (!isLoading && !isFinished) {
 				isLoading = true;
 				
