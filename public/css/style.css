@@ -118,3 +118,8 @@ display: block !important;
 #feed {
 	padding: 7px;
 }
+
+
+a {
+    word-break: break-all;
+}
