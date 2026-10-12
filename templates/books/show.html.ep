@@ -23,6 +23,9 @@
 			</h1>
 			</p>
 			<p>[<%= $owner->{name} %>, <%= $book->{year} %>]</p>
+			% if ($lists_count > 1) {
+			<p><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/index">Оглавление</a></p>
+			% }
 
 			<h2>
 				%= $list->{title};
