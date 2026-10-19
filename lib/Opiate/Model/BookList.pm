@@ -42,6 +42,7 @@ sub insert {
 	return;
 }
 
+
 sub select {
 	my $class = shift;
 	my %opts  = (
@@ -55,7 +56,7 @@ sub select {
 		SELECT * 
 		FROM book_lists
 		WHERE book_id = ?
-		ORDER BY id
+		ORDER BY id DESC
 		LIMIT ?
 		OFFSET ?
 	], $opts{book_id}, $opts{limit}, $opts{offset});

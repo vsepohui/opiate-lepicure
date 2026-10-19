@@ -1,0 +1,31 @@
+% my $url = url_for;
+% $url =~ s/feed\.rss//g;
+<?xml version="1.0"?>
+<rss version="2.0">
+<channel>
+   <title>Opiate L'Epicure</title>
+   <link>https://opiate-lepicure.ru<%= $url %></link>
+   <language>ru</language>
+   % if (@$list && @$list == 10) {
+   <link rel="next" href="https://opiate-lepicure.ru<%= $url . '/'  %>feed.rss?page=<%= $page + 1 %>"/>
+   % }
+% for (@$list) {
+	<item>
+	% my $s = $_->{title};
+	% my $url = 'https://opiate-lepicure.ru' . $url . '/' . $_->{id};
+	<title><%= $s %></title>
+	<link><%= $url %></link>
+	<description>
+	% my $msg = $_->{text};
+	% my @l = split /\n/, $msg;
+	% for (@l) {
+		% $_ = html_escape $_;
+		% $_ =~ s/(^|\s)(https?:\/\/[\w\.]\S*)/$1\<a href="$2"\>$2\<\/a\>/g;
+		%== $_;
+		<br/>
+	% }
+	</description>
+	</item>
+% }
+ </channel>
+</rss>
