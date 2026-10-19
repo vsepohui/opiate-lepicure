@@ -56,7 +56,7 @@ sub startup {
 	$r->any('/#alias/books/#book_id/#book_alias')->to('Books#show');
 	$r->post('/#alias/books/#book_id/#book_alias/add_list')->to('Books#add_list');
 	$r->any('/#alias/books/#book_id/#book_alias/index')->to('Books#index');
-	$r->any('/#alias/books/#book_id/#book_alias/feed')->to('Books#feed');
+	$r->any('/#alias/books/#book_id/#book_alias/feed.rss')->to('Books#feed');
 	$r->any('/#alias/books/#book_id/#book_alias/#page_id')->to('Books#show');
 	
 	$r->post('/#alias/books/add')->to('Books#add');

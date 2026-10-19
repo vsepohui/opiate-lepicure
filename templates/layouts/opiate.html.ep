@@ -24,8 +24,9 @@
 % if (my $css = stash 'include_css') {
 	<link href="/css/<%= $css %>" rel="stylesheet" />
 % }    
-% if (stash 'has_feed') {
-	<link rel="alternate" type="application/rss+xml" href="<%= $url eq '/' ? '/' : $url . '/'  %>feed.rss" />
+% if (my $feed = stash 'has_feed') {
+	% my $feed_url = ($url eq '/' ? '/' : $url . '/') . 'feed.rss';
+	<link rel="alternate" type="application/rss+xml" href="<%= $feed_url %>"/>
 % }
 % my $noty = stash ('noty') || flash ('noty');
 % my $owner = stash('owner');

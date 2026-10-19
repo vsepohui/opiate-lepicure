@@ -1,4 +1,4 @@
-% layout 'opiate';
+% layout 'opiate', has_feed => 1;
 % title [$book->{name}, $owner->{name}];
 
 %= include 'include/user_header';
