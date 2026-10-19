@@ -1,4 +1,4 @@
-% layout 'opiate', has_feed => 1;
+% layout 'opiate', has_feed => '/' . $owner->{alias} . '/books/' . $book->{id} . '/' . $book->{alias} . '/feed.rss';
 % title [$book->{name}, $owner->{name}];
 
 %= include 'include/user_header';

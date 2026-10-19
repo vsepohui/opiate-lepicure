@@ -25,8 +25,10 @@
 	<link href="/css/<%= $css %>" rel="stylesheet" />
 % }    
 % if (my $feed = stash 'has_feed') {
-	% my $feed_url = ($url eq '/' ? '/' : $url . '/') . 'feed.rss';
-	<link rel="alternate" type="application/rss+xml" href="<%= $feed_url %>"/>
+	% unless ($feed =~ /rss/) {
+		% $feed = ($url eq '/' ? '/' : $url . '/') . 'feed.rss';
+	% } 
+	<link rel="alternate" type="application/rss+xml" href="<%= $feed %>"/>
 % }
 % my $noty = stash ('noty') || flash ('noty');
 % my $owner = stash('owner');
