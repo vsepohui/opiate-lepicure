@@ -6,7 +6,7 @@
    <title>Opiate L'Epicure</title>
    <link>https://opiate-lepicure.ru<%= $url %></link>
    <language>ru</language>
-   % if (@$list && @$list == 10) {
+   % if (@$list && @$list == 20) {
    <link rel="next" href="https://opiate-lepicure.ru<%= $url . '/'  %>feed.rss?page=<%= $page + 1 %>"/>
    % }
 % for (@$list) {
