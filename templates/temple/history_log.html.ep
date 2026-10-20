@@ -1,0 +1,96 @@
+% layout 'opiate';
+
+
+<div class="container">
+	<br/>
+	<div class="m-auto" style="max-width: 900px;">
+		<h1><a href="/temple">Темпл</a> &gt; Журнал событий</h1>
+		<table class="table">
+		<tr>
+			<th>id</th>
+			<th>ctime</th>
+			<th>user_id</th>
+			<th>sudo_id</th>
+			<th>object_table</th>
+			<th>object_id</th>
+			<th>log</th>
+		</tr>
+		% for (@$log) {
+			<tr>
+				<td><%= $_->{id} %></td>
+				<td><%= $_->{ctime} %></td>
+				<td><%= $_->{user_id} %></td>
+				<td><%= $_->{sudo_id} %></td>
+				<td><%= $_->{object_table} %></td>
+				<td><%= $_->{object_id} %></td>
+				<td><%= $_->{log} %></td>
+			</tr>
+		% }
+		</table>
+		
+		% if ($page_count > 1) {
+		  <ul class="pagination pagination-lg">
+			% if ($page > 1) {
+				<li class="page-item"><a class="page-link" href="?page=<%= $page - 1 %>">&lt;</a></li>
+			% } 
+			<li class="page-item">
+				<li class="page-item">
+				% if ($page == 1) {
+					<b class="page-link"> 
+				% } else {
+					<a class="page-link" href="?page=1">
+				% }
+					1
+				% if ($page == 1) {
+					</b>
+				% } else {
+					</a>
+				% }
+				</li>
+			</li>
+			% if ($page_count > 2) {
+				% my $a = $page - 1;
+				% my $b = $page + 1;
+				% if ($page > 3) {
+					<li class="page-item page-link">&hellip;</li>
+				% }
+				% for (grep {$_ > 1 && $_ < $page_count} $a..$b) {
+					<li class="page-item">
+					% if ($page == $_) {
+						<b class="page-link"> 
+					% } else {
+						<a class="page-link" href="?page=<%= $_ %>">
+					% }
+					<%= $_ %>
+					% if ($page == $_) {
+						</b>
+					% } else {
+						</a>
+					% }
+					</li>
+				% }
+				% if ($page_count - $page >= 3) {
+					<li class="page-item page-link">&hellip;</li>
+				% }				
+			% } 
+			
+			<li class="page-item">
+			% if ($page == $page_count) {
+				<b class="page-link"> 
+			% } else {
+				<a class="page-link" href="?page=<%= $page_count %>">
+			% }
+				<%= $page_count %>
+			% if ($page == $page_count) {
+				</b>
+			% } else {
+				</a>
+			% }
+			</li>
+			% if ($page < $page_count) {
+				<li class="page-item"><a class="page-link" href="?page=<%= $page + 1 %>">&gt;</a></li>
+			% } 
+		  </ul>
+		 % }		
+	</div>
+</div>

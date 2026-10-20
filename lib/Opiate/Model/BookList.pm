@@ -42,8 +42,29 @@ sub insert {
 		VALUES (?, ?, ?)
 	], $opts{book_id}, $opts{title}, $opts{text});
 	
-	return;
+	
+	my $id = $self->_db->last_insert_id('book_lists');
+
+	return $self->select_by_id(id => $id);	
 }
+
+
+sub select_by_id {
+	my $class = shift;
+	my %opts  = (
+		id	=> undef,
+		@_,
+	);
+	
+	my ($obj) = $class->_db->select_all(q[
+		SELECT * 
+		FROM book_lists
+		WHERE id = ?
+	], $opts{id});
+	
+	return $class->new(%$obj);
+}
+
 
 sub select_all_by_book_id {
 	my $class = shift;

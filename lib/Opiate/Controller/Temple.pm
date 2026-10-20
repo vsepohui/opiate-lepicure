@@ -7,6 +7,9 @@ use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
 use Opiate::Model::Invite;
+use Opiate::Model::HistoryLog;
+
+use POSIX qw(ceil);
 
 
 sub acl {
@@ -30,6 +33,23 @@ sub users {
 	
 	return $self->render(
 		users => \@users,
+	);
+}
+
+sub history_log {
+	my $self = shift;
+	$self->acl;
+	
+	my $page = $self->param('page') || 1;
+	
+	my $count = Opiate::Model::HistoryLog->count();
+	my @log = Opiate::Model::HistoryLog->select(limit => 10, offset => ($page - 1) * 10);
+	
+	return $self->render(
+		log		=> \@log,
+		page	=> $page,
+		count	=> $count,
+		page_count => ceil ($count / 10),
 	);
 }
 

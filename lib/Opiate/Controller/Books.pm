@@ -8,6 +8,7 @@ use Mojo::Base 'Opiate::Controller';
 use Opiate::Model::User;
 use Opiate::Model::Book;
 use Opiate::Model::BookList;
+use Opiate::Model::HistoryLog;
 use Opiate::Magic;
 
 use utf8;
@@ -139,6 +140,14 @@ sub add {
 			year    => $year,
 		);
 		
+		Opiate::Model::HistoryLog->insert(
+			user_id 		=> $self->user->{id},
+			sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
+			object_table 	=> 'books',
+			object_id    	=> $book->{id},
+			log			 	=> "Добавлена книга: $name, $year",
+		);
+		
 		return $self->redirect_to('/' . $owner->{alias} . '/books/' . $book->{id} . '/' . $alias);
 	}
 
@@ -166,6 +175,14 @@ sub add_list {
 			title   => $title,
 			text    => $text,
 		);
+		
+		Opiate::Model::HistoryLog->insert(
+			user_id 		=> $self->user->{id},
+			sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
+			object_table 	=> 'book_lists',
+			object_id    	=> $list->{id},
+			log			 	=> "Добавлен лист книги: $title\n\n$text",
+		);		
 		
 		my $lists_count = Opiate::Model::BookList->count(book_id => $book->{id});
 		

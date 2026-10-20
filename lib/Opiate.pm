@@ -44,6 +44,7 @@ sub startup {
 	$r->any('/temple/users/sudo')->to('Temple#user_sudo');
 	$r->any('/temple/users/sudo_off')->to('Temple#user_sudo_off');
 	$r->any('/temple/invites')->to('Temple#invites');
+	$r->any('/temple/history_log')->to('Temple#history_log');
 	
 	$r->any('/profile')->to('User#profile');
 	
@@ -132,6 +133,7 @@ sub check_auth {
 			
 			if ($is_god && $c->session('sudo')) {
 				$alias = $c->session('sudo');
+				$c->stash->{sudo} = Opiate::Model::User->get_by_alias(alias => $c->session->{alias});
 			} 
 
 			$c->stash('is_god' => ($alias ~~ $self->config->{god}));	

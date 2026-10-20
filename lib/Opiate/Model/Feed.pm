@@ -7,6 +7,7 @@ use utf8;
 
 use Opiate::DB;
 use Opiate::Magic;
+use Opiate::Model::HistoryLog;
 
 use base 'Opiate::Model';
 
@@ -20,7 +21,9 @@ sub insert {
 		VALUES (?, ?, ?)
 	], $opts{user_id}, $opts{subject}, $opts{message});
 	
-	return;
+	my $id = $self->_db->last_insert_id('feed');
+	
+	return $self->select_by_id(id => $id);
 }
 
 sub update {

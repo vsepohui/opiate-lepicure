@@ -7,6 +7,7 @@ use Mojo::Base 'Opiate::Controller';
 
 use Opiate::Model::User;
 use Opiate::Model::Feed;
+use Opiate::Model::HistoryLog;
 use Opiate::Magic;
 
 use constant POSTS_PER_PAGE => 10; 
@@ -44,6 +45,15 @@ sub feed {
 			subject => $subject,
 			message	=> $message,
 		);
+		
+		Opiate::Model::HistoryLog->insert(
+			user_id 		=> $self->user->{id},
+			sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
+			object_table 	=> 'feed',
+			object_id    	=> $feed->{id},
+			log			 	=> "Добавлен пост: $subject\n\n$message",
+		);
+		
 		return $self->back;
 	}
 
@@ -121,10 +131,20 @@ sub post {
 		my $message = $self->param('message') or return $self->error('Вы не ввели текст сообщения!');
 		
 		
-		$feed->update(
-			subject => $subject,
-			message => $message,
-		);
+		if ($feed->{subject} ne $subject || $feed->{message} ne $message) {
+			$feed->update(
+				subject => $subject,
+				message => $message,
+			);
+			
+			Opiate::Model::HistoryLog->insert(
+				user_id 		=> $self->user->{id},
+				sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
+				object_table 	=> 'feed',
+				object_id    	=> $feed->{id},
+				log			 	=> "Обновлен пост: $subject\n\n$message",
+			);	
+		}
 		
 		return $self->redirect_to('/' . $alias . '/feed/' . $feed_id);
 	}
