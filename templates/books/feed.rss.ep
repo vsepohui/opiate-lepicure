@@ -9,10 +9,15 @@
    % if (@$list && @$list == 20) {
    <link rel="next" href="https://opiate-lepicure.ru<%= $url . '/'  %>feed.rss?page=<%= $page + 1 %>"/>
    % }
-% for (@$list) {
+% my $n = 0;
+% my $s = 0; 
+% for (reverse @$list) {
+	% if ($n >= ($page - 1) * 20) {
+		% $s ++;
+		% last if $s >= 21;
 	<item>
 	% my $s = $_->{title};
-	% my $url = 'https://opiate-lepicure.ru' . $url . '/' . $_->{id};
+	% my $url = 'https://opiate-lepicure.ru' . $url . '/' . (scalar (@$list) - $n);
 	<title><%= $s %></title>
 	<link><%= $url %></link>
 	<description>
@@ -26,6 +31,8 @@
 	% }
 	</description>
 	</item>
+	% }
+	% $n ++;
 % }
  </channel>
 </rss>

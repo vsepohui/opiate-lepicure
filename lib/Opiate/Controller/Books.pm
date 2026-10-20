@@ -92,8 +92,6 @@ sub index {
 		offset  => 0,
 	);
 	
-	@list = @list;
-	
 	return $self->render(
 		owner       => $owner, 
 		book        => $book,
@@ -112,10 +110,10 @@ sub feed {
 	
 	my $page = $self->param('page') // 1;
 	
-	my @list = Opiate::Model::BookList->select_desc(
+	my @list = Opiate::Model::BookList->select(
 		book_id => $book->{id},
-		limit   => 20,
-		offset  => ($page - 1) * 20,
+		limit   => 1000,
+		offset  => 0,
 	);
 	
 	
