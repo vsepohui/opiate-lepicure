@@ -86,11 +86,7 @@ sub index {
 	my ($book) = Opiate::Model::Book->select_by_id(id => $self->stash('book_id')) or  return $self->error('Книга не найдена!');
 	return $self->error('Книга не найдена!') if(($book->{user_id} != $owner->{id}) || ($book->{alias} ne $self->stash('book_alias')));
 	
-	my @list = Opiate::Model::BookList->select(
-		book_id => $book->{id},
-		limit   => 1000,
-		offset  => 0,
-	);
+	my @list = Opiate::Model::BookList->select_all_by_book_id($book->{id});
 	
 	return $self->render(
 		owner       => $owner, 
@@ -110,11 +106,7 @@ sub feed {
 	
 	my $page = $self->param('page') // 1;
 	
-	my @list = Opiate::Model::BookList->select(
-		book_id => $book->{id},
-		limit   => 1000,
-		offset  => 0,
-	);
+	my @list = Opiate::Model::BookList->select_all_by_book_id($book->{id});
 	
 	
 	return $self->render(

@@ -34,12 +34,39 @@ sub insert {
 	my $self = shift;
 	my %opts = @_;
 	
+	my $ckey = 'book_lists:'.$opts{book_id};
+	$self->_cache->delete($ckey);
+	
 	$self->_db->do(q[
 		INSERT INTO book_lists (book_id, title, text)
 		VALUES (?, ?, ?)
 	], $opts{book_id}, $opts{title}, $opts{text});
 	
 	return;
+}
+
+sub select_all_by_book_id {
+	my $class = shift;
+	my $book_id = shift;
+	
+	my $c = $class->_cache;
+	my $ckey = 'book_lists:'.$book_id;
+	
+	my @list;
+	
+	if (my $list = $c->get($ckey)) {
+		@list = @$list;
+	} else {
+		@list = $class->select(
+			book_id => $book_id,
+			limit   => 1000,
+			offset  => 0,
+		);
+		
+		$c->set($ckey => \@list);
+	}
+	
+	return @list;
 }
 
 

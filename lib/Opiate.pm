@@ -157,7 +157,6 @@ sub check_auth {
 
 	$c->stash(magic => '<input type="hidden" name="magic" value="' . $code . ':' . $token . '"/>');	
 
-
 	if ($c->req->method() eq 'POST') {
 		my $magic = $c->param('magic') or return $c->page_404;
 		my ($rnd, $user_id, $time, $sign) = split /:/, $magic;
