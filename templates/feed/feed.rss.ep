@@ -14,7 +14,7 @@
 	% my $s = $_->{subject};
 	% my $url = 'https://opiate-lepicure.ru/' . $alias . '/feed/' . $_->{id};
 	<title><%= $s %></title>
-	<link>https://opiate-lepicure.ru<%= $url %></link>
+	<link><%= $url %></link>
 	<description>
 	% my $msg = $_->{message};
 	% my @l = split /\n/, $msg;
