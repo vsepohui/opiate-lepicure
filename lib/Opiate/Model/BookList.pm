@@ -161,8 +161,28 @@ sub inc_visit_counter {
 		SET visit_count = ?
 		WHERE id = ?
 	], $self->{visit_count}, $self->{id});
+
 	
 	return;
+}
+
+sub update {
+	my $self = shift;
+	my %opts = @_;
+	
+	$self->{title} = $opts{title};
+	$self->{text} = $opts{text};
+	
+	$self->_db->do(q[
+		UPDATE book_lists 
+		SET 
+			title = ?,
+			text = ?
+		WHERE id = ?
+	], $self->{title}, $self->{text}, $self->{id});
+	
+	return;
+
 }
 
 1;

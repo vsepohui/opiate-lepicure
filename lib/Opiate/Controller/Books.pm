@@ -11,6 +11,8 @@ use Opiate::Model::BookList;
 use Opiate::Model::HistoryLog;
 use Opiate::Magic;
 
+use JSON::XS;
+
 use utf8;
 
 use constant LISTS_PER_PAGE => 10; 
@@ -67,6 +69,32 @@ sub show {
 	return $self->page_404 if !$list && $offset > 1;
 	
 	my $lists_count = Opiate::Model::BookList->count(book_id => $book->{id});
+	
+	$list->inc_visit_counter if $list;
+	
+	if ($self->req->method eq 'POST') {
+		return $self->error('Ошибка доступа!') unless $self->is_allowed;
+
+		my $title = $self->param('title') or return $self->error('Вы не ввели заголовок листа!');
+		my $text = $self->param('text') or return $self->error('Вы не ввели текст!');
+
+		if ($list->{title} ne $title || $list->{text} ne $text) {
+			$list->update( 
+				title => $title,
+				text  => $text,
+			);
+			
+			Opiate::Model::HistoryLog->insert(
+				user_id 		=> $self->user->{id},
+				sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
+				object_table 	=> 'book_lists',
+				object_id    	=> $list->{id},
+				log			 	=> 'UPDATE: ' . encode_json({%$list}),
+			);
+		}
+		
+		return $self->redirect_to('/' . $owner->{alias} . '/books/' . $book->{id} . '/' . $book->{alias} . '/' . $self->stash('page_id'));
+	}
 	
 	return $self->render(
 		owner       => $owner, 
@@ -145,7 +173,7 @@ sub add {
 			sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
 			object_table 	=> 'books',
 			object_id    	=> $book->{id},
-			log			 	=> "Добавлена книга: $name, $year",
+			log			 	=> 'INSERT: '. encode_json({%$book}),
 		);
 		
 		return $self->redirect_to('/' . $owner->{alias} . '/books/' . $book->{id} . '/' . $alias);
@@ -181,7 +209,7 @@ sub add_list {
 			sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
 			object_table 	=> 'book_lists',
 			object_id    	=> $list->{id},
-			log			 	=> "Добавлен лист книги: $title\n\n$text",
+			log			 	=> 'INSERT: '. encode_json({%$list}),
 		);		
 		
 		my $lists_count = Opiate::Model::BookList->count(book_id => $book->{id});

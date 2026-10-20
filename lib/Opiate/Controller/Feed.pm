@@ -9,6 +9,7 @@ use Opiate::Model::User;
 use Opiate::Model::Feed;
 use Opiate::Model::HistoryLog;
 use Opiate::Magic;
+use JSON::XS;
 
 use constant POSTS_PER_PAGE => 10; 
 
@@ -51,7 +52,7 @@ sub feed {
 			sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
 			object_table 	=> 'feed',
 			object_id    	=> $feed->{id},
-			log			 	=> "Добавлен пост: $subject\n\n$message",
+			log			 	=> 'INSERT: ' . encode_json({%$feed}),
 		);
 		
 		return $self->back;
@@ -142,7 +143,7 @@ sub post {
 				sudo_id 		=> $self->stash->{sudo} ? $self->stash->{sudo}->{id} : undef,
 				object_table 	=> 'feed',
 				object_id    	=> $feed->{id},
-				log			 	=> "Обновлен пост: $subject\n\n$message",
+				log			 	=> 'UPDATE: '. encode_json({%$feed}),
 			);	
 		}
 		

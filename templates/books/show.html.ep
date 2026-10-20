@@ -26,19 +26,40 @@
 			% if ($lists_count > 1) {
 			<p><a href="/<%= $owner->{alias} %>/books/<%= $book->{id} %>/<%= $book->{alias} %>/index">Оглавление</a></p>
 			% }
-
-			<h2>
-				%= $list->{title};
-			</h2>
 			
-			<p>
-				% my $msg = $list->{text};
-				% my @l = split /\n/, $msg;
-				% for (@l) {
-					% $_ =~ s/</&lt;/g;
-					% $_ =~ s/>/&gt;/g;
-					%== $_;
+			% if (param 'edit') {
+				% my $user = stash('user');
+				% if ($user->{alias} eq $owner->{alias}) {
+					<form method="POST" action="?edit=1" id="form_post">
+						%== magic;
+						<input class="form-control form-control-lg" style="margin-top: 14px;" type="text" id="title" name="title" placeholder="Заголовок листа" value="<%= $list->{title} %>" required/>
+						<textarea type="text" class="form-control form-control-lg" style="margin-top: 14px;" placeholder="Текст" id="text" name="text" rows="10" required><%= $list->{text} %></textarea>
+						<input type="submit" class="btn btn-lg btn-primary w-100 py-2" style="margin-top: 14px;" id="post_button" name="post_button" value="Сохранить"/>
+					</form>
 					<br/>
+				% }
+			% } else {
+
+				<h2>
+					%= $list->{title};
+				</h2>
+				
+				<p>
+					% my $msg = $list->{text};
+					% my @l = split /\n/, $msg;
+					% for (@l) {
+						% $_ =~ s/</&lt;/g;
+						% $_ =~ s/>/&gt;/g;
+						%== $_;
+						<br/>
+					% }
+				</p>
+			% }
+			<p>
+				<strong><i class="bi bi-eye"></i></strong> <%= $list->{visit_count} || 1 %>
+				<a href="<%= url_for %>" style="color: black"><strong><i class="bi bi-link-45deg"></i></strong></a>
+				% if ($c->stash('user') && $c->stash('user')->{alias} eq $owner->{alias}) {
+					<a href="?edit=1" style="color: black"><strong><i class="bi bi-pencil"></i></strong></a>
 				% }
 			</p>
 			<hr/>			
