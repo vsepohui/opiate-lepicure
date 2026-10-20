@@ -92,7 +92,7 @@ sub index {
 		offset  => 0,
 	);
 	
-	@list = reverse @list;
+	@list = @list;
 	
 	return $self->render(
 		owner       => $owner, 
