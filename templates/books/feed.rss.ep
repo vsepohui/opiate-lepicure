@@ -17,7 +17,7 @@
 		% last if $s >= 21;
 	<item>
 	% my $s = $_->{title};
-	% my $url = 'https://opiate-lepicure.ru' . $url . '/' . (scalar (@$list) - $n);
+	% my $url = 'https://opiate-lepicure.ru' . $url . (scalar (@$list) - $n);
 	<title><%= $s %></title>
 	<link><%= $url %></link>
 	<description>
