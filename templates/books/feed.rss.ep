@@ -3,7 +3,7 @@
 <?xml version="1.0"?>
 <rss version="2.0">
 <channel>
-   <title>Opiate L'Epicure</title>
+   <title><%= $book->{name} %> :: <%=  $owner->{name} %> :: Opiate L'Epicure</title>
    <link>https://opiate-lepicure.ru<%= $url %></link>
    <language>ru</language>
    % if (@$list && @$list == 20) {
