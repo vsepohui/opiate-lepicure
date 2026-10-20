@@ -170,6 +170,9 @@ sub update {
 	my $self = shift;
 	my %opts = @_;
 	
+	my $ckey = 'book_lists:'.$opts{book_id};
+	$self->_cache->delete($ckey);	
+	
 	$self->{title} = $opts{title};
 	$self->{text} = $opts{text};
 	
