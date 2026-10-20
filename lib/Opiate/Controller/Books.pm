@@ -112,7 +112,7 @@ sub feed {
 	
 	my $page = $self->param('page') // 1;
 	
-	my @list = Opiate::Model::BookList->select(
+	my @list = Opiate::Model::BookList->select_desc(
 		book_id => $book->{id},
 		limit   => 20,
 		offset  => ($page - 1) * 20,

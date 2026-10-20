@@ -56,6 +56,27 @@ sub select {
 		SELECT * 
 		FROM book_lists
 		WHERE book_id = ?
+		ORDER BY id
+		LIMIT ?
+		OFFSET ?
+	], $opts{book_id}, $opts{limit}, $opts{offset});
+	
+	return map {$class->new(%$_)} @list;
+}
+
+sub select_desc {
+	my $class = shift;
+	my %opts  = (
+		book_id => undef,
+		limit	=> undef,
+		offset  => undef,
+		@_,
+	);
+	
+	my @list = $class->_db->select_all(q[
+		SELECT * 
+		FROM book_lists
+		WHERE book_id = ?
 		ORDER BY id DESC
 		LIMIT ?
 		OFFSET ?
