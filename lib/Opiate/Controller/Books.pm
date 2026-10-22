@@ -37,6 +37,7 @@ sub books {
 	
 	
 	my @books = Opiate::Model::Book->select_by_user_id(user_id => $owner->{id});
+	@books = sort {$a->{name} cmp $b->{name}} @books;
 	
 	my %lists_count = map {$_ => Opiate::Model::BookList->count(book_id => $_)} map {$_->{id}} @books;
 	
